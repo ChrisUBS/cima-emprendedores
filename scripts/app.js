@@ -45,12 +45,14 @@ function isValid(person, ubicacion, facultad, taller) {
 }
 
 function validRegister(){
-
+    var selectedUbicacion = $("#ubicacion select").val();
+    var selectedFacultad = $("#facultad select").val();
+    var selectedTaller = $("#taller select").val();
 }
 
 function register() {
     var selectedOption = $("#txtService").val();
-    var inputName, inputLastName, inputMiddleName, inputEmail, inputMatricula, inputNoEmpleado, selectedUbicacion, selectedFacultad, selectedTaller;
+    var inputName, inputLastName, inputMiddleName, inputEmail, inputMatricula, inputNoEmpleado;
 
     if (selectedOption === "option1") {
         inputMatricula = $("#option1 input[name='']").eq(0).val();
@@ -75,10 +77,6 @@ function register() {
         inputMiddleName = $("#option4 input[name='']").eq(2).val();
         inputEmail = $("#option4 input[name='']").eq(3).val();
     }
-
-    selectedUbicacion = $("#ubicacion select").val();
-    selectedFacultad = $("#facultad select").val();
-    selectedTaller = $("#taller select").val();
     
 
     let newPerson = new Person(inputName, inputLastName, inputMiddleName, inputEmail, inputMatricula, inputNoEmpleado);
@@ -87,34 +85,23 @@ function register() {
         // displayPerson(newPerson);
         // people.push(newPerson);
         // notifications("alert-success", "Registro exitoso");
-                // if(isValid(newPerson, selectedUbicacion, selectedFacultad, selectedTaller)){
-                //     notifications("alert-success", "Registro exitoso");
-                // }else{
-                //     notifications("alert-error", "¡Campo requerido ó no valido!");
-                // }
+        // if(isValid(newPerson, selectedUbicacion, selectedFacultad, selectedTaller)){
+        //     notifications("alert-success", "Registro exitoso");
+        // }else{
+        //     notifications("alert-error", "¡Campo requerido ó no valido!");
+        // }
         switch (selectedOption) {
             case "option1":
                 Alumno();
                 break;
             case "option2":
                 Docente();
-
                 break;
             case "option3":
                 Egresado();
-                if(isValid(newPerson, selectedUbicacion, selectedTaller)){
-                    notifications("alert-success", "Registro exitoso");
-                }else{
-                    notifications("alert-error", "¡Campo requerido ó no valido!");
-                }
                 break; 
             case "option4":
                 Externo();
-                if(isValid(newPerson, selectedUbicacion, selectedTaller)){
-                    notifications("alert-success", "Registro exitoso");
-                }else{
-                    notifications("alert-error", "¡Campo requerido ó no valido!");
-                }
                 break; 
         }
     } else {
