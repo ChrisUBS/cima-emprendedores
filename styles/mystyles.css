@@ -1,0 +1,165 @@
+/*global*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+/*general form*/
+.log-bg {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: #00723F;
+    height: 100vh;
+}
+
+.form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.form h1 {
+    text-align: center;
+    padding: 0 0 20px 0;
+    border-bottom: 1px solid silver;
+    margin-bottom: 30px;
+}
+
+.form form {
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+.form-normal{
+    font-size: 20px;
+}
+
+form .username {
+    position: relative;
+    border-bottom: 2px solid #adadad;
+    margin: 30px 0;
+}
+
+/*config inputs*/
+.input-control {
+    position: relative;
+    margin: 10px;
+}
+
+.input-columns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+
+.input-notColumns {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.input-columns-flex{
+    display: flex;
+    justify-content: center;
+}
+
+.input-control input {
+    width: 100%;
+    padding: 10 0px;
+    font-size: 16px;
+    color: #000000;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    background: transparent;
+}
+
+.input-control label {
+    position: absolute;
+    top: 0;
+    left: 0px;
+    font-size: 16px;
+    color: #585754;
+    pointer-events: none;
+    transition: .5s;
+    transform: translateY(-25%);
+}
+
+.input-control input:focus~label,
+.input-control input:valid~label {
+    top: -20px;
+    left: 0;
+    color: #585754;
+    font-size: 12px;
+}
+
+.input-control select {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    width: 50%;
+    height: 40px;
+    border: 1px solid;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/*button*/
+.btn-reg {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 10px;
+}
+
+.btn-small{
+    width: 50px;
+}
+
+.btn-reg:hover {
+    background-color: rgb(206, 142, 0);
+}
+
+/*notifications*/
+.hide {
+    display: none;
+}
+
+.alert-error {
+    color: red;
+    font-size: 14px;
+}
+
+.alert-success {
+    color: green;
+    font-size: 14px;
+}
+
+.noti {
+    text-align: center;
+}

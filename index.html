@@ -1,11 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cimarrones Emprendedores</title>
+    <link rel="stylesheet" href="plugins/bootstrap.css">
+    <link rel="stylesheet" href="styles/mystyles.css">
+    <script src="https://kit.fontawesome.com/b8ce32ba45.js" crossorigin="anonymous"></script>   
 </head>
+
 <body>
-    
+    <!-- Panel principal -->
+    <main class="log-bg">
+        <!-- Panel del formulario -->
+        <div class="form">
+            <h1>Inicio</h1>
+            <!-- Barra de seleccion -->
+            <div class="input-control">
+                <select name="txtService" id="txtService">
+                    <option value="">Seleccionar</option>
+                    <option value="option1">Alumno</option>
+                    <option value="option2">Docente</option>
+                    <option value="option3">Egresado</option>
+                    <option value="option4">Exterior</option>
+                </select>
+            </div>
+            <div>
+                <!-- Alumnos -->
+                <div id="option1">
+                    <div class="input-columns-flex">
+                        <div class="input-control">
+                            <input type="text" name="" id="txtMatricula" required="">
+                            <label>Matricula</label>
+                        </div>
+                        <div>
+                            <button type="button" class="btn-reg btn-small" id="search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </div>
+                    <div class="input-columns">
+                        <div class="input-control">
+                            <input type="text" name="" id="txtNombre" required="">
+                            <label>Nombre(s)</label>
+                        </div>
+                        <div class="input-control">
+                            <input type="text" name="" id="txtApellidoP" required="">
+                            <label>Apellido Paterno</label>
+                        </div>
+                        <div class="input-control">
+                            <input type="text" name="" id="txtApellidoM" required="">
+                            <label>Apellido Materno</label>
+                        </div>
+                        <div class="input-control">
+                            <input type="text" name="" id="email" required="">
+                            <label>Correo Electronico</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Docentes -->
+                <div id="option2">
+                    <div class="input-notColumns">
+                        <div class="input-control">
+                            <input type="text" name="" id="" required="">
+                            <label>No. De Empleado</label>
+                        </div>
+                    </div>
+                    <div class="input-columns">
+                        <div class="input-control">
+                            <input type="text" name="" required="">
+                            <label>Nombre(s)</label>
+                        </div>
+                        <div class="input-control">
+                            <input type="text" name="" required="">
+                            <label>Apellido Paterno</label>
+                        </div>
+                        <div class="input-control">
+                            <input type="text" name="" required="">
+                            <label>Apellido Materno</label>
+                        </div>
+                        <div class="input-control">
+                            <input type="text" name="" id="email" required="">
+                            <label>Correo Electronico</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Egresados -->
+                <div id="option3" class="input-columns">
+                    <div class="input-control">
+                        <input type="text" name="" required="">
+                        <label>Nombre(s)</label>
+                    </div>
+                    <div class="input-control">
+                        <input type="text" name="" required="">
+                        <label>Apellido Paterno</label>
+                    </div>
+                    <div class="input-control">
+                        <input type="text" name="" required="">
+                        <label>Apellido Materno</label>
+                    </div>
+                    <div class="input-control">
+                        <input type="text" name="" id="email" required="">
+                        <label>Correo Electronico</label>
+                    </div>
+                </div>
+                <!-- Externos -->
+                <div id="option4" class="input-columns">
+                    <div class="input-control">
+                        <input type="text" name="" required="">
+                        <label>Nombre(s)</label>
+                    </div>
+                    <div class="input-control">
+                        <input type="text" name="" required="">
+                        <label>Apellido Paterno</label>
+                    </div>
+                    <div class="input-control">
+                        <input type="text" name="" required="">
+                        <label>Apellido Materno</label>
+                    </div>
+                    <div class="input-control">
+                        <input type="text" name="" id="email" required="">
+                        <label>Correo Electronico</label>
+                    </div>
+                </div>
+            </div>
+            <!-- Optiones Extras -->
+            <!-- Ubicacion Y Facultad -->
+            <div class="input-columns">
+                <div id="ubicacion">
+                    <h1 class="form-normal">Campus</h1>
+                    <div class="input-control">
+                        <select name="txtService" id="txtService">
+                            <option value="">Seleccionar Campus</option>
+                            <option value="Tijuana">Tijuana</option>
+                            <option value="Mexicali">Mexicali</option>
+                            <option value="Ensenada">Ensenada</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="facultad">
+                    <h1 class="form-normal">Facultad</h1>
+                    <div class="input-control">
+                        <select disabled name="txtService" id="txtService2">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- Taller -->
+            <div id="taller">
+                <h1 class="form-normal">Taller</h1>
+                <div class="input-control">
+                    <select name="txtService" id="txtService">
+                    </select>
+                </div>
+            </div>
+            <!-- Boton siguiente. -->
+            <div>
+                <button type="button" class="btn-reg" id="btnNext">Siguiente</button>
+                <div class="hide noti" id="notifications">Notificaciones Aqui.</div>
+            </div>
+            <div>
+                <button type="button" class="btn-reg" id="btnRegister">Registrarse</button>
+                <div class="hide noti" id="notifications">Notificaciones Aqui.</div>
+            </div>
+        </div>
+        <div>
+        </div>
+    </main>
+    <!-- Scripts -->
+    <script src="plugins/jquery3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/options.js"></script>
+    <script src="scripts/prueba.js"></script>
 </body>
+
 </html>
