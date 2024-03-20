@@ -15,36 +15,30 @@
 <body>
     <!-- Navbar -->
     <header>
-        <div class="">
-
-            <nav class=" navbar navbar-light bg-light center ">
-
-                <div class="izq">
-                    <a href="https://www.uabc.mx/">
-                        <img src="/cimarrones-emprendedores/Logos/escudo-actualizado-2022.png" width="60" height="70" class="d-inline-block align-top center" alt="">
-                    </a>
-                </div>
-                
-
-
-
-                <div class="centralizar">
-                    <h3 class="txtcentro">Cimarrones Emprendedores </h3 >
-                    <p class="txtcentro">Portal de Talleres UABC</p>
-                </div>
-
-
-                <div class="logos" >
-                    <a class="logos" href="https://www.instagram.com/cimarronesemprendedores/">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                    <a class="logos" href="https://www.facebook.com/CimarronesEmprendedoresUABC/?locale=es_LA">
-                        <i class="fa-brands fa-square-facebook"></i>
-                    </a>
-                </div>
-
+        <div class="navbar navbar-light bg-light center">
+            <div>
+            <nav class="navbar navbar-light bg-light center">
+              <a class="navbar-brand center" href="#">
+                <img src="escudo-actualizado-2022.png" width="60" height="70" class="d-inline-block align-top center" alt="">
+            <p class="">Portal Talleres UABC</p>
+            </div>
+            
+            
+            <div >
+            <p class="txtcentro">Cimarrones Emprendedores UABC</p>
+            </div>
+            
+            
+              <div>
+              <a href="https://www.facebook.com/CimarronesEmprendedoresUABC/?locale=es_LA">
+                <img src="Facebook_logo_(square).png" width="55" height="40" class="d-inline-block align-top center pad" alt="">
+            </a>
+            </div>
+            
+            
             </nav>
-        </div>
+            </div>
+            
     </header>
 
     <!-- Panel principal -->
@@ -54,7 +48,7 @@
             <h1>Inicio</h1>
             <!-- Barra de seleccion -->
             <div class="input-control">
-                <select name="txtService" id="txtService">
+                <select name="txtOption" id="txtOption">
                     <option value="">Seleccionar</option>
                     <option value="option1">Alumno</option>
                     <option value="option2">Docente</option>
@@ -71,8 +65,7 @@
                             <label>Matricula</label>
                         </div>
                         <div>
-                            <button type="button" class="btn-reg btn-small" id="search"><i
-                                    class="fa-solid fa-magnifying-glass"></i></button>
+                            <button type="button" class="btn-reg btn-small" id="search"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </div>
                     <div class="input-columns">
@@ -95,113 +88,78 @@
                     </div>
                 </div>
                 <!-- Docentes -->
-                <div id="option2">
-                    <div class="input-notColumns">
-                        <div class="input-control">
-                            <input type="text" name="" id="" required="">
-                            <label>No. De Empleado</label>
-                        </div>
+                <div id="option2" class="input-columns-flex">
+                    <div class="input-control">
+                        <input type="text" name="" id="txtId" required="">
+                        <label>No. De Empleado</label>
                     </div>
-                    <div class="input-columns">
-                        <div class="input-control">
-                            <input type="text" name="" required="">
-                            <label>Nombre(s)</label>
-                        </div>
-                        <div class="input-control">
-                            <input type="text" name="" required="">
-                            <label>Apellido Paterno</label>
-                        </div>
-                        <div class="input-control">
-                            <input type="text" name="" required="">
-                            <label>Apellido Materno</label>
-                        </div>
-                        <div class="input-control">
-                            <input type="text" name="" id="email" required="">
-                            <label>Correo Electronico</label>
-                        </div>
+                    <div>
+                        <button type="button" class="btn-reg btn-small search" id=""><i
+                                class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>
-                <!-- Egresados -->
-                <div id="option3" class="input-columns">
+                <!-- Inputs -->
+                <div id="inputGeneral" class="input-columns">
                     <div class="input-control">
-                        <input type="text" name="" required="">
+                        <input type="text" name="nombre" id="txtNombre" required="">
                         <label>Nombre(s)</label>
                     </div>
                     <div class="input-control">
-                        <input type="text" name="" required="">
+                        <input type="text" name="apellidoP" id="txtApellidoP" required="">
                         <label>Apellido Paterno</label>
                     </div>
                     <div class="input-control">
-                        <input type="text" name="" required="">
+                        <input type="text" name="apellidoM" id="txtApellidoM" required="">
                         <label>Apellido Materno</label>
                     </div>
                     <div class="input-control">
-                        <input type="text" name="" id="email" required="">
+                        <input type="text" name="email" id="txtEmail" required="">
                         <label>Correo Electronico</label>
                     </div>
                 </div>
-                <!-- Externos -->
-                <div id="option4" class="input-columns">
-                    <div class="input-control">
-                        <input type="text" name="" required="">
-                        <label>Nombre(s)</label>
+
+                <!-- Optiones Extras -->
+                <!-- Ubicacion Y Facultad -->
+                <div class="input-columns">
+                    <div id="ubicacion">
+                        <h1 class="form-normal">Campus</h1>
+                        <div class="input-control">
+                            <select name="txtCampus" id="txtCampus">
+                                <option value="">Seleccionar Campus</option>
+                                <option value="Tijuana">Tijuana</option>
+                                <option value="Mexicali">Mexicali</option>
+                                <option value="Ensenada">Ensenada</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="input-control">
-                        <input type="text" name="" required="">
-                        <label>Apellido Paterno</label>
-                    </div>
-                    <div class="input-control">
-                        <input type="text" name="" required="">
-                        <label>Apellido Materno</label>
-                    </div>
-                    <div class="input-control">
-                        <input type="text" name="" id="email" required="">
-                        <label>Correo Electronico</label>
+                    <div id="facultad">
+                        <h1 class="form-normal">Facultad</h1>
+                        <div class="input-control">
+                            <select name="txtFacultad" id="txtFacultad">
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Optiones Extras -->
-            <!-- Ubicacion Y Facultad -->
-            <div class="input-columns">
-                <div id="ubicacion">
-                    <h1 class="form-normal">Campus</h1>
+                <!-- Taller -->
+                <div id="taller">
+                    <h1 class="form-normal">Taller</h1>
                     <div class="input-control">
-                        <select name="txtService" id="txtService">
-                            <option value="">Seleccionar Campus</option>
-                            <option value="Tijuana">Tijuana</option>
-                            <option value="Mexicali">Mexicali</option>
-                            <option value="Ensenada">Ensenada</option>
+                        <select name="txtTaller" id="txtTaller">
                         </select>
                     </div>
                 </div>
-                <div id="facultad">
-                    <h1 class="form-normal">Facultad</h1>
-                    <div class="input-control">
-                        <select disabled name="txtService" id="txtService2">
-                        </select>
-                    </div>
+                <!-- Boton siguiente. -->
+                <div>
+                    <button type="button" class="btn-reg" id="btnNext">Siguiente</button>
+                    <div class="hide noti" id="notifications">Notificaciones Aqui.</div>
+                </div>
+                <div>
+                    <button type="button" class="btn-reg" id="btnRegister">Registrarse</button>
+                    <div class="hide noti" id="notifications">Notificaciones Aqui.</div>
                 </div>
             </div>
-            <!-- Taller -->
-            <div id="taller">
-                <h1 class="form-normal">Taller</h1>
-                <div class="input-control">
-                    <select name="txtService" id="txtService">
-                    </select>
-                </div>
-            </div>
-            <!-- Boton siguiente. -->
             <div>
-                <button type="button" class="btn-reg" id="btnNext">Siguiente</button>
-                <div class="hide noti" id="notifications">Notificaciones Aqui.</div>
             </div>
-            <div>
-                <button type="button" class="btn-reg" id="btnRegister">Registrarse</button>
-                <div class="hide noti" id="notifications">Notificaciones Aqui.</div>
-            </div>
-        </div>
-        <div>
-        </div>
     </main>
     <!-- Scripts -->
     <script src="plugins/jquery3.7.1.js"></script>
