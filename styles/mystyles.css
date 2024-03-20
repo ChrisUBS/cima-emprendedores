@@ -12,6 +12,54 @@ img {
     max-width: 100%;
 }
 
+/*Estilos Header (Gael Ivan)*/
+
+
+
+.center{
+    display: flex;
+
+}
+.logos{
+    width: 125px;
+    margin: 7.5px;
+    font-size: 40px;
+    color: #444444;
+
+}
+
+.pad{
+    padding-right: 15px;
+}
+
+.txtcentro{
+    text-align: center;
+
+    
+}
+.centralizar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+    margin-left: 65px;
+}
+.txtlogo{
+    
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    
+    text-align: center;
+}
+
+.izq{
+    margin-left: 20px;
+   
+}
+
+
+
 /*general form*/
 .log-bg {
     margin: 0;
@@ -163,3 +211,4 @@ form .username {
 .noti {
     text-align: center;
 }
+
