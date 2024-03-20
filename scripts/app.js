@@ -44,24 +44,24 @@ function isValid(person, ubicacion, facultad, taller) {
     return validation;
 }
 
-function validRegister(){
-    var selectedUbicacion = $("#ubicacion select").val();
-    var selectedFacultad = $("#facultad select").val();
-    var selectedTaller = $("#taller select").val();
-}
+// function validRegister(){
+//     var selectedUbicacion = $("#ubicacion select").val();
+//     var selectedFacultad = $("#facultad select").val();
+//     var selectedTaller = $("#taller select").val();
+// }
 
 function register() {
     var selectedOption = $("#txtOption").val();
     var inputName, inputLastName, inputMiddleName, inputEmail, inputMatricula, inputNoEmpleado;
     
     if (selectedOption === "option1") {
-        inputMatricula = $("#option1 input[name='matricula']").eq(0).val();
+        inputMatricula = $("input[name='matricula']").eq(0).val();
         inputName = $("input[name='nombre']").val();
         inputLastName = $("input[name='apellidoP']").val();
         inputMiddleName = $("input[name='apellidoM']").val();
         inputEmail = $("input[name='email']").val();
     } else if (selectedOption === "option2") {
-        inputNoEmpleado = $("#option2 input[name='']").val();
+        inputNoEmpleado = $("input[name='noEmpleado']").val();
         inputName = $("input[name='nombre']").val();
         inputLastName = $("input[name='apellidoP']").val();
         inputMiddleName = $("input[name='apellidoM']").val();
@@ -80,6 +80,9 @@ function register() {
     
 
     let newPerson = new Person(inputName, inputLastName, inputMiddleName, inputEmail, inputMatricula, inputNoEmpleado);
+    var selectedUbicacion = $("#txtCampus").val();
+    var selectedFacultad = $("#txtFacultad").val();
+    var selectedTaller = $("#txtTaller").val();
         
     if (isValid(newPerson)) {
         // displayPerson(newPerson);
@@ -90,9 +93,18 @@ function register() {
         // }else{
         //     notifications("alert-error", "¡Campo requerido ó no valido!");
         // }
+        //$("#btnRegister").click(console.log("Sirve"));
         switch (selectedOption) {
             case "option1":
                 Alumno();
+                $("#btnRegister").click(function(){
+                    if (isValid(alumno1,'tijuana', selectedFacultad, selectedTaller)) {
+                        notifications("alert-success", "Registro exitoso");
+                        console.log("entre")
+                    } else {
+                        notifications("alert-error", "¡Campo requerido ó no valido!");
+                    }
+                });
                 break;
             case "option2":
                 Docente();
@@ -107,12 +119,12 @@ function register() {
     } else {
         notifications("alert-error", "¡Campo requerido ó no valido!");
     }
-
+    
 }
 
 
 //Opciones del 1 al 4.
-function Alumno(){
+function Alumno(newPerson){
     $('#txtFacultad').prop('disabled', true);
     $('#txtTaller').prop('disabled', true);
     $("#btnNext").hide();
@@ -216,6 +228,7 @@ function Talleres() {
 
     if (selectedUbicacion) {
         $('#txtTaller').prop('disabled', false);
+        selectTaller.append("<option value=''>Seleccionar Taller</option>");
         const talleres = talleresXUbicacion[selectedUbicacion];
         talleres.forEach(taller => {
             selectTaller.append(`<option value='${taller}'>${taller}</option>`);
@@ -274,8 +287,6 @@ function init() {
         }
     });
     $("#btnNext").click(register);
-
-
 }
 
 $(document).ready(function () {
