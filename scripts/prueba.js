@@ -24,3 +24,54 @@ function init2(){
     $('.search').click(buscarMatricula)
 }
 window.onload = init2;
+
+
+// function register() {
+//     let selectedOption = $("#txtOption").val();
+//     let newPerson = {};
+    
+//     switch (selectedOption) {
+//         case "option1":
+//             newPerson.matricula = $("input[name='matricula']").val();
+//             newPerson.noEmpleado = "";
+//             break;
+//         case "option2":
+//             newPerson.noEmpleado = $("input[name='noEmpleado']").val();
+//             newPerson.matricula = "";
+//             break;
+//         case "option3":
+//         case "option4":
+//             newPerson.matricula = "";
+//             newPerson.noEmpleado = "";
+//             break;
+//     }
+
+//     newPerson.nombre = $("input[name='nombre']").val();
+//     newPerson.apellidoP = $("input[name='apellidoP']").val();
+//     newPerson.apellidoM = $("input[name='apellidoM']").val();
+//     newPerson.email = $("input[name='email']").val();
+    
+//     checkExtra(newPerson, selectedOption);
+//     validNext(newPerson, selectedOption);
+// }
+
+// function checkExtra(newPerson, selectedOption) {
+//     newPerson.ubicacion = $("#txtCampus").val();
+//     newPerson.facultad = $("#txtFacultad").val();
+//     newPerson.taller = $("#txtTaller").val();
+    
+//     if (selectedOption === "option3" || selectedOption === "option4") {
+//         delete newPerson.facultad;
+//     }
+// }
+
+// $("#btnRegister").click(register);
+
+// function validNext(newPerson, selectedOption) {
+//     if (isValid(newPerson)) {
+//         notifications("alert-success", "Registro exitoso");
+//         console.log("Valor:", newPerson);
+//     } else {
+//         notifications("alert-error", "¡Campo requerido o no válido!");
+//     }
+// }

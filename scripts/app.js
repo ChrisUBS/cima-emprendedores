@@ -65,175 +65,116 @@ function isValid(person) {
 function validNext(newPerson, selectedOption){
     if (isValid(newPerson)){
         validRegister(newPerson,selectedOption);
-        notifications("alert-success", "Registro exitoso");
-        console.log("Valor:", newPerson);
     }else{
         notifications("alert-error", "¡Campo requerido ó no valido!");
     }
 }
 
 function validRegister(newPerson, selectedOption){
+    changeForm(selectedOption);
     switch (selectedOption) {
         case "option1":
-            Alumno();
-            $("#btnRegister").click(function(){
-                checkExtra(newPerson, selectedOption);
-                console.log("Valor:", newPerson);
-                if (isValid(newPerson)) {
-                    notifications("alert-success", "Registro exitoso");
-                    console.log("Valor:", newPerson);
-                } else {
-                    notifications("alert-error", "¡Campo requerido ó no valido!");
-                }
-            });
-            break;
         case "option2":
-            Docente();
             $("#btnRegister").click(function(){
                 checkExtra(newPerson, selectedOption);
                 console.log("Valor:", newPerson);
                 if (isValid(newPerson)) {
                     notifications("alert-success", "Registro exitoso");
-                    console.log("Valor:", newPerson);
                 } else {
                     notifications("alert-error", "¡Campo requerido ó no valido!");
                 }
             });
             break;
-        case "option3":
-            Exterior();
-            $("#btnRegister").click(function(){
-                checkExtra(newPerson, selectedOption);
-                console.log("Valor:", newPerson);
-                if (isValid(newPerson)) {
-                    notifications("alert-success", "Registro exitoso");
-                    console.log("Valor:", newPerson);
-                } else {
-                    notifications("alert-error", "¡Campo requerido ó no valido!");
-                }
-            });
-            break; 
-        case "option4":
-            Exterior();
-            $("#btnRegister").click(function(){
-                checkExtra(newPerson, selectedOption);
-                console.log("Valor:", newPerson);
-                if (isValid(newPerson)) {
-                    notifications("alert-success", "Registro exitoso");
-                    console.log("Valor:", newPerson);
-                } else {
-                    notifications("alert-error", "¡Campo requerido ó no valido!");
-                }
-            });
-            break;
+    }
+}
+
+function checkExtra(newPerson, selectedOption){
+    if (selectedOption === "option1" || "option2") {
+        newPerson.ubicacion = $("#txtCampus").val();
+        newPerson.facultad = $("#txtFacultad").val();
+        newPerson.taller = $("#txtTaller").val();
+    } else if (selectedOption === "option3" || "option3") {
+        newPerson.ubicacion = $("#txtCampus").val();
+        newPerson.taller = $("#txtTaller").val();
     }
 }
 
 function register() {
     let selectedOption = $("#txtOption").val();
-    let inputName, inputLastName, inputMiddleName, inputEmail, inputMatricula, inputNoEmpleado, selectUbicacion, selectFacultad, selectTaller;
+    let newPerson = {};
     
-    if (selectedOption === "option1") {
-        inputMatricula = $("input[name='matricula']").val();
-        inputName = $("input[name='nombre']").val();
-        inputLastName = $("input[name='apellidoP']").val();
-        inputMiddleName = $("input[name='apellidoM']").val();
-        inputEmail = $("input[name='email']").val();
-    } else if (selectedOption === "option2") {
-        inputNoEmpleado = $("input[name='noEmpleado']").val();
-        inputName = $("input[name='nombre']").val();
-        inputLastName = $("input[name='apellidoP']").val();
-        inputMiddleName = $("input[name='apellidoM']").val();
-        inputEmail = $("input[name='email']").val();
-    } else if (selectedOption === "option3") {
-        inputName = $("input[name='nombre']").val();
-        inputLastName = $("input[name='apellidoP']").val();
-        inputMiddleName = $("input[name='apellidoM']").val();
-        inputEmail = $("input[name='email']").val();
-    } else if (selectedOption === "option4") {
-        inputName = $("input[name='nombre']").val();
-        inputLastName = $("input[name='apellidoP']").val();
-        inputMiddleName = $("input[name='apellidoM']").val();
-        inputEmail = $("input[name='email']").val();
+    switch (selectedOption) {
+        case "option1":
+            newPerson.matricula = $("input[name='matricula']").val();
+            break;
+        case "option2":
+            newPerson.noEmpleado = $("input[name='noEmpleado']").val();
+            break;
+        case "option3":
+        case "option4":
+            break;
     }
-    let newPerson = new Person(inputName, inputLastName, inputMiddleName, inputEmail, inputMatricula, inputNoEmpleado, selectUbicacion, selectFacultad, selectTaller);
+    newPerson.nombre = $("input[name='nombre']").val();
+    newPerson.apellidoP = $("input[name='apellidoP']").val();
+    newPerson.apellidoM = $("input[name='apellidoM']").val();
+    newPerson.email = $("input[name='email']").val();
     validNext(newPerson, selectedOption);
 }
 
-function checkExtra(newPerson, selectedOption){
-    let selectUbicacion = $("#txtCampus").val();
-    let selectFacultad = $("#txtFacultad").val();
-    let selectTaller = $("#txtTaller").val();
-    if (selectedOption === "option1") {
-        newPerson.ubicacion = selectUbicacion;
-        newPerson.facultad = selectFacultad;
-        newPerson.taller = selectTaller;
-    } else if (selectedOption === "option2") {
-        newPerson.ubicacion = selectUbicacion;
-        newPerson.facultad = selectFacultad;
-        newPerson.taller = selectTaller;
-    } else if (selectedOption === "option3" || "option3") {
-        newPerson.ubicacion = selectUbicacion;
-        newPerson.taller = selectTaller;
+function changeForm(selectedOption){
+    switch (selectedOption) {
+        case "option1":
+        case "option2":
+            $('#txtFacultad').prop('disabled', true);
+            $('#txtTaller').prop('disabled', true);
+            $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function() {
+                $('label[for="' + $(this).attr('id') + '"]').removeClass('animated-label');
+            });
+            $("#btnNext").hide();
+            $("#btnRegister").show();
+            $("#ubicacion").show();
+            $("#facultad").show();
+            $("#taller").show();
+            $("#ubicacion select").change(Facultad);
+            $("#ubicacion select").change(Talleres);
+            $("#txtOption").change(function() {
+                $("#ubicacion").hide();
+                $("#facultad").hide();
+                $("#taller").hide();
+                $("#btnRegister").hide();
+                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function() {
+                    $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
+                });
+            });
+            break;
+        case "option3":
+        case "option4":
+            $('#txtFacultad').prop('disabled', true);
+            $('#txtTaller').prop('disabled', true);
+            $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function() {
+                $('label[for="' + $(this).attr('id') + '"]').removeClass('animated-label');
+            });
+            $("#btnNext").hide();
+            $("#btnRegister").show();
+            $("#ubicacion").show();
+            $("#taller").show();
+            $("#ubicacion select").change(Facultad);
+            $("#ubicacion select").change(Talleres);
+            $("#txtOption").change(function() {
+                $("#ubicacion").hide();
+                $("#taller").hide();
+                $("#btnRegister").hide();
+                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function() {
+                    $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
+                });
+            });
+            break;
     }
 }
-
-//Opciones del 1 al 4.
-function Alumno(){
-    $('#txtFacultad').prop('disabled', true);
-    $('#txtTaller').prop('disabled', true);
-    $("#btnNext").hide();
-    $("#btnRegister").show();
-    $("#ubicacion").show();
-    $("#facultad").show();
-    $("#taller").show();
-    $("#ubicacion select").change(Facultad);
-    $("#ubicacion select").change(Talleres);
-    $("#txtOption").change(function() {
-        $("#ubicacion").hide();
-        $("#facultad").hide();
-        $("#taller").hide();
-        $("#btnRegister").hide();
-    });
-}
-function Docente(){
-    $('#txtFacultad').prop('disabled', true);
-    $('#txtTaller').prop('disabled', true);
-    $("#btnNext").hide();
-    $("#btnRegister").show();
-    $("#ubicacion").show();
-    $("#facultad").show();
-    $("#taller").show();
-    $("#ubicacion select").change(Facultad);
-    $("#ubicacion select").change(Talleres);
-    $("#txtOption").change(function() {
-        $("#ubicacion").hide();
-        $("#facultad").hide();
-        $("#taller").hide();
-        $("#btnRegister").hide();
-    });
-}
-function Exterior(){
-    $('#txtFacultad').prop('disabled', true);
-    $('#txtTaller').prop('disabled', true);
-    $("#btnNext").hide();
-    $("#btnRegister").show();
-    $("#ubicacion").show();
-    $("#taller").show();
-    $("#ubicacion select").change(Facultad);
-    $("#ubicacion select").change(Talleres);
-    $("#txtOption").change(function() {
-        $("#ubicacion").hide();
-        $("#taller").hide();
-        $("#btnRegister").hide();
-    });
-}
-
 
 //Facultad
 function Facultad() {
     var selectedUbicacion = $("#txtCampus").val();
-    console.log("Selected campus:", selectedUbicacion);
     const facultadesXUbicacion = {
         "Tijuana": ["Facultad de Artes", "Facultad de Ciencias Químicas e Ingeniería", "Facultad de Contaduría y Administración", "Facultad de Ciencias de la Salud, Valle de las Palmas", "Facultad de Deportes", "Facultad de Derecho", "Facultad de Economía y Relaciones Internacionales", "Facultad de Humanidades y Ciencias Sociales", "Facultad de Idiomas", "Facultad de la Ingeniería y Tecnología", "Facultad de Medicina y Psicología", "Facultad de Odontología", "Facultad de Turismo y Mercadotecnia", "Instituto de Investigaciones Históricas", "Facultad de Ciencias de la Ingeniería, Administrativas y Sociales"],
         "Mexicali": ["Facultad de Artes", "Facultad de Arquitectura y Diseño", "Instituto de Ciencias Agrícolas", "Facultad de Ciencias Sociales y Políticas", "Facultad de Ciencias Humanas", "Facultad de Ciencias Administrativas", "Facultad de Deportes", "Facultad de Derecho", "Facultad de Enfermería", "Facultad de Idiomas", "Facultad de Ingeniería", "Facultad de Ingeniería y Negocios Guadalupe Victoria", "Instituto de Investigaciones en Ciencias Veterinarias", "Instituto de Investigaciones Culturales (IIC Museo)", "Instituto de Investigaciones Sociales", "Instituto de Ingeniería", "Facultad de Medicina", "Facultad de Odontología", "Facultad de Pedagogía e Innovación Educativa"],
@@ -259,7 +200,6 @@ function Facultad() {
 
 function Talleres() {
     var selectedUbicacion = $("#txtCampus").val();
-    console.log("Selected campus:", selectedUbicacion);
     const talleresXUbicacion = {
         "Tijuana": ["Taller 1", "Taller 2", "Taller 3"],
         "Mexicali": ["Taller A", "Taller B", "Taller C"],
@@ -337,96 +277,3 @@ function init() {
 $(document).ready(function () {
     init();
 });
-
-
-
-
-
-
-
-// function displayPerson(person){
-//     let table = $("#personTable");
-//     let personHTML=`
-//     <tr class="">
-//         <td>${person.name}</td>
-//         <td>${person.lastName}</td>
-//         <td>${person.middleName}</td>
-//         <td>${person.email}</td>
-//         <td>${person.matricula}</td>
-//     </tr>
-//     `;
-
-//     table.append(personHTML);
-//     $('html, body').animate({
-//         scrollTop: $("#personTable").offset().top
-//     }, 1000);
-// }
-
-
-
-// function init() {
-//     $("#btnRegister").click(register);
-// }
-// window.onload = init;
-
-
-
-// function Facultad() {
-//     var selectedLocation = $("#ubicacion select").val();
-
-//     $("#facultad select").empty();
-    
-//     // Agregar las opciones de facultad según la ubicación seleccionada
-//     switch(selectedLocation) {
-//         case "Tijuana":
-//             $("#facultad select").append("<option value=''>Seleccionar Facultad</option>");
-//             $("#facultad select").append("<option value='Facultad1'>Facultad 1</option>");
-//             $("#facultad select").append("<option value='Facultad2'>Facultad 2</option>");
-//             $("#facultad select").append("<option value='Facultad3'>Facultad 3</option>");
-//             break;
-//         case "Mexicali":
-//             $("#facultad select").append("<option value=''>Seleccionar Facultad</option>");
-//             $("#facultad select").append("<option value='FacultadA'>Facultad A</option>");
-//             $("#facultad select").append("<option value='FacultadB'>Facultad B</option>");
-//             $("#facultad select").append("<option value='FacultadC'>Facultad C</option>");
-//             break;
-//         case "Ensenada":
-//             $("#facultad select").append("<option value=''>Seleccionar Facultad</option>");
-//             $("#facultad select").append("<option value='FacultadX'>Facultad X</option>");
-//             $("#facultad select").append("<option value='FacultadY'>Facultad Y</option>");
-//             $("#facultad select").append("<option value='FacultadZ'>Facultad Z</option>");
-//             break;
-//         default:
-//             break;
-//     }
-// }
-
-
-// function Talleres(){
-//     var selectedLocation = $("#facultad select").val();
-
-//     $("#taller select").empty();
-
-//     switch(selectedLocation) {
-//         case "Facultad1":
-//             $("#taller select").append("<option value=''>Seleccionar Taller</option>");
-//             $("#taller select").append("<option value='taller1'>Taller 1</option>");
-//             $("#taller select").append("<option value='taller2'>Taller 2</option>");
-//             $("#taller select").append("<option value='taller3'>Taller 3</option>");
-//             break;
-//         case "Facultad2":
-//             $("#taller select").append("<option value=''>Seleccionar Taller</option>");
-//             $("#taller select").append("<option value='tallerA'>Taller A</option>");
-//             $("#taller select").append("<option value='tallerB'>Taller B</option>");
-//             $("#taller select").append("<option value='tallerC'>Taller C</option>");
-//             break;
-//         case "Facultad3":
-//             $("#taller select").append("<option value=''>Seleccionar Taller</option>");
-//             $("#taller select").append("<option value='tallerX'>Taller X</option>");
-//             $("#taller select").append("<option value='tallerY'>Taller Y</option>");
-//             $("#taller select").append("<option value='tallerZ'>Taller Z</option>");
-//             break;
-//         default:
-//             break;
-//     }
-// }
