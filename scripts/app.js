@@ -14,12 +14,23 @@ class Person {
     }
 }
 
+
+
+function OrginalVal() {
+    let ubicacionOriginal = $("#ubicacion").html();
+    let facultadOriginal = $("#facultad").html();
+    let tallerOriginal = $("#taller").html();
+    $("#ubicacion").html(ubicacionOriginal);
+    $("#facultad").html(facultadOriginal);
+    $("#taller").html(tallerOriginal);
+}
+
 //Validacion de todos los campos.
 function isValid(person) {
     let validation = true;
     $("#notifications").removeClass("alert-error");
     $("#notifications").removeClass("alert-success");
-    
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (person.name === "" || person.lastName === "" || person.middleName === "" || person.email === "" || person.matricula === "" || person.noEmpleado === "" || person.ubicacion === "" || person.facultad === "" || person.taller === "") {
@@ -58,21 +69,33 @@ function isValid(person) {
 }
 
 //Validacion del boton siguiente.
-function validNext(newPerson, selectedOption){
-    if (isValid(newPerson)){
-        validRegister(newPerson,selectedOption);
-    }else{
+function validNext(newPerson, selectedOption) {
+    if (isValid(newPerson)) {
+        validRegister(newPerson, selectedOption);
+    } else {
         notifications("alert-error", "¡Campo requerido ó no valido!");
     }
 }
 
 //Validacion del boton registro.
-function validRegister(newPerson, selectedOption){
+function validRegister(newPerson, selectedOption) {
     changeForm(selectedOption);
     switch (selectedOption) {
         case "option1":
         case "option2":
-            $("#btnRegister").click(function(){
+            $("#btnRegister").click(function () {
+                checkExtra(newPerson, selectedOption);
+                console.log("Valor:", newPerson);
+                if (isValid(newPerson)) {
+                    notifications("alert-success", "Registro exitoso");
+                } else {
+                    notifications("alert-error", "¡Campo requerido ó no valido!");
+                }
+            });
+            break;
+        case "option3":
+        case "option4":
+            $("#btnRegister").click(function () {
                 checkExtra(newPerson, selectedOption);
                 console.log("Valor:", newPerson);
                 if (isValid(newPerson)) {
@@ -86,7 +109,7 @@ function validRegister(newPerson, selectedOption){
 }
 
 //Seguna parte del formulario registro.
-function checkExtra(newPerson, selectedOption){
+function checkExtra(newPerson, selectedOption) {
     if (selectedOption === "option1" || "option2") {
         newPerson.ubicacion = $("#txtCampus").val();
         newPerson.facultad = $("#txtFacultad").val();
@@ -101,7 +124,7 @@ function checkExtra(newPerson, selectedOption){
 function register() {
     let selectedOption = $("#txtOption").val();
     let newPerson = {};
-    
+
     switch (selectedOption) {
         case "option1":
             newPerson.matricula = $("input[name='matricula']").val();
@@ -122,13 +145,13 @@ function register() {
 
 
 //Cambios en el formulario registro (dependiendo el evento y/o opciones).
-function changeForm(selectedOption){
+function changeForm(selectedOption) {
     switch (selectedOption) {
         case "option1":
         case "option2":
             $('#txtFacultad').prop('disabled', true);
             $('#txtTaller').prop('disabled', true);
-            $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function() {
+            $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
                 $('label[for="' + $(this).attr('id') + '"]').removeClass('animated-label');
             });
             $("#btnNext").hide();
@@ -139,24 +162,26 @@ function changeForm(selectedOption){
             $("#btnEdit").show();
             $("#ubicacion select").change(Facultad);
             $("#ubicacion select").change(Talleres);
-            $("#btnEdit").click(function() {
+            $("#btnEdit").click(function () {
                 $("#ubicacion").hide();
                 $("#facultad").hide();
                 $("#taller").hide();
+                OrginalVal();
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
-                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function() {
+                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
                     $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 $("#btnNext").show();
             });
-            $("#txtOption").change(function() {
+            $("#txtOption").change(function () {
                 $("#ubicacion").hide();
                 $("#facultad").hide();
                 $("#taller").hide();
+                OrginalVal();
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
-                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function() {
+                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
                     $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 if ($(this).val() === "") {
@@ -170,32 +195,34 @@ function changeForm(selectedOption){
         case "option4":
             $('#txtFacultad').prop('disabled', true);
             $('#txtTaller').prop('disabled', true);
-            $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function() {
+            $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
                 $('label[for="' + $(this).attr('id') + '"]').removeClass('animated-label');
             });
             $("#btnNext").hide();
             $("#btnRegister").show();
             $("#ubicacion").show();
             $("#taller").show();
+            OrginalVal();
             $("#btnEdit").show();
             $("#ubicacion select").change(Facultad);
             $("#ubicacion select").change(Talleres);
-            $("#btnEdit").click(function() {
+            $("#btnEdit").click(function () {
                 $("#ubicacion").hide();
                 $("#taller").hide();
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
-                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function() {
+                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
                     $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 $("#btnNext").show();
             });
-            $("#txtOption").change(function() {
+            $("#txtOption").change(function () {
                 $("#ubicacion").hide();
                 $("#taller").hide();
                 $("#btnRegister").hide();
+                OrginalVal();
                 $("#btnEdit").hide();
-                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function() {
+                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
                     $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 if ($(this).val() === "") {
@@ -216,7 +243,7 @@ function Facultad() {
         "Mexicali": ["Facultad de Artes", "Facultad de Arquitectura y Diseño", "Instituto de Ciencias Agrícolas", "Facultad de Ciencias Sociales y Políticas", "Facultad de Ciencias Humanas", "Facultad de Ciencias Administrativas", "Facultad de Deportes", "Facultad de Derecho", "Facultad de Enfermería", "Facultad de Idiomas", "Facultad de Ingeniería", "Facultad de Ingeniería y Negocios Guadalupe Victoria", "Instituto de Investigaciones en Ciencias Veterinarias", "Instituto de Investigaciones Culturales (IIC Museo)", "Instituto de Investigaciones Sociales", "Instituto de Ingeniería", "Facultad de Medicina", "Facultad de Odontología", "Facultad de Pedagogía e Innovación Educativa"],
         "Ensenada": ["Facultad de Artes", "Escuela de Ciencias de la Salud", "Facultad de Ciencias", "Facultad de Ciencias Administrativas y Sociales", "Facultad de Ciencias Marinas", "Facultad de Deportes", "Facultad de Enología y Gastronomía", "Facultad de Idiomas", "Facultad de Ingeniería y Negocios - San Quintín", "Facultad de Ingeniería, Arquitectura y Diseño", "Instituto de Investigación y Desarrollo Educativo", "Instituto de Investigaciones Oceanológicas"]
     };
-    
+
     var selectedUbicacion = $("#txtCampus").val();
     const selectFacultad = $("#txtFacultad");
 
@@ -242,7 +269,7 @@ function Talleres() {
         "Mexicali": ["Taller A", "Taller B", "Taller C"],
         "Ensenada": ["Taller X", "Taller Y", "Taller Z"]
     };
-    
+
     var selectedUbicacion = $("#txtCampus").val();
     const selectTaller = $("#txtTaller");
 
@@ -280,11 +307,11 @@ function init() {
     $("#btnNext").hide();
     $("#btnRegister").hide();
     $("#btnEdit").hide();
-    
+
     // Hook eventos
     $("#txtOption").change(function () {
         var selectedOption = $(this).val();
-        
+
         $('#txtNombre').val('');
         $('#txtApellidoP').val('');
         $('#txtApellidoM').val('');
