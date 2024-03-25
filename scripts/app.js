@@ -14,7 +14,7 @@ class Person {
     }
 }
 
-
+//Validacion de todos los campos.
 function isValid(person) {
     let validation = true;
     $("#notifications").removeClass("alert-error");
@@ -22,17 +22,14 @@ function isValid(person) {
     
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // Verificar si alguno de los campos requeridos está vacío
     if (person.name === "" || person.lastName === "" || person.middleName === "" || person.email === "" || person.matricula === "" || person.noEmpleado === "" || person.ubicacion === "" || person.facultad === "" || person.taller === "") {
         validation = false;
         $(".input-control input").css("border-color", "initial");
-        // Marcar los campos de texto vacíos con borde rojo
         $(".input-control input").each(function () {
             if ($(this).val() === "") {
                 $(this).css("border-color", "red");
             }
         });
-        // Marcar los select de ubicacion, facultad y taller en rojo si no se ha seleccionado ninguna opción
         if (person.ubicacion === "") {
             $("#txtCampus").css("border-color", "red");
         }
@@ -44,13 +41,11 @@ function isValid(person) {
         }
     }
 
-    // Verificar si el campo del email es válido usando la expresión regular
     if (person.email !== "" && !emailRegex.test(person.email)) {
         validation = false;
         $(".input-control input#txtEmail").css("border-color", "red");
     }
 
-    // Restablecer el borde rojo después de 1.5 segundos si es necesario
     if (!validation) {
         setTimeout(function () {
             $(".input-control input").css("border-color", "initial");
@@ -62,6 +57,7 @@ function isValid(person) {
     return validation;
 }
 
+//Validacion del boton siguiente.
 function validNext(newPerson, selectedOption){
     if (isValid(newPerson)){
         validRegister(newPerson,selectedOption);
@@ -70,6 +66,7 @@ function validNext(newPerson, selectedOption){
     }
 }
 
+//Validacion del boton registro.
 function validRegister(newPerson, selectedOption){
     changeForm(selectedOption);
     switch (selectedOption) {
@@ -88,6 +85,7 @@ function validRegister(newPerson, selectedOption){
     }
 }
 
+//Seguna parte del formulario registro.
 function checkExtra(newPerson, selectedOption){
     if (selectedOption === "option1" || "option2") {
         newPerson.ubicacion = $("#txtCampus").val();
@@ -99,6 +97,7 @@ function checkExtra(newPerson, selectedOption){
     }
 }
 
+//Registro inicial.
 function register() {
     let selectedOption = $("#txtOption").val();
     let newPerson = {};
@@ -121,6 +120,8 @@ function register() {
     validNext(newPerson, selectedOption);
 }
 
+
+//Cambios en el formulario registro (dependiendo el evento y/o opciones).
 function changeForm(selectedOption){
     switch (selectedOption) {
         case "option1":
@@ -135,16 +136,34 @@ function changeForm(selectedOption){
             $("#ubicacion").show();
             $("#facultad").show();
             $("#taller").show();
+            $("#btnEdit").show();
             $("#ubicacion select").change(Facultad);
             $("#ubicacion select").change(Talleres);
+            $("#btnEdit").click(function() {
+                $("#ubicacion").hide();
+                $("#facultad").hide();
+                $("#taller").hide();
+                $("#btnRegister").hide();
+                $("#btnEdit").hide();
+                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function() {
+                    $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
+                });
+                $("#btnNext").show();
+            });
             $("#txtOption").change(function() {
                 $("#ubicacion").hide();
                 $("#facultad").hide();
                 $("#taller").hide();
                 $("#btnRegister").hide();
+                $("#btnEdit").hide();
                 $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function() {
                     $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
+                if ($(this).val() === "") {
+                    $("#btnNext").hide();
+                } else {
+                    $("#btnNext").show();
+                }
             });
             break;
         case "option3":
@@ -158,15 +177,32 @@ function changeForm(selectedOption){
             $("#btnRegister").show();
             $("#ubicacion").show();
             $("#taller").show();
+            $("#btnEdit").show();
             $("#ubicacion select").change(Facultad);
             $("#ubicacion select").change(Talleres);
+            $("#btnEdit").click(function() {
+                $("#ubicacion").hide();
+                $("#taller").hide();
+                $("#btnRegister").hide();
+                $("#btnEdit").hide();
+                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function() {
+                    $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
+                });
+                $("#btnNext").show();
+            });
             $("#txtOption").change(function() {
                 $("#ubicacion").hide();
                 $("#taller").hide();
                 $("#btnRegister").hide();
+                $("#btnEdit").hide();
                 $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function() {
                     $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
+                if ($(this).val() === "") {
+                    $("#btnNext").hide();
+                } else {
+                    $("#btnNext").show();
+                }
             });
             break;
     }
@@ -198,6 +234,7 @@ function Facultad() {
     }
 }
 
+//Talleres
 function Talleres() {
     var selectedUbicacion = $("#txtCampus").val();
     const talleresXUbicacion = {
@@ -223,6 +260,7 @@ function Talleres() {
     }
 }
 
+//Animacion de las notificaciones
 function notifications(type, msg) {
     let div = $("#notifications");
     div.slideDown(1000);
@@ -231,6 +269,7 @@ function notifications(type, msg) {
     div.slideUp(3000);
 }
 
+//main
 function init() {
     $("#option1").hide();
     $("#option2").hide();
@@ -240,6 +279,7 @@ function init() {
     $("#taller").hide();
     $("#btnNext").hide();
     $("#btnRegister").hide();
+    $("#btnEdit").hide();
     
     // Hook eventos
     $("#txtOption").change(function () {
