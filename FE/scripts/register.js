@@ -1,13 +1,13 @@
 var people = [];
 
 class Person {
-    constructor(name, lastName, middleName, email, matricula, noEmpleado, ubicacion, facultad, taller) {
+    constructor(idUabc, name, lastName, middleName, email, ubicacion, facultad, taller) {
         this.name = name;
         this.lastName = lastName;
         this.middleName = middleName;
         this.email = email;
-        this.matricula = matricula;
-        this.noEmpleado = noEmpleado;
+        this.matricula = idUabc;
+        this.noEmpleado = idUabc;
         this.ubicacion = ubicacion;
         this.facultad = facultad;
         this.taller = taller;
@@ -33,7 +33,7 @@ function isValid(person, selectedOption) {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (person.name === "" || person.lastName === "" || person.middleName === "" || person.email === "" || person.matricula === "" || person.noEmpleado === "" || person.ubicacion === "" || person.taller === "") {
+    if (person.name === "" || person.lastName === "" || person.middleName === "" || person.email === "" || person.idUabc === "" || person.ubicacion === "" || person.taller === "") {
         validation = false;
         $(".input-control input").css("border-color", "initial");
         $(".input-control input").each(function () {
@@ -154,10 +154,10 @@ function register() {
 
     switch (selectedOption) {
         case "option1":
-            newPerson.matricula = $("input[name='matricula']").val();
+            newPerson.idUabc = $("input[name='matricula']").val();
             break;
         case "option2":
-            newPerson.noEmpleado = $("input[name='noEmpleado']").val();
+            newPerson.idUabc = $("input[name='noEmpleado']").val();
             break;
         case "option3":
         case "option4":
@@ -330,7 +330,7 @@ function insertToDatabase(newPerson) {
         url: `${apiURL}register/save_register.php`,
         method: 'POST',
         data: { 
-            id: newPerson.matricula,
+            id: newPerson.idUabc,
             nombre: newPerson.nombre,
             apellidoP: newPerson.apellidoP,
             apellidoM: newPerson.apellidoM,
@@ -358,13 +358,12 @@ function insertToDatabase(newPerson) {
 }
 
 function searchToDatabase(){
-    let matricula = $('#txtId').val();
-    console.log(matricula);
+    let idUabc = $('#txtId').val();
 
     $.ajax({
         type: "POST",
         url: `${apiURL}register/get_register.php`,
-        data: { id: matricula },
+        data: { id: idUabc },
         dataType: "json",
         success: function(response) {
             if (response.success) {
