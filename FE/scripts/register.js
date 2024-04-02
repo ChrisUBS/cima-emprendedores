@@ -16,7 +16,7 @@ class Person {
 
 
 
-function OrginalVal() {
+function OriginalVal() {
     let ubicacionOriginal = $("#ubicacion").html();
     let facultadOriginal = $("#facultad").html();
     let tallerOriginal = $("#taller").html();
@@ -26,14 +26,14 @@ function OrginalVal() {
 }
 
 //Validacion de todos los campos.
-function isValid(person) {
+function isValid(person, selectedOption) {
     let validation = true;
     $("#notifications").removeClass("alert-error");
     $("#notifications").removeClass("alert-success");
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (person.name === "" || person.lastName === "" || person.middleName === "" || person.email === "" || person.matricula === "" || person.noEmpleado === "" || person.ubicacion === "" || person.facultad === "" || person.taller === "") {
+    if (person.name === "" || person.lastName === "" || person.middleName === "" || person.email === "" || person.matricula === "" || person.noEmpleado === "" || person.ubicacion === "" || person.taller === "") {
         validation = false;
         $(".input-control input").css("border-color", "initial");
         $(".input-control input").each(function () {
@@ -44,8 +44,10 @@ function isValid(person) {
         if (person.ubicacion === "") {
             $("#txtCampus").css("border-color", "red");
         }
-        if (person.facultad === "") {
-            $("#txtFacultad").css("border-color", "red");
+        if (selectedOption === "option1" || selectedOption === "option2") {
+            if (person.facultad === "") {
+                $("#txtFacultad").css("border-color", "red");
+            }
         }
         if (person.taller === "") {
             $("#txtTaller").css("border-color", "red");
@@ -68,9 +70,10 @@ function isValid(person) {
     return validation;
 }
 
+
 //Validacion del boton siguiente.
 function validNext(newPerson, selectedOption) {
-    if (isValid(newPerson)) {
+    if (isValid(newPerson, selectedOption)) {
         validRegister(newPerson, selectedOption);
     } else {
         notifications("alert-error", "¡Campo requerido ó no valido!");
@@ -86,8 +89,8 @@ function validRegister(newPerson, selectedOption) {
             $("#btnRegister").click(function () {
                 checkExtra(newPerson, selectedOption);
                 console.log("Valor:", newPerson);
-                if (isValid(newPerson)) {
-                    notifications("alert-success", "Registro exitoso");
+                if (isValid(newPerson, selectedOption)) {
+                    insertToDatabase(newPerson);
                 } else {
                     notifications("alert-error", "¡Campo requerido ó no valido!");
                 }
@@ -99,7 +102,7 @@ function validRegister(newPerson, selectedOption) {
                 checkExtra(newPerson, selectedOption);
                 console.log("Valor:", newPerson);
                 if (isValid(newPerson)) {
-                    notifications("alert-success", "Registro exitoso");
+                    
                 } else {
                     notifications("alert-error", "¡Campo requerido ó no valido!");
                 }
@@ -166,7 +169,7 @@ function changeForm(selectedOption) {
                 $("#ubicacion").hide();
                 $("#facultad").hide();
                 $("#taller").hide();
-                OrginalVal();
+                OriginalVal();
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
                 $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
@@ -178,7 +181,7 @@ function changeForm(selectedOption) {
                 $("#ubicacion").hide();
                 $("#facultad").hide();
                 $("#taller").hide();
-                OrginalVal();
+                OriginalVal();
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
                 $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
@@ -202,13 +205,13 @@ function changeForm(selectedOption) {
             $("#btnRegister").show();
             $("#ubicacion").show();
             $("#taller").show();
-            OrginalVal();
             $("#btnEdit").show();
             $("#ubicacion select").change(Facultad);
             $("#ubicacion select").change(Talleres);
             $("#btnEdit").click(function () {
                 $("#ubicacion").hide();
                 $("#taller").hide();
+                OriginalVal();
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
                 $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
@@ -219,8 +222,8 @@ function changeForm(selectedOption) {
             $("#txtOption").change(function () {
                 $("#ubicacion").hide();
                 $("#taller").hide();
+                OriginalVal();
                 $("#btnRegister").hide();
-                OrginalVal();
                 $("#btnEdit").hide();
                 $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
                     $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
@@ -235,7 +238,7 @@ function changeForm(selectedOption) {
     }
 }
 
-//Facultad
+//Facultades
 function Facultad() {
     var selectedUbicacion = $("#txtCampus").val();
     const facultadesXUbicacion = {
@@ -294,6 +297,38 @@ function notifications(type, msg) {
     div.addClass(type);
     div.text(msg);
     div.slideUp(3000);
+}
+
+
+//Provisional | base de dato y envio email.
+function insertToDatabase(newPerson) {
+    $.ajax({
+        url: 'conection.php',
+        method: 'POST',
+        data: { 
+            nombre: newPerson.nombre,
+            apellidoP: newPerson.apellidoP,
+            apellidoM: newPerson.apellidoM,
+            email: newPerson.email,
+        },
+        dataType: 'json', 
+        success: function(response) {
+            if (response.success) {
+                notifications("alert-success", "Registro Exitoso.");
+                $("#btnRegister").hide();
+                $("#btnEdit").hide();
+                setTimeout(function () {
+                    location.reload();
+                }, 4500);
+            } else {
+                notifications("alert-error", "¡Error!. Por favor, inténtalo de nuevo.");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            notifications("alert-error", "¡Error!. Por favor, inténtalo de nuevo.");
+        }
+    });
 }
 
 //main
