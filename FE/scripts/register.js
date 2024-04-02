@@ -85,7 +85,19 @@ function validRegister(newPerson, selectedOption) {
     changeForm(selectedOption);
     switch (selectedOption) {
         case "option1":
+            newPerson={ ...newPerson, option:"Alumno"}
+            $("#btnRegister").click(function () {
+                checkExtra(newPerson, selectedOption);
+                console.log("Valor:", newPerson);
+                if (isValid(newPerson, selectedOption)) {
+                    insertToDatabase(newPerson);
+                } else {
+                    notifications("alert-error", "¡Campo requerido ó no valido!");
+                }
+            });
+            break;
         case "option2":
+            newPerson={ ...newPerson, option:"Docente"}
             $("#btnRegister").click(function () {
                 checkExtra(newPerson, selectedOption);
                 console.log("Valor:", newPerson);
@@ -97,7 +109,19 @@ function validRegister(newPerson, selectedOption) {
             });
             break;
         case "option3":
+            newPerson={ ...newPerson, option:"Egresado"}
+            $("#btnRegister").click(function () {
+                checkExtra(newPerson, selectedOption);
+                console.log("Valor:", newPerson);
+                if (isValid(newPerson)) {
+                    
+                } else {
+                    notifications("alert-error", "¡Campo requerido ó no valido!");
+                }
+            });
+            break;
         case "option4":
+            newPerson={ ...newPerson, option:"Exterior"}
             $("#btnRegister").click(function () {
                 checkExtra(newPerson, selectedOption);
                 console.log("Valor:", newPerson);
@@ -117,7 +141,7 @@ function checkExtra(newPerson, selectedOption) {
         newPerson.ubicacion = $("#txtCampus").val();
         newPerson.facultad = $("#txtFacultad").val();
         newPerson.taller = $("#txtTaller").val();
-    } else if (selectedOption === "option3" || "option3") {
+    } else if (selectedOption === "option3" || "option4") {
         newPerson.ubicacion = $("#txtCampus").val();
         newPerson.taller = $("#txtTaller").val();
     }
@@ -154,7 +178,7 @@ function changeForm(selectedOption) {
         case "option2":
             $('#txtFacultad').prop('disabled', true);
             $('#txtTaller').prop('disabled', true);
-            $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
+            $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
                 $('label[for="' + $(this).attr('id') + '"]').removeClass('animated-label');
             });
             $("#btnNext").hide();
@@ -172,7 +196,7 @@ function changeForm(selectedOption) {
                 OriginalVal();
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
-                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
+                $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
                     $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 $("#btnNext").show();
@@ -184,7 +208,7 @@ function changeForm(selectedOption) {
                 OriginalVal();
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
-                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
+                $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
                     $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 if ($(this).val() === "") {
@@ -198,7 +222,7 @@ function changeForm(selectedOption) {
         case "option4":
             $('#txtFacultad').prop('disabled', true);
             $('#txtTaller').prop('disabled', true);
-            $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
+            $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
                 $('label[for="' + $(this).attr('id') + '"]').removeClass('animated-label');
             });
             $("#btnNext").hide();
@@ -214,7 +238,7 @@ function changeForm(selectedOption) {
                 OriginalVal();
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
-                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
+                $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
                     $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 $("#btnNext").show();
@@ -225,7 +249,7 @@ function changeForm(selectedOption) {
                 OriginalVal();
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
-                $('#txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
+                $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
                     $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 if ($(this).val() === "") {
@@ -299,17 +323,19 @@ function notifications(type, msg) {
     div.slideUp(3000);
 }
 
-
+let apiURL="http://localhost/cimarronesEmprendedores/BE/"
 //Provisional | base de dato y envio email.
 function insertToDatabase(newPerson) {
     $.ajax({
-        url: 'conection.php',
+        url: `${apiURL}register/save_register.php`,
         method: 'POST',
         data: { 
+            id: newPerson.matricula,
             nombre: newPerson.nombre,
             apellidoP: newPerson.apellidoP,
             apellidoM: newPerson.apellidoM,
             email: newPerson.email,
+            option: newPerson.option,  
         },
         dataType: 'json', 
         success: function(response) {
@@ -330,6 +356,32 @@ function insertToDatabase(newPerson) {
         }
     });
 }
+
+function searchToDatabase(){
+    let matricula = $('#txtId').val();
+    console.log(matricula);
+
+    $.ajax({
+        type: "POST",
+        url: `${apiURL}register/get_register.php`,
+        data: { id: matricula },
+        dataType: "json",
+        success: function(response) {
+            if (response.success) {
+                $('#txtNombre').val(response.nombre);
+                $('#txtApellidoP').val(response.apellidoP);
+                $('#txtApellidoM').val(response.apellidoM);
+                $('#txtEmail').val(response.email);
+            } else {
+                notifications("alert-error", response.error);
+            }
+        },
+        error: function(xhr, status, error) {
+            notifications("alert-error", "Error en la solicitud al servidor.");
+        }
+    });
+}
+
 
 //main
 function init() {
@@ -355,14 +407,17 @@ function init() {
         $("#inputGeneral").show();
 
         if (selectedOption === "option1") {
+            $('.search').click(searchToDatabase)
             $("#btnNext").show();
             $("#option1").show();
             $("#option2").hide();
         } else if (selectedOption === "option2") {
+            $('.search').click(searchToDatabase)
             $("#btnNext").show();
             $("#option1").hide();
             $("#option2").show();
         } else if (selectedOption === "option3" || selectedOption === "option4") {
+            $('.search').click(searchToDatabase)
             $("#btnNext").show();
             $("#option1").hide();
             $("#option2").hide();
