@@ -430,6 +430,8 @@ function init() {
     $("#btnNext").click(register);
 }
 
+
+
 $(document).ready(function () {
     init();
 });

@@ -18,7 +18,8 @@
         <nav class="navbar navbar-light bg-light">
             <div class="center-content">
                 <a href="https://www.uabc.mx/">
-                    <img src="assets/escudo-actualizado-2022.png" width="60" height="70" class="d-inline-block align-top" alt="">
+                    <img src="assets/escudo-actualizado-2022.png" width="60" height="70"
+                        class="d-inline-block align-top" alt="">
                 </a>
             </div>
             <div class="center-content">
@@ -60,7 +61,8 @@
                         <label>Matricula</label>
                     </div>
                     <div>
-                        <button type="button" class="btn-reg btn-small search" id=""><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button id="btnSearch" type="button" class="btn-reg btn-small search" id=""><i
+                                class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>
                 <!-- Docentes -->
@@ -70,7 +72,8 @@
                         <label>No. De Empleado</label>
                     </div>
                     <div>
-                        <button type="button" class="btn-reg btn-small search" id=""><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button id="btnSearch" type="button" class="btn-reg btn-small search" id=""><i
+                                class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>
                 <!-- Inputs -->
@@ -97,29 +100,40 @@
                 </div>
                 <!-- Optiones Extras -->
                 <!-- Ubicacion Y Facultad -->
-                <div class="input-columns">
-                    <div id="ubicacion">
-                        <h1 class="form-normal">Campus</h1>
-                        <div class="input-control">
-                            <select name="txtCampus" id="txtCampus">
-                                <option value=""></option>
-                                <option value="Tijuana">Ensenada</option>
-                                <option value="Mexicali">Mexicali</option>
-                                <option value="Ensenada">Tijuana</option>
-                            </select>
+                <div  id="ubicacion">
+                    <div class="input-notColumns">
+                        <div>
+                            <h1 class="form-normal">Campus</h1>
                         </div>
                     </div>
-                    <div id="facultad">
-                        <h1 class="form-normal">Facultad</h1>
-                        <div class="input-control">
-                            <select name="txtFacultad" id="txtFacultad">
-                            </select>
+                    <div class="input-control">
+                        <select name="txtCampus" id="txtCampus">
+                            <option value=""></option>
+                            <option value="Tijuana">Ensenada</option>
+                            <option value="Mexicali">Mexicali</option>
+                            <option value="Ensenada">Tijuana</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Facultad -->
+                <div id="facultad">
+                    <div class="input-notColumns">
+                        <div>
+                            <h1 class="form-normal">Facultad</h1>
                         </div>
+                    </div>
+                    <div class="input-control">
+                        <select name="txtFacultad" id="txtFacultad">
+                        </select>
                     </div>
                 </div>
                 <!-- Taller -->
                 <div id="taller">
-                    <h1 class="form-normal">Taller</h1>
+                    <div class="input-notColumns">
+                        <div>
+                            <h1 class="form-normal">Taller</h1>
+                        </div>
+                    </div>
                     <div class="input-control">
                         <select name="txtTaller" id="txtTaller">
                         </select>
@@ -146,6 +160,7 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
     <script src="scripts/register.js"></script>
+    <!-- <script src="scripts/prueba.js"></script> -->
 </body>
 
 </html>
