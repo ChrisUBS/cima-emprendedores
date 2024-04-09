@@ -63,8 +63,8 @@ img {
 }
 
 .form {
-    width: 90%;
-    max-width: 600px;
+    width: 97%;
+    max-width: 2000px;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
@@ -84,7 +84,8 @@ img {
 
 .form-middle {
     font-size: 24px;
-}
+    padding-bottom: 5px;
+}           
 
 form .username {
     position: relative;
@@ -208,3 +209,48 @@ form .username {
     font-size: 0.8rem;
     text-align: center;
 }
+
+
+
+/* Admin table */
+
+th {
+    text-align: center;
+    padding: 10px;
+    padding-left: 45px;
+    
+    padding-right: 75px; 
+    
+    
+}
+
+
+.input-group {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente el contenido */
+}
+
+/* barra de busqueda */
+.input-control {
+    padding-top: 2px ;
+    margin-bottom:20px;
+}
+
+.input-control label {
+    display: block;
+    font-weight: 700;
+    
+    
+}
+
+.input-control input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    
+}
+
+
+
