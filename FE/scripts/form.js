@@ -6,8 +6,7 @@ class Person {
         this.lastName = lastName;
         this.middleName = middleName;
         this.email = email;
-        this.matricula = idUabc;
-        this.noEmpleado = idUabc;
+        this.idUabc = idUabc;
         this.ubicacion = ubicacion;
         this.facultad = facultad;
         this.taller = taller;
@@ -154,10 +153,10 @@ function register() {
 
     switch (selectedOption) {
         case "option1":
-            newPerson.idUabc = $("input[name='matricula']").val();
+            newPerson.idUabc = $("input[name='idUabc']").val();
             break;
         case "option2":
-            newPerson.idUabc = $("input[name='noEmpleado']").val();
+            newPerson.idUabc = $("input[name='idUabc']").val();
             break;
         case "option3":
         case "option4":
@@ -384,8 +383,7 @@ function searchToDatabase(){
 
 //main
 function init() {
-    $("#option1").hide();
-    $("#option2").hide();
+    $("#optionId").hide();
     $("#inputGeneral").hide();
     $("#ubicacion").hide();
     $("#facultad").hide();
@@ -407,23 +405,20 @@ function init() {
 
         if (selectedOption === "option1") {
             $('.search').click(searchToDatabase)
+            $('#txtId').siblings('label').text("Matricula");
+            $("#optionId").show();
             $("#btnNext").show();
-            $("#option1").show();
-            $("#option2").hide();
         } else if (selectedOption === "option2") {
             $('.search').click(searchToDatabase)
+            $('#txtId').siblings('label').text("No. Empleado");
+            $('#txtId').show();
             $("#btnNext").show();
-            $("#option1").hide();
-            $("#option2").show();
         } else if (selectedOption === "option3" || selectedOption === "option4") {
-            $('.search').click(searchToDatabase)
             $("#btnNext").show();
-            $("#option1").hide();
-            $("#option2").hide();
+            $("#optionId").hide();
         } else {
             $("#btnNext").hide();
-            $("#option1").hide();
-            $("#option2").hide();
+            $("#optionId").hide();
             $("#inputGeneral").hide();
         }
     });

@@ -43,7 +43,7 @@ function login() {
                 localStorage.setItem('username', response.userName);
                 notifications('alert-success','Inicio de sesión exitoso');
                 setTimeout(function () {
-                    window.location.href = "admin.html";
+                    window.location.href = "adminHome.html";
                 }, 4000);
             } else {
                 notifications('alert-error', response.error);
