@@ -1,6 +1,11 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost:3000"); // Reemplaza esto con la URL de tu frontend
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+// Permitir solicitudes desde cualquier origen
+header("Access-Control-Allow-Origin: *");
+
+// Permitir métodos HTTP GET, POST, y OPTIONS
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+
+// Permitir los encabezados Content-Type y Authorization en las solicitudes CORS
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header('Content-Type: application/json');
 include("../conection.php");

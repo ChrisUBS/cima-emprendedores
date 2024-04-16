@@ -322,7 +322,7 @@ function notifications(type, msg) {
     div.slideUp(3000);
 }
 
-let apiURL="http://localhost:3000/cimarrones-emprendedores/BE/"
+let apiURL="http://localhost/cimarrones-emprendedores/BE/"
 //Provisional | base de dato y envio email.
 function insertToDatabase(newPerson) {
     $.ajax({
@@ -339,6 +339,7 @@ function insertToDatabase(newPerson) {
         dataType: 'json', 
         success: function(response) {
             if (response.success) {
+                console.log(response);
                 notifications("alert-success", "Registro Exitoso.");
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
@@ -375,6 +376,7 @@ function searchToDatabase(){
             }
         },
         error: function(xhr, status, error) {
+            console.error(error);
             notifications("alert-error", "Error en la solicitud al servidor.");
         }
     });

@@ -1,4 +1,4 @@
-let logoutURL = "http://localhost:3000/cimarrones-emprendedores/BE/";
+let logoutURL = "http://localhost/cimarrones-emprendedores/BE/";
 
 function logout() {
     $.ajax({
