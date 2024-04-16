@@ -23,32 +23,31 @@ function validateForm() {
 
 // Función para realizar el inicio de sesión
 let apiURL="http://localhost/cimarronesEmprendedores/BE/"
-function login() {
-    if (!validateForm()) {
-        return;
-    }
 
-    let username = $("#username").val().trim();
-    let password = $("#password").val().trim();
+function login() {
+    var username = $("#username").val();
+    var password = $("#password").val();
 
     $.ajax({
         type: "POST",
         url: `${apiURL}users/login.php`,
-        data: {username: username, password: password},
+        data: {
+            username: username,
+            password: password
+        },
+        dataType: "json",
         success: function(response) {
-            if (response === 'success') {
-                // window.location.href = "dashboard.php";
-                notifications('alert-success','Listo'); //URL
+            if(response.success) {
+                notifications('alert-success','Inicio de sesión exitoso');
                 setTimeout(function () {
-                    $('#login').hide();
-                    $('#admin').show();
-                }, 4500);
+                    window.location.href = "admin.html";
+                }, 4000);
             } else {
                 notifications('alert-error', 'Nombre de usuario o contraseña incorrectos.');
             }
         },
-        error: function() {
-            notifications('alert-error', 'Error de conexión.');
+        error: function(xhr, status, error) {
+            console.error(error);
         }
     });
 }

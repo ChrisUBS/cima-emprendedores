@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2024 at 04:36 AM
+-- Generation Time: Apr 16, 2024 at 02:37 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,6 +35,13 @@ CREATE TABLE `admin` (
   `password` varchar(100) NOT NULL,
   `level` char(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`iduser`, `username`, `name`, `lastname`, `password`, `level`) VALUES
+(1, 'root', 'Alejandro', 'Barragan', '$2y$10$ut/eTOZfSZGEMBbCSq86VOZvWD56AymnN3gVcNPvA8TyRsoxOkwba', '1');
 
 -- --------------------------------------------------------
 
@@ -118,6 +125,24 @@ CREATE TABLE `registro` (
   `assist` varchar(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `registro`
+--
+
+INSERT INTO `registro` (`idregistro`, `iduabc`, `name`, `lastname`, `middlename`, `type`, `idtaller`, `idfacultad`, `assist`) VALUES
+(1, 1, '', '', '', '', '', '', '0'),
+(2, 1, '', '', '', '', '', '', '0'),
+(3, 1, '', '', '', '', '', '', '0'),
+(4, 1272547, '', '', '', '', '', '', '0'),
+(5, 1, '', '', '', '', '', '', '0'),
+(6, 1, '', '', '', '', '', '', '0'),
+(7, 1, '', '', '', '', '', '', '0'),
+(8, 1, '', '', '', '', '', '', '0'),
+(9, 1, '', '', '', '', '', '', '0'),
+(10, 1, '', '', '', '', '', '', '0'),
+(11, 1, '', '', '', '', '', '', '0'),
+(12, 1, '', '', '', '', '', '', '0');
+
 -- --------------------------------------------------------
 
 --
@@ -152,6 +177,14 @@ CREATE TABLE `usuarios` (
   `email` varchar(30) NOT NULL,
   `type` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `usuarios`
+--
+
+INSERT INTO `usuarios` (`iduabc`, `idfacultad`, `name`, `lastname`, `middlename`, `email`, `type`) VALUES
+('1272547', 0, 'Alejandro', 'Barragan', 'Flores', 'johan.barragan@uabc.edu.mx', 'Alumno'),
+('1', 0, 'Alex', 'Hernandez', 'Flores', 'abc123@gmail.com', 'Alumno');
 
 --
 -- Indexes for dumped tables
@@ -189,7 +222,7 @@ ALTER TABLE `talleres`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `iduser` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `iduser` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `facultades`
@@ -201,7 +234,7 @@ ALTER TABLE `facultades`
 -- AUTO_INCREMENT for table `registro`
 --
 ALTER TABLE `registro`
-  MODIFY `idregistro` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `idregistro` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `talleres`
