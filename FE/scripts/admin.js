@@ -6,7 +6,7 @@ function notifications(type, msg) {
     div.slideUp(3000);
 }
 
-let apiURL = "http://localhost/cimarronesEmprendedores/BE/";
+let apiURL = "http://localhost:3000/cimarrones-emprendedores/BE/";
 function searchToDatabase() {
     $.ajax({
         type: "GET", // Cambiar de POST a GET

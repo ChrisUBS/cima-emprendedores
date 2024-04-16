@@ -322,7 +322,7 @@ function notifications(type, msg) {
     div.slideUp(3000);
 }
 
-let apiURL="http://localhost/cimarronesEmprendedores/BE/"
+let apiURL="http://localhost:3000/cimarrones-emprendedores/BE/"
 //Provisional | base de dato y envio email.
 function insertToDatabase(newPerson) {
     $.ajax({

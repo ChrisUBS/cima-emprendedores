@@ -1,16 +1,19 @@
 <?php
+header("Access-Control-Allow-Origin: http://localhost:3000"); // Reemplaza esto con la URL de tu frontend
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header('Content-Type: application/json');
 include("../conection.php");
 
 // Verificar si se reciben datos de inicio de sesión
-if(isset($_POST['username']) && isset($_POST['password'])) {
+if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
     $query = "SELECT iduser, username, password FROM admin WHERE username = '$username'";
     $result = mysqli_query($conn, $query);
 
-    if($result && mysqli_num_rows($result) == 1) {
+    if ($result && mysqli_num_rows($result) == 1) {
         $row = mysqli_fetch_assoc($result);
         $stored_hashed_password = $row['password'];
 
@@ -33,4 +36,3 @@ function generateToken()
 {
     return bin2hex(random_bytes(32));
 }
-?>
