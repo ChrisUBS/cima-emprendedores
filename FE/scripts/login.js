@@ -22,7 +22,7 @@ function validateForm() {
 }
 
 // Función para realizar el inicio de sesión
-let apiURL="http://localhost/cimarronesEmprendedores/BE/"
+let apiURL="http://localhost/cimarrones-emprendedores/BE/"
 
 function login() {
     var username = $("#username").val();

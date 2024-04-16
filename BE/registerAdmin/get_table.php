@@ -1,17 +1,27 @@
 <?php
+// Permitir solicitudes desde cualquier origen
+header("Access-Control-Allow-Origin: *");
+
+// Permitir métodos HTTP GET, POST, y OPTIONS
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+// Permitir los encabezados Content-Type y Authorization en las solicitudes CORS
+header('Content-Type: application/json');
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 include("../conection.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
-    $id = $_GET["id"];
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    //$id = $_GET["id"];
+
+    // Verificar la conexión a la base de datos
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
     
-    $query = "SELECT u.iduabc, u.type, t.nameworkshop as taller, r.idfacultad, r.assist, t.date as fecha_registro
-            FROM usuarios u
-            INNER JOIN registro r ON u.iduabc = r.iduabc
-            INNER JOIN talleres t ON r.idtaller = t.idworkshop
-            WHERE u.iduabc = ?";
+    $query = "SELECT iduabc, lastname FROM usuarios";
 
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $id);
+    // Verificar el tipo de dato en bind_param
+    //$stmt->bind_param("i", $id);
     $stmt->execute();
     
     $result = $stmt->get_result();
@@ -21,10 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
         while ($row = $result->fetch_assoc()) {
             $data[] = array(
                 "iduabc" => $row["iduabc"],
-                "type" => $row["type"],
-                "taller" => $row["taller"],
-                "fecha_registro" => $row["fecha_registro"],
-                "assist" => $row["assist"]
+                "lastname" => $row["lastname"],
             );
         }
         echo json_encode(array("success" => true, "data" => $data));

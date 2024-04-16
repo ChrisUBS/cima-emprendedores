@@ -6,38 +6,38 @@ function notifications(type, msg) {
     div.slideUp(3000);
 }
 
-let apiURL = "http://localhost/cimarronesEmprendedores/BE/";
+let apiURL = "http://localhost/cimarrones-emprendedores/BE/";
 function searchToDatabase() {
     $.ajax({
         type: "GET", // Cambiar de POST a GET
         url: `${apiURL}registerAdmin/get_table.php`,
-        // data: { id: $('#searchBar').val() }, // Cambiar de $('#txtId').val() a $('#searchBar').val()
         dataType: "json",
         success: function(response) {
             console.log(response);
-            // if (response.success) {
-            //     $('#listaAlumnos').empty();
+            if (response.success) {
+                $('#listaAlumnos').empty();
                 
-            //     response.data.forEach(function(registro) {
-            //         $('#listaAlumnos').append(`
-            //             <tr>
-            //                 <td>${registro.iduabc}</td>
-            //                 <td>${registro.type}</td>
-            //                 <td>${registro.taller}</td>
-            //                 <td>${registro.fecha_registro}</td>
-            //                 <td>${registro.assist}</td>
-            //             </tr>
-            //         `);
-            //     });
-            // } else {
-            //     var errorMessage = "Error en la respuesta del servidor.";
-            //     if (response.error) {
-            //         errorMessage = response.error;
-            //     }
-            //     notifications("alert-error", errorMessage);
-            // }
+                response.data.forEach(function(registro) {
+                    $('#listaAlumnos').append(`
+                        <tr>
+                            <td>${registro.iduabc}</td>
+                            <td>${registro.lastname}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    `);
+                });
+            } else {
+                var errorMessage = "Error en la respuesta del servidor.";
+                if (response.error) {
+                    errorMessage = response.error;
+                }
+                notifications("alert-error", errorMessage);
+            }
         },
         error: function(xhr, status, error) {
+            console.log(error);
             notifications("alert-error", "Error en la solicitud al servidor.");
         }
     });
