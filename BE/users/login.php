@@ -7,24 +7,30 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Consultar la base de datos para obtener el hash de la contraseña almacenada
-    $query = "SELECT password FROM admin WHERE username = '$username'";
+    $query = "SELECT iduser, username, password FROM admin WHERE username = '$username'";
     $result = mysqli_query($conn, $query);
 
     if($result && mysqli_num_rows($result) == 1) {
-        // Obtener el hash de la contraseña almacenada
         $row = mysqli_fetch_assoc($result);
         $stored_hashed_password = $row['password'];
 
-        if(password_verify($password, $stored_hashed_password)) {
-            echo json_encode(array('success' => true));
+        if (password_verify($password, $stored_hashed_password)) {
+            $token = generateToken();
+            $_SESSION['access_token'] = $token;
+            echo json_encode(['success' => true, 'token' => $token, 'userId' => $row['iduser'], 'userName' => $row['username']]);
         } else {
-            echo json_encode(array('success' => false, 'message' => 'Contraseña incorrecta'));
+            echo json_encode(['success' => false, 'error' => 'Contraseña incorrecta']);
         }
     } else {
-        echo json_encode(array('success' => false, 'message' => 'Usuario no encontrado'));
+        echo json_encode(['success' => false, 'error' => 'Usuario no encontrado']);
     }
 } else {
-    echo json_encode(array('success' => false, 'message' => 'No se recibieron datos de inicio de sesión'));
+    echo json_encode(['success' => false, 'error' => 'No se recibieron datos de inicio de sesión']);
+}
+
+// Función para generar un token de sesión
+function generateToken()
+{
+    return bin2hex(random_bytes(32));
 }
 ?>

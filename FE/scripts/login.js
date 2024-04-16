@@ -38,12 +38,15 @@ function login() {
         dataType: "json",
         success: function(response) {
             if(response.success) {
+                // Guardar el token en el almacenamiento local
+                localStorage.setItem('token', response.token);
+                localStorage.setItem('username', response.userName);
                 notifications('alert-success','Inicio de sesión exitoso');
                 setTimeout(function () {
                     window.location.href = "admin.html";
                 }, 4000);
             } else {
-                notifications('alert-error', 'Nombre de usuario o contraseña incorrectos.');
+                notifications('alert-error', response.error);
             }
         },
         error: function(xhr, status, error) {
