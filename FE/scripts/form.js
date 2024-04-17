@@ -338,6 +338,7 @@ function insertToDatabase(newPerson) {
         },
         dataType: 'json', 
         success: function(response) {
+            console.log(response);
             if (response.success) {
                 console.log(response);
                 notifications("alert-success", "Registro Exitoso.");

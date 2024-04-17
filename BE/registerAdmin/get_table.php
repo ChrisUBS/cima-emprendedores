@@ -10,18 +10,18 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 include("../conection.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    //$id = $_GET["id"];
 
     // Verificar la conexión a la base de datos
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
     
-    $query = "SELECT iduabc, lastname FROM usuarios";
+    $query = "SELECT u.iduabc, u.type, t.nameworkshop, r.date, r.assist 
+            FROM usuarios u 
+            LEFT JOIN registro r ON u.iduabc = r.iduabc 
+            LEFT JOIN talleres t ON r.idworkshop = t.idworkshop";
 
     $stmt = $conn->prepare($query);
-    // Verificar el tipo de dato en bind_param
-    //$stmt->bind_param("i", $id);
     $stmt->execute();
     
     $result = $stmt->get_result();
@@ -31,7 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         while ($row = $result->fetch_assoc()) {
             $data[] = array(
                 "iduabc" => $row["iduabc"],
-                "lastname" => $row["lastname"],
+                "type" => $row["type"],
+                "nameworkshop" => $row["nameworkshop"],
+                "date" => $row["date"],
+                "assist" => $row["assist"],
             );
         }
         echo json_encode(array("success" => true, "data" => $data));

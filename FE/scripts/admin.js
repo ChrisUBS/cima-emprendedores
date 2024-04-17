@@ -6,11 +6,7 @@ function notifications(type, msg) {
     div.slideUp(3000);
 }
 
-<<<<<<< HEAD
-let apiURL = "http://localhost:3000/cimarrones-emprendedores/BE/";
-=======
 let apiURL = "http://localhost/cimarrones-emprendedores/BE/";
->>>>>>> ed364fef26f142ee6113acd781d8f6f5fef2a0fd
 function searchToDatabase() {
     $.ajax({
         type: "GET", // Cambiar de POST a GET
@@ -25,10 +21,10 @@ function searchToDatabase() {
                     $('#listaAlumnos').append(`
                         <tr>
                             <td>${registro.iduabc}</td>
-                            <td>${registro.lastname}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>${registro.type}</td>
+                            <td>${registro.nameworkshop}</td>
+                            <td>${registro.date}</td>
+                            <td>${registro.assist}</td>
                         </tr>
                     `);
                 });
