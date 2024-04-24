@@ -10,21 +10,26 @@ let apiURL = "http://localhost/cimarrones-emprendedores/BE/";
 function searchToDatabase() {
     $.ajax({
         type: "GET", // Cambiar de POST a GET
-        url: `${apiURL}registerAdmin/get_table.php`,
+        url: `${apiURL}registerAdmin/get_table_workshop.php`,
         dataType: "json",
         success: function(response) {
             console.log(response);
             if (response.success) {
-                $('#listaAlumnos').empty();
+                $('#listaTalleres').empty();
                 
-                response.data.forEach(function(registro) {
-                    $('#listaAlumnos').append(`
+                response.data.forEach(function(talleres) {
+                    $('#listaTalleres').append(`
                         <tr>
-                            <td>${registro.iduabc}</td>
-                            <td>${registro.type}</td>
-                            <td>${registro.nameworkshop}</td>
-                            <td>${registro.date}</td>
-                            <td>${registro.assist}</td>
+                            <td>${talleres.nameworkshop}</td>
+                            <td>${talleres.idfacultad}</td>
+                            <td>${talleres.campus}</td>
+                            <td>${talleres.date}</td>
+                            <td>${talleres.time}</td>
+                            <td>
+                                <i class="fa-solid fa-circle-info"></i>
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                <i class="fa-solid fa-trash"></i>
+                            </td>
                         </tr>
                     `);
                 });

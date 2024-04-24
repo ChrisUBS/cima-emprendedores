@@ -20,16 +20,16 @@ function sendEmail($to, $subject, $body, $attachment) {
     $mail = new PHPMailer(true);
     
     try {
-        // Configurar el servidor SMTP
+        // Servidor SMTP
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com'; // Cambia esto a tu servidor SMTP
+        $mail->Host = 'smtp.gmail.com'; 
         $mail->SMTPAuth = true;
-        $mail->Username = 'johan.barragan@uabc.edu.mx'; // Cambia esto a tu correo
-        $mail->Password = 'lioplpjswtazgtqn'; // Cambia esto a tu contraseña
+        $mail->Username = 'johan.barragan@uabc.edu.mx';
+        $mail->Password = 'lioplpjswtazgtqn'; 
         $mail->SMTPSecure = 'tls';
-        $mail->Port = 587; // Cambia este puerto si es necesario
+        $mail->Port = 587;
 
-        // Configura los detalles del correo electrónico
+        // Configura correo electrónico
         $mail->setFrom('cimarronesemprendedores@uabc.edu.mx', 'Cimarrones Emprendedores');
         $mail->addAddress($to);
         $mail->Subject = $subject;
