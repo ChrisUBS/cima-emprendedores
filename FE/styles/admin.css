@@ -207,3 +207,25 @@ th {
 .nav-item.mt-auto {
     margin-top: auto !important;
 }
+
+.col-md-12 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+
+    .searchButton {
+        margin-right: auto;
+    }
+
+.eliminarbtn{
+    background-color: rgb(196, 35, 35) !important;
+}
+
+
+
+
+
