@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2024 at 02:37 AM
+-- Generation Time: Apr 17, 2024 at 07:36 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,6 +42,20 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`iduser`, `username`, `name`, `lastname`, `password`, `level`) VALUES
 (1, 'root', 'Alejandro', 'Barragan', '$2y$10$ut/eTOZfSZGEMBbCSq86VOZvWD56AymnN3gVcNPvA8TyRsoxOkwba', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `conferencistas`
+--
+
+CREATE TABLE `conferencistas` (
+  `idlecturer` int(5) NOT NULL,
+  `name` varchar(25) NOT NULL,
+  `lastname` varchar(25) NOT NULL,
+  `middlename` varchar(25) NOT NULL,
+  `info` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -120,8 +134,9 @@ CREATE TABLE `registro` (
   `lastname` varchar(20) NOT NULL,
   `middlename` varchar(20) NOT NULL,
   `type` varchar(10) NOT NULL,
-  `idtaller` varchar(30) NOT NULL,
+  `idworkshop` varchar(30) NOT NULL,
   `idfacultad` varchar(30) NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp(),
   `assist` varchar(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -129,19 +144,8 @@ CREATE TABLE `registro` (
 -- Dumping data for table `registro`
 --
 
-INSERT INTO `registro` (`idregistro`, `iduabc`, `name`, `lastname`, `middlename`, `type`, `idtaller`, `idfacultad`, `assist`) VALUES
-(1, 1, '', '', '', '', '', '', '0'),
-(2, 1, '', '', '', '', '', '', '0'),
-(3, 1, '', '', '', '', '', '', '0'),
-(4, 1272547, '', '', '', '', '', '', '0'),
-(5, 1, '', '', '', '', '', '', '0'),
-(6, 1, '', '', '', '', '', '', '0'),
-(7, 1, '', '', '', '', '', '', '0'),
-(8, 1, '', '', '', '', '', '', '0'),
-(9, 1, '', '', '', '', '', '', '0'),
-(10, 1, '', '', '', '', '', '', '0'),
-(11, 1, '', '', '', '', '', '', '0'),
-(12, 1, '', '', '', '', '', '', '0');
+INSERT INTO `registro` (`idregistro`, `iduabc`, `name`, `lastname`, `middlename`, `type`, `idworkshop`, `idfacultad`, `date`, `assist`) VALUES
+(1, 1, '', '', '', '', '', '', '2024-04-15', '0');
 
 -- --------------------------------------------------------
 
@@ -154,6 +158,7 @@ CREATE TABLE `talleres` (
   `nameworkshop` varchar(50) NOT NULL,
   `idlecturer` varchar(5) NOT NULL,
   `idfacultad` varchar(50) NOT NULL,
+  `campus` varchar(20) NOT NULL,
   `descriptionworkshop` varchar(250) NOT NULL,
   `time` time NOT NULL,
   `date` date NOT NULL,
@@ -161,6 +166,13 @@ CREATE TABLE `talleres` (
   `post` varchar(50) NOT NULL,
   `status` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `talleres`
+--
+
+INSERT INTO `talleres` (`idworkshop`, `nameworkshop`, `idlecturer`, `idfacultad`, `campus`, `descriptionworkshop`, `time`, `date`, `ability`, `post`, `status`) VALUES
+(1, 'Telecom', '1', '1', 'Tijuana', 'ABC', '12:23:51', '2024-04-18', 1, 'HOLA MUNDO', 0);
 
 -- --------------------------------------------------------
 
@@ -197,6 +209,12 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`iduser`);
 
 --
+-- Indexes for table `conferencistas`
+--
+ALTER TABLE `conferencistas`
+  ADD PRIMARY KEY (`idlecturer`);
+
+--
 -- Indexes for table `facultades`
 --
 ALTER TABLE `facultades`
@@ -225,6 +243,12 @@ ALTER TABLE `admin`
   MODIFY `iduser` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `conferencistas`
+--
+ALTER TABLE `conferencistas`
+  MODIFY `idlecturer` int(5) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `facultades`
 --
 ALTER TABLE `facultades`
@@ -234,13 +258,13 @@ ALTER TABLE `facultades`
 -- AUTO_INCREMENT for table `registro`
 --
 ALTER TABLE `registro`
-  MODIFY `idregistro` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idregistro` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `talleres`
 --
 ALTER TABLE `talleres`
-  MODIFY `idworkshop` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idworkshop` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
