@@ -6,7 +6,6 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 
 include("../conection.php");
-
 require '../vendor/autoload.php';
 require '../plugins/phpqrcode/qrlib.php';
 
