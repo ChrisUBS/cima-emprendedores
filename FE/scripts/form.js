@@ -1,7 +1,7 @@
 var people = [];
 
 class Person {
-    constructor(idUabc, name, lastName, middleName, email, ubicacion, facultad, taller) {
+    constructor(idUabc, name, lastName, middleName, email, ubicacion, facultad, lic, taller) {
         this.name = name;
         this.lastName = lastName;
         this.middleName = middleName;
@@ -9,6 +9,7 @@ class Person {
         this.idUabc = idUabc;
         this.ubicacion = ubicacion;
         this.facultad = facultad;
+        this.lic = lic;
         this.taller = taller;
     }
 }
@@ -18,9 +19,11 @@ class Person {
 function OriginalVal() {
     let ubicacionOriginal = $("#ubicacion").html();
     let facultadOriginal = $("#facultad").html();
+    let licOriginal = $("#lic").html();
     let tallerOriginal = $("#taller").html();
     $("#ubicacion").html(ubicacionOriginal);
     $("#facultad").html(facultadOriginal);
+    $("#lic").html(licOriginal);
     $("#taller").html(tallerOriginal);
 }
 
@@ -32,7 +35,7 @@ function isValid(person, selectedOption) {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (person.name === "" || person.lastName === "" || person.middleName === "" || person.email === "" || person.idUabc === "" || person.ubicacion === "" || person.taller === "") {
+    if (person.name === "" || person.lastName === "" || person.middleName === "" || person.email === "" || person.idUabc === "" || person.ubicacion === "" || person.taller === "" || person.lic === "") {
         validation = false;
         $(".input-control input").css("border-color", "initial");
         $(".input-control input").each(function () {
@@ -46,6 +49,11 @@ function isValid(person, selectedOption) {
         if (selectedOption === "option1" || selectedOption === "option2") {
             if (person.facultad === "") {
                 $("#txtFacultad").css("border-color", "red");
+            }
+        }
+        if (selectedOption === "option1") {
+            if (person.lic === "") {
+                $("#txtLic").css("border-color", "red");
             }
         }
         if (person.taller === "") {
@@ -63,6 +71,7 @@ function isValid(person, selectedOption) {
             $(".input-control input").css("border-color", "initial");
             $("#txtCampus").css("border-color", "initial");
             $("#txtFacultad").css("border-color", "initial");
+            $("#txtLic").css("border-color", "initial");
             $("#txtTaller").css("border-color", "initial");
         }, 1500);
     }
@@ -84,10 +93,9 @@ function validRegister(newPerson, selectedOption) {
     changeForm(selectedOption);
     switch (selectedOption) {
         case "option1":
-            newPerson={ ...newPerson, option:"Alumno"}
+            newPerson = { ...newPerson, option: "Alumno" }
             $("#btnRegister").click(function () {
                 checkExtra(newPerson, selectedOption);
-                console.log("Valor:", newPerson);
                 if (isValid(newPerson, selectedOption)) {
                     insertToDatabase(newPerson);
                 } else {
@@ -96,10 +104,9 @@ function validRegister(newPerson, selectedOption) {
             });
             break;
         case "option2":
-            newPerson={ ...newPerson, option:"Docente"}
+            newPerson = { ...newPerson, option: "Docente" }
             $("#btnRegister").click(function () {
                 checkExtra(newPerson, selectedOption);
-                console.log("Valor:", newPerson);
                 if (isValid(newPerson, selectedOption)) {
                     insertToDatabase(newPerson);
                 } else {
@@ -108,24 +115,22 @@ function validRegister(newPerson, selectedOption) {
             });
             break;
         case "option3":
-            newPerson={ ...newPerson, option:"Egresado"}
+            newPerson = { ...newPerson, option: "Egresado" }
             $("#btnRegister").click(function () {
                 checkExtra(newPerson, selectedOption);
-                console.log("Valor:", newPerson);
                 if (isValid(newPerson)) {
-                    
+
                 } else {
                     notifications("alert-error", "¡Campo requerido ó no valido!");
                 }
             });
             break;
         case "option4":
-            newPerson={ ...newPerson, option:"Exterior"}
+            newPerson = { ...newPerson, option: "Exterior" }
             $("#btnRegister").click(function () {
                 checkExtra(newPerson, selectedOption);
-                console.log("Valor:", newPerson);
                 if (isValid(newPerson)) {
-                    
+
                 } else {
                     notifications("alert-error", "¡Campo requerido ó no valido!");
                 }
@@ -136,11 +141,18 @@ function validRegister(newPerson, selectedOption) {
 
 //Seguna parte del formulario registro.
 function checkExtra(newPerson, selectedOption) {
-    if (selectedOption === "option1" || "option2") {
+    if (selectedOption === "option1") {
+        newPerson.ubicacion = $("#txtCampus").val();
+        newPerson.facultad = $("#txtFacultad").val();
+        newPerson.lic = $("#txtLic").val();
+        newPerson.taller = $("#txtTaller").val();
+    }
+    else if (selectedOption === "option2") {
         newPerson.ubicacion = $("#txtCampus").val();
         newPerson.facultad = $("#txtFacultad").val();
         newPerson.taller = $("#txtTaller").val();
-    } else if (selectedOption === "option3" || "option4") {
+    }
+    else if (selectedOption === "option3" || "option4") {
         newPerson.ubicacion = $("#txtCampus").val();
         newPerson.taller = $("#txtTaller").val();
     }
@@ -149,23 +161,20 @@ function checkExtra(newPerson, selectedOption) {
 //Registro inicial.
 function register() {
     let selectedOption = $("#txtOption").val();
-    let newPerson = {};
+    
+    let newPerson = {
+        idUabc: $("input[name='idUabc']").val(),
+        name: $("input[name='nombre']").val(),
+        lastName: $("input[name='apellidoP']").val(),
+        middleName: $("input[name='apellidoM']").val(),
+        email: $("input[name='email']").val(),
+    };
 
-    switch (selectedOption) {
-        case "option1":
-            newPerson.idUabc = $("input[name='idUabc']").val();
-            break;
-        case "option2":
-            newPerson.idUabc = $("input[name='idUabc']").val();
-            break;
-        case "option3":
-        case "option4":
-            break;
+    if (!isValid(newPerson, selectedOption)) {
+        notifications("alert-error", "¡Campo requerido o no válido!");
+        return;
     }
-    newPerson.nombre = $("input[name='nombre']").val();
-    newPerson.apellidoP = $("input[name='apellidoP']").val();
-    newPerson.apellidoM = $("input[name='apellidoM']").val();
-    newPerson.email = $("input[name='email']").val();
+
     validNext(newPerson, selectedOption);
 }
 
@@ -174,10 +183,72 @@ function register() {
 function changeForm(selectedOption) {
     switch (selectedOption) {
         case "option1":
+            $('#txtFacultad').prop('disabled', true);
+            $('#txtLic').prop('disabled', true);
+            $('#txtTaller').prop('disabled', true);
+            $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
+                $('label[for="' + $(this).attr('id') + '"]').removeClass('animated-label');
+            });
+            $("#btnNext").hide();
+            $("#btnRegister").show();
+            $("#ubicacion").show();
+            $("#facultad").show();
+            $("#lic").show();
+            $("#taller").show();
+            $("#btnEdit").show();
+            $("#ubicacion select").change(getFacultad);
+            $("#facultad select").change(getLic);
+            $("#ubicacion select").change(getTalleres);
+            $("#btnEdit").click(function () {
+                $("#ubicacion").hide();
+                $("#facultad").hide();
+                $("#taller").hide();
+                $("#lic").hide();
+                OriginalVal();
+                $("#btnRegister").hide();
+                $("#btnEdit").hide();
+                $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
+                    $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
+                });
+                $("#btnNext").show();
+                let newPerson = {
+                    name: $("input[name='nombre']").val(),
+                    lastName: $("input[name='apellidoP']").val(),
+                    middleName: $("input[name='apellidoM']").val(),
+                    email: $("input[name='email']").val(),
+                    idUabc: $("input[name='idUabc']").val(),
+                };
+                isValid(newPerson, selectedOption);
+            });
+            $("#txtOption").change(function () {
+                $("#ubicacion").hide();
+                $("#facultad").hide();
+                $("#lic").hide();
+                $("#taller").hide();
+                OriginalVal();
+                $("#btnRegister").hide();
+                $("#btnEdit").hide();
+                $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
+                    $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
+                });
+                if ($(this).val() === "") {
+                    $("#btnNext").hide();
+                } else {
+                    $("#btnNext").show();
+                }
+                let newPerson = {
+                    name: $("input[name='nombre']").val(),
+                    lastName: $("input[name='apellidoP']").val(),
+                    middleName: $("input[name='apellidoM']").val(),
+                    email: $("input[name='email']").val(),
+                    idUabc: $("input[name='idUabc']").val(),
+                };
+                isValid(newPerson, selectedOption);
+            });
         case "option2":
             $('#txtFacultad').prop('disabled', true);
             $('#txtTaller').prop('disabled', true);
-            $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
+            $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
                 $('label[for="' + $(this).attr('id') + '"]').removeClass('animated-label');
             });
             $("#btnNext").hide();
@@ -186,8 +257,8 @@ function changeForm(selectedOption) {
             $("#facultad").show();
             $("#taller").show();
             $("#btnEdit").show();
-            $("#ubicacion select").change(Facultad);
-            $("#ubicacion select").change(Talleres);
+            $("#ubicacion select").change(getFacultad);
+            $("#ubicacion select").change(getTalleres);
             $("#btnEdit").click(function () {
                 $("#ubicacion").hide();
                 $("#facultad").hide();
@@ -195,10 +266,18 @@ function changeForm(selectedOption) {
                 OriginalVal();
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
-                $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
+                $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
                     $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 $("#btnNext").show();
+                let newPerson = {
+                    name: $("input[name='nombre']").val(),
+                    lastName: $("input[name='apellidoP']").val(),
+                    middleName: $("input[name='apellidoM']").val(),
+                    email: $("input[name='email']").val(),
+                    idUabc: $("input[name='idUabc']").val(),
+                };
+                isValid(newPerson, selectedOption);
             });
             $("#txtOption").change(function () {
                 $("#ubicacion").hide();
@@ -207,7 +286,7 @@ function changeForm(selectedOption) {
                 OriginalVal();
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
-                $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
+                $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
                     $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 if ($(this).val() === "") {
@@ -216,6 +295,14 @@ function changeForm(selectedOption) {
                     $("#btnNext").show();
                 }
             });
+            let newPerson = {
+                name: $("input[name='nombre']").val(),
+                lastName: $("input[name='apellidoP']").val(),
+                middleName: $("input[name='apellidoM']").val(),
+                email: $("input[name='email']").val(),
+                idUabc: $("input[name='idUabc']").val(),
+            };
+            isValid(newPerson, selectedOption);
             break;
         case "option3":
         case "option4":
@@ -229,8 +316,8 @@ function changeForm(selectedOption) {
             $("#ubicacion").show();
             $("#taller").show();
             $("#btnEdit").show();
-            $("#ubicacion select").change(Facultad);
-            $("#ubicacion select").change(Talleres);
+            $("#ubicacion select").change(getFacultad);
+            $("#ubicacion select").change(getTalleres);
             $("#btnEdit").click(function () {
                 $("#ubicacion").hide();
                 $("#taller").hide();
@@ -241,6 +328,14 @@ function changeForm(selectedOption) {
                     $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 $("#btnNext").show();
+                let newPerson = {
+                    name: $("input[name='nombre']").val(),
+                    lastName: $("input[name='apellidoP']").val(),
+                    middleName: $("input[name='apellidoM']").val(),
+                    email: $("input[name='email']").val(),
+                    idUabc: $("input[name='idUabc']").val(),
+                };
+                isValid(newPerson, selectedOption);
             });
             $("#txtOption").change(function () {
                 $("#ubicacion").hide();
@@ -256,61 +351,100 @@ function changeForm(selectedOption) {
                 } else {
                     $("#btnNext").show();
                 }
+                let newPerson = {
+                    name: $("input[name='nombre']").val(),
+                    lastName: $("input[name='apellidoP']").val(),
+                    middleName: $("input[name='apellidoM']").val(),
+                    email: $("input[name='email']").val(),
+                    idUabc: $("input[name='idUabc']").val(),
+                };
+                isValid(newPerson, selectedOption);
             });
             break;
     }
 }
 
 //Facultades
-function Facultad() {
+function getFacultad() {
     var selectedUbicacion = $("#txtCampus").val();
-    const facultadesXUbicacion = {
-        "Tijuana": ["Facultad de Artes", "Facultad de Ciencias Químicas e Ingeniería", "Facultad de Contaduría y Administración", "Facultad de Ciencias de la Salud, Valle de las Palmas", "Facultad de Deportes", "Facultad de Derecho", "Facultad de Economía y Relaciones Internacionales", "Facultad de Humanidades y Ciencias Sociales", "Facultad de Idiomas", "Facultad de la Ingeniería y Tecnología", "Facultad de Medicina y Psicología", "Facultad de Odontología", "Facultad de Turismo y Mercadotecnia", "Instituto de Investigaciones Históricas", "Facultad de Ciencias de la Ingeniería, Administrativas y Sociales"],
-        "Mexicali": ["Facultad de Artes", "Facultad de Arquitectura y Diseño", "Instituto de Ciencias Agrícolas", "Facultad de Ciencias Sociales y Políticas", "Facultad de Ciencias Humanas", "Facultad de Ciencias Administrativas", "Facultad de Deportes", "Facultad de Derecho", "Facultad de Enfermería", "Facultad de Idiomas", "Facultad de Ingeniería", "Facultad de Ingeniería y Negocios Guadalupe Victoria", "Instituto de Investigaciones en Ciencias Veterinarias", "Instituto de Investigaciones Culturales (IIC Museo)", "Instituto de Investigaciones Sociales", "Instituto de Ingeniería", "Facultad de Medicina", "Facultad de Odontología", "Facultad de Pedagogía e Innovación Educativa"],
-        "Ensenada": ["Facultad de Artes", "Escuela de Ciencias de la Salud", "Facultad de Ciencias", "Facultad de Ciencias Administrativas y Sociales", "Facultad de Ciencias Marinas", "Facultad de Deportes", "Facultad de Enología y Gastronomía", "Facultad de Idiomas", "Facultad de Ingeniería y Negocios - San Quintín", "Facultad de Ingeniería, Arquitectura y Diseño", "Instituto de Investigación y Desarrollo Educativo", "Instituto de Investigaciones Oceanológicas"]
-    };
+    $.ajax({
+        type: "GET",
+        url: `${apiURL}register/get_faculty.php`,
+        data: { ubicacion: selectedUbicacion },
+        success: function (response) {
+            var selectFacultad = $("#txtFacultad");
+            
+            selectFacultad.empty();
 
-    var selectedUbicacion = $("#txtCampus").val();
-    const selectFacultad = $("#txtFacultad");
-
-    selectFacultad.empty();
-
-    if (selectedUbicacion) {
-        $('#txtFacultad').prop('disabled', false);
-        selectFacultad.append("<option value=''></option>");
-        const facultades = facultadesXUbicacion[selectedUbicacion];
-        facultades.forEach(facultad => {
-            selectFacultad.append(`<option value='${facultad}'>${facultad}</option>`);
-        });
-    } else {
-        $('#txtFacultad').prop('disabled', true);
-    }
+            if (response && response.facultades && response.facultades.length > 0) {
+                $('#txtFacultad').prop('disabled', false);
+                selectFacultad.append("<option value=''></option>");
+                response.facultades.forEach(facultad => {
+                    selectFacultad.append(`<option value='${facultad.idfacultad}'>${facultad.nombre}</option>`);
+                });
+            } else {
+                $('#txtFacultad').prop('disabled', true);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error al obtener las facultades:", error);
+        }
+    });
 }
 
+//Obtener licenciaturas.
+function getLic() {
+    var selectedFacultad = $("#txtFacultad").val();
+    $.ajax({
+        type: "GET",
+        url: `${apiURL}register/get_lic.php`,
+        data: { idfacultad: selectedFacultad },
+        success: function (response) {
+            var selectLicenciatura = $("#txtLic");
+            
+            selectLicenciatura.empty();
+
+            if (response && response.licenciaturas && response.licenciaturas.length > 0) {
+                $('#txtLic').prop('disabled', false);
+                selectLicenciatura.append("<option value=''></option>");
+                response.licenciaturas.forEach(licenciatura => {
+                    selectLicenciatura.append(`<option value='${licenciatura.idlic}'>${licenciatura.nombre}</option>`);
+                });
+            } else {
+                $('#txtLic').prop('disabled', true);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error al obtener las licenciaturas:", error);
+        }
+    });
+}
 //Talleres
-function Talleres() {
+function getTalleres() {
     var selectedUbicacion = $("#txtCampus").val();
-    const talleresXUbicacion = {
-        "Tijuana": ["Taller 1", "Taller 2", "Taller 3"],
-        "Mexicali": ["Taller A", "Taller B", "Taller C"],
-        "Ensenada": ["Taller X", "Taller Y", "Taller Z"]
-    };
-
-    var selectedUbicacion = $("#txtCampus").val();
-    const selectTaller = $("#txtTaller");
-
-    selectTaller.empty();
-
-    if (selectedUbicacion) {
-        $('#txtTaller').prop('disabled', false);
-        selectTaller.append("<option value=''></option>");
-        const talleres = talleresXUbicacion[selectedUbicacion];
-        talleres.forEach(taller => {
-            selectTaller.append(`<option value='${taller}'>${taller}</option>`);
-        });
-    } else {
-        $('#txtTaller').prop('disabled', true);
-    }
+    $.ajax({
+        type: "GET",
+        url: `${apiURL}register/get_workshops.php`,
+        data: { ubicacion: selectedUbicacion },
+        success: function(response) {
+            var selectTaller = $("#txtTaller");
+            selectTaller.empty();
+            
+            if (response && response.success && response.talleres && response.talleres.length > 0) {
+                $('#txtTaller').prop('disabled', false);
+                selectTaller.append("<option value=''></option>");
+                
+                response.talleres.forEach(taller => {
+                    selectTaller.append(`<option value='${taller.idworkshop}'>${taller.nombre}</option>`);
+                });
+            } else {
+                $('#txtTaller').prop('disabled', true);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error al obtener los talleres:", error);
+        }
+    });
 }
 
 //Animacion de las notificaciones
@@ -322,25 +456,28 @@ function notifications(type, msg) {
     div.slideUp(3000);
 }
 
-let apiURL="http://localhost/cimarrones-emprendedores/BE/"
+let apiURL = "http://localhost/cimarrones-emprendedores/BE/"
 //Provisional | base de dato y envio email.
 function insertToDatabase(newPerson) {
+    console.log("Datos: ",newPerson);
     $.ajax({
         url: `${apiURL}register/save_register.php`,
         method: 'POST',
-        data: { 
+        data: {
             id: newPerson.idUabc,
-            nombre: newPerson.nombre,
-            apellidoP: newPerson.apellidoP,
-            apellidoM: newPerson.apellidoM,
+            idfacultad: newPerson.facultad,
+            nombre: newPerson.name,
+            apellidoP: newPerson.lastName,
+            apellidoM: newPerson.middleName,
             email: newPerson.email,
-            option: newPerson.option,  
+            option: newPerson.option,
+            idlic: newPerson.lic
+            // ubicacion: newPerson.ubicacion,
+            // taller: newPerson.taller
         },
-        dataType: 'json', 
-        success: function(response) {
-            console.log(response);
+        dataType: 'json',
+        success: function (response) {
             if (response.success) {
-                console.log(response);
                 notifications("alert-success", "Registro Exitoso.");
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
@@ -348,17 +485,17 @@ function insertToDatabase(newPerson) {
                     location.reload();
                 }, 4500);
             } else {
-                notifications("alert-error", "¡Error!. Por favor, inténtalo de nuevo.");
+                notifications("alert-error", response.message || "¡Error! Por favor, inténtalo de nuevo.");
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
             notifications("alert-error", "¡Error!. Por favor, inténtalo de nuevo.");
         }
     });
 }
 
-function searchToDatabase(){
+function searchToDatabase() {
     let idUabc = $('#txtId').val();
 
     $.ajax({
@@ -366,7 +503,7 @@ function searchToDatabase(){
         url: `${apiURL}register/get_register.php`,
         data: { id: idUabc },
         dataType: "json",
-        success: function(response) {
+        success: function (response) {
             if (response.success) {
                 $('#txtNombre').val(response.nombre);
                 $('#txtApellidoP').val(response.apellidoP);
@@ -376,7 +513,7 @@ function searchToDatabase(){
                 notifications("alert-error", response.error);
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error(error);
             notifications("alert-error", "Error en la solicitud al servidor.");
         }
@@ -390,6 +527,7 @@ function init() {
     $("#inputGeneral").hide();
     $("#ubicacion").hide();
     $("#facultad").hide();
+    $("#lic").hide();
     $("#taller").hide();
     $("#btnNext").hide();
     $("#btnRegister").hide();
@@ -414,7 +552,7 @@ function init() {
         } else if (selectedOption === "option2") {
             $('.search').click(searchToDatabase)
             $('#txtId').siblings('label').text("No. Empleado");
-            $('#txtId').show();
+            $('#optionId').show();
             $("#btnNext").show();
         } else if (selectedOption === "option3" || selectedOption === "option4") {
             $("#btnNext").show();

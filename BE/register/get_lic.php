@@ -9,30 +9,36 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header('Content-Type: application/json');
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
+// Incluir archivo de conexión a la base de datos
 include("../conection.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    $idfacultad = $_GET['idfacultad'];
 
-    $ubicacion = $_GET['ubicacion'];
-
-    $query = "SELECT idworkshop, nameworkshop FROM talleres WHERE idcampus = ?";
+    $query = "SELECT idlic, namelic FROM licenciaturas WHERE idfacultad = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $ubicacion);
+    $stmt->bind_param("i", $idfacultad);
     $stmt->execute();
+    
     $result = $stmt->get_result();
-
-    $talleres = array();
+    $licenciaturas = array();
+    
     while ($row = $result->fetch_assoc()) {
-        $talleres[] = array(
-            "idworkshop" => $row["idworkshop"],
-            "nombre" => $row["nameworkshop"]
+        $licenciaturas[] = array(
+            "idlic" => $row["idlic"],
+            "nombre" => $row["namelic"]
         );
     }
-    if (count($talleres) > 0) {
-        echo json_encode(array("success" => true, "talleres" => $talleres));
+    
+    if (count($licenciaturas) > 0) {
+        echo json_encode(array("success" => true, "licenciaturas" => $licenciaturas));
     } else {
-        echo json_encode(array("success" => false, "error" => "No se encontraron talleres para el campus proporcionado."));
+        echo json_encode(array("success" => false, "error" => "No se encontraron licenciaturas."));
     }
+    
     $stmt->close();
 } else {
     echo json_encode(array("success" => false, "error" => "Solicitud no válida."));

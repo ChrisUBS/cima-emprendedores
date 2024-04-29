@@ -24,7 +24,9 @@ function searchToDatabase() {
                             <td>${registro.type}</td>
                             <td>${registro.nameworkshop}</td>
                             <td>${registro.date}</td>
-                            <td>${registro.assist}</td>
+                            <td>
+                                <input type="checkbox" disabled ${registro.assist === 1 ? 'checked' : ''}>
+                            </td>
                         </tr>
                     `);
                 });

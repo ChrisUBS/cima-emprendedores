@@ -18,22 +18,27 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     }
     $ubicacion = $_GET['ubicacion'];
 
-    $query = "SELECT facultad FROM facultades WHERE campus = ?";
+    $query = "SELECT idfacultad, facultad FROM facultades WHERE idcampus = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $ubicacion);
     $stmt->execute();
+    
     $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $facultades = array();
-        while ($row = $result->fetch_assoc()) {
-            $facultades[] = $row["facultad"];
-        }
+    $facultades = array();
+    
+    while ($row = $result->fetch_assoc()) {
+        $facultades[] = array(
+            "idfacultad" => $row["idfacultad"],
+            "nombre" => $row["facultad"]
+        );
+    }
+    
+    if (count($facultades) > 0) {
         echo json_encode(array("success" => true, "facultades" => $facultades));
     } else {
-        echo json_encode(array("success" => false, "error" => "No se encontraron facultades para la ubicación proporcionada."));
+        echo json_encode(array("success" => false, "error" => "No se encontraron facultades."));
     }
-
+    
     $stmt->close();
 } else {
     echo json_encode(array("success" => false, "error" => "Solicitud no válida."));
