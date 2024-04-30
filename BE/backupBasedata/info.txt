@@ -1,0 +1,39 @@
+Cambios para que funcione el phpmailer.
+[Phar]
+; https://php.net/phar.readonly
+;phar.readonly = On
+
+; https://php.net/phar.require-hash
+;phar.require_hash = On
+
+;phar.cache_list =
+
+[mail function]
+; For Win32 only.
+; https://php.net/smtp
+SMTP=smtp.gmail.com
+; https://php.net/smtp-port
+smtp_port=587
+
+; For Win32 only.
+; https://php.net/sendmail-from
+sendmail_from = "johan.barragan@uabc.edu.mx"
+
+; For Unix only.  You may supply arguments as well (default: "sendmail -t -i").
+; https://php.net/sendmail-path
+sendmail_path = "\"C:\xampp\sendmail\sendmail.exe" -t" -->
+
+<!-- [sendmail]
+
+smtp_server=smtp.gmail.com
+smtp_port=587
+error_logfile=error.log
+debug_logfile=debug.log
+auth_username=johan.barragan@uabc.edu.mx
+auth_password=lioplpjswtazgtqn
+force_sender=johan.barragan@uabc.edu.mx
+
+
+php.ini
+quitar comentario en:
+;extensión=gd

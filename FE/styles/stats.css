@@ -18,7 +18,7 @@ img {
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    margin-bottom: 50px; /* Espacio adicional debajo del navbar */
+    margin-bottom: 10px; /* Espacio adicional debajo del navbar */
 }
 
 .center-content {
@@ -169,6 +169,9 @@ th {
 .sidebar {
     background-color: #f8f9fa;
     padding-bottom: 50px; /* Espacio adicional para el botón de cerrar sesión */
+    margin-left: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .sidebar .nav-link {
@@ -208,39 +211,36 @@ th {
     margin-top: auto !important;
 }
 
-.col-md-12 {
+
+.graphics-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas de igual tamaño */
+    gap: 150px; /* Espacio opcional entre las columnas */
+    justify-content: center; /* Centra el grid en el contenedor */
+     /* Alinea los elementos verticalmente */
+}
+
+.bar-graphic, .pie-graphic {
+    /* Asegura que los canvas no excedan el tamaño de los contenedores */
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+footer{
+    background-color: #f8f9fa;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-box{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
-
-.searchButton {
-    margin-right: auto;
-}
-
-.eliminarbtn{
-    background-color: rgb(196, 35, 35) !important;
-}
-
-button.Info, button.Edit, button.Delete {
-    border: none; 
-    background-color: transparent; 
-    padding: 8px; 
-    margin: 0; 
-    width: auto; 
-    height: auto; 
-    display: inline-flex; 
-    align-items: center; 
-    justify-content: center; 
-    cursor: pointer; 
-}
-
-/* Estilo adicional para el ícono dentro de los botones */
-button.Info i, button.Edit i, button.Delete i {
-    font-size: 1.2rem; /* Ajusta el tamaño del ícono según sea necesario */
-}
-
-
-
-
-
