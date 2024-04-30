@@ -16,10 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         die("Connection failed: " . $conn->connect_error);
     }
     
-    $query = "SELECT u.iduabc, u.type, t.nameworkshop, r.date, r.assist 
-            FROM usuarios u 
-            LEFT JOIN registro r ON u.iduabc = r.iduabc 
-            LEFT JOIN talleres t ON r.idworkshop = t.idworkshop";
+    $query = "SELECT r.iduabc, u.type, t.nameworkshop, r.date, r.assist 
+                FROM registro r
+                LEFT JOIN usuarios u ON r.iduabc = u.iduabc
+                LEFT JOIN talleres t ON r.idworkshop = t.idworkshop;";
 
     $stmt = $conn->prepare($query);
     $stmt->execute();

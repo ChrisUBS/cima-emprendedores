@@ -18,7 +18,6 @@ img {
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    margin-bottom: 50px; /* Espacio adicional debajo del navbar */
 }
 
 .center-content {
@@ -38,20 +37,26 @@ img {
         align-items: stretch;
         padding: 20px;
     }
+
     .center-content:last-child {
         margin-left: 0;
         margin-top: 10px;
     }
+
     .logos {
         margin-left: 0;
         margin-right: 10px;
+    }
+
+    .input-control select {
+        max-width: 500px;
     }
 }
 
 /* general form */
 .log-bg {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background: #00723F;
+    background:  rgb(206, 142, 0);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -59,8 +64,8 @@ img {
 }
 
 .form {
-    width: 97%;
-    max-width: 2000px;
+    width: 90%;
+    max-width: 600px;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
@@ -80,45 +85,91 @@ img {
 
 .form-middle {
     font-size: 24px;
-    padding-bottom: 5px;
-}         
-
-/* Admin table */
-th {
-    text-align: center;
-    padding: 10px;
-    padding-left: 45px;
-    padding-right: 75px; 
 }
 
-.input-group {
-    display: flex;
-    justify-content: center; /* Centra horizontalmente el contenido */
+form .username {
+    position: relative;
+    border-bottom: 2px solid #adadad;
+    margin: 30px 0;
 }
 
-/* barra de busqueda */
+/* config inputs */
+.input-control {
+    position: relative;
+    margin: 10px;
+}
+
+.input-columns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+
+@media(max-width:768px) {
+    .input-columns {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
 .input-notColumns {
     width: 100%;
     max-width: 200px;
     margin: 0 auto;
 }
 
-.input-control {
-    padding-top: 2px ;
-    margin-bottom:20px;
-}
-
-.input-control label {
-    display: block;
-    font-weight: 700;
+.input-columns-flex {
+    display: flex;
+    justify-content: center;
 }
 
 .input-control input {
     width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    padding: 10 0px;
+    font-size: 16px;
+    color: #000000;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    background: transparent;
+}
+
+.input-control label {
+    position: absolute;
+    top: 0;
+    left: 0px;
+    font-size: 0.8rem;
+    color: #585754;
+    pointer-events: none;
+    transition: .5s;
+    transform: translateY(-25%);
+}
+
+.input-control input:focus~label,
+.input-control input:valid~label,
+.input-control input:disabled~label {
+    top: -20px;
+    left: 0;
+    color: #585754;
+    font-size: 12px;
+}
+
+.animated-label {
+    transition: top 0.2s, left 0.2s, font-size 0.2s;
+}
+
+.input-control select {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    height: 40px;
+    border: 1px solid;
+    border-radius: 10px;
+    width: 200px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    max-width: calc(100% - 20px);
 }
 
 /* button */
@@ -223,6 +274,24 @@ th {
 
 .eliminarbtn{
     background-color: rgb(196, 35, 35) !important;
+}
+
+button.Info, button.Edit, button.Delete {
+    border: none; 
+    background-color: transparent; 
+    padding: 8px; 
+    margin: 0; 
+    width: auto; 
+    height: auto; 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+}
+
+/* Estilo adicional para el ícono dentro de los botones */
+button.Info i, button.Edit i, button.Delete i {
+    font-size: 1.2rem; /* Ajusta el tamaño del ícono según sea necesario */
 }
 
 
