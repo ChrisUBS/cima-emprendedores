@@ -51,12 +51,49 @@ function searchToDatabase() {
 
 
 
+
+
 function init() {
     searchToDatabase();
+    // $("#btnDelete").click(register);
     // $("#btnDelete").click(register);
     $('#searchForm').on('submit', function(event) {
         event.preventDefault();
         searchToDatabase();
+    });
+    // Escucha el evento de clic en los botones de eliminación
+    $(document).on('click', '.btn-class.Delete', function() {
+        const post = $(this).attr('data-post');
+
+        // Confirmar eliminación
+        const confirmed = confirm('¿Estás seguro de que deseas eliminar este taller?');
+
+        if (confirmed) {
+            // Enviar una solicitud POST a delete_workshop.php con el valor post
+            $.ajax({
+                type: 'POST',
+                url: `${apiURL}registerAdmin/delete_workshop.php`,
+                data: JSON.stringify({ post: post }),
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        // Taller eliminado con éxito
+                        notifications('alert-success', 'Taller eliminado correctamente.');
+                        // Recargar datos de la tabla después de eliminar el taller
+                        searchToDatabase();
+                    } else {
+                        // Manejar errores
+                        notifications('alert-error', 'No se pudo eliminar el taller: ' + response.error);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Manejar errores de la solicitud AJAX
+                    notifications('alert-error', 'Error al eliminar el taller.');
+                    console.error(error);
+                }
+            });
+        }
     });
     // Escucha el evento de clic en los botones de eliminación
     $(document).on('click', '.btn-class.Delete', function() {
