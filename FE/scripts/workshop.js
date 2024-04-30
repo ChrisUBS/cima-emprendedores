@@ -7,28 +7,28 @@ function notifications(type, msg) {
 }
 
 let apiURL = "http://localhost/cimarrones-emprendedores/BE/";
+
 function searchToDatabase() {
     $.ajax({
-        type: "GET", // Cambiar de POST a GET
+        type: "GET",
         url: `${apiURL}registerAdmin/get_table_workshop.php`,
         dataType: "json",
         success: function(response) {
             console.log(response);
             if (response.success) {
                 $('#listaTalleres').empty();
-                
                 response.data.forEach(function(talleres) {
                     $('#listaTalleres').append(`
-                                                <tr>
+                        <tr>
                             <td>${talleres.nameworkshop}</td>
                             <td>${talleres.idfacultad}</td>
                             <td>${talleres.campus}</td>
                             <td>${talleres.date}</td>
                             <td>${talleres.time}</td>
                             <td>
-                            <button id="btnInfo" type="button" class="btn-class Info"><i class="fa-solid fa-circle-info"></i></button>
-                            <button id="btnEdit" type="button" class="btn-class Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button id="btnDelete" type="button" class="btn-class Delete" data-post="${talleres.post}"><i class="fa-solid fa-trash"></i></button>
+                                <button type="button" class="btn-class Info" data-id="${talleres.post}"><i class="fa-solid fa-circle-info"></i></button>
+                                <button type="button" class="btn-class Edit" data-id="${talleres.post}"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button type="button" class="btn-class Delete" data-id="${talleres.post}"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
                     `);
@@ -48,86 +48,29 @@ function searchToDatabase() {
     });
 }
 
-
-
-
-
-
 function init() {
     searchToDatabase();
-    // $("#btnDelete").click(register);
-    // $("#btnDelete").click(register);
     $('#searchForm').on('submit', function(event) {
         event.preventDefault();
         searchToDatabase();
     });
-    // Escucha el evento de clic en los botones de eliminación
-    $(document).on('click', '.btn-class.Delete', function() {
-        const post = $(this).attr('data-post');
 
-        // Confirmar eliminación
-        const confirmed = confirm('¿Estás seguro de que deseas eliminar este taller?');
-
-        if (confirmed) {
-            // Enviar una solicitud POST a delete_workshop.php con el valor post
-            $.ajax({
-                type: 'POST',
-                url: `${apiURL}registerAdmin/delete_workshop.php`,
-                data: JSON.stringify({ post: post }),
-                contentType: 'application/json',
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success) {
-                        // Taller eliminado con éxito
-                        notifications('alert-success', 'Taller eliminado correctamente.');
-                        // Recargar datos de la tabla después de eliminar el taller
-                        searchToDatabase();
-                    } else {
-                        // Manejar errores
-                        notifications('alert-error', 'No se pudo eliminar el taller: ' + response.error);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    // Manejar errores de la solicitud AJAX
-                    notifications('alert-error', 'Error al eliminar el taller.');
-                    console.error(error);
-                }
-            });
-        }
+    $(document).on('click', '.Info', function() {
+        var id = $(this).data('id');
+        // Aquí puedes cargar los datos del taller para mostrarlos en el modal de info
+        $('#infoModal').modal('show');
     });
-    // Escucha el evento de clic en los botones de eliminación
-    $(document).on('click', '.btn-class.Delete', function() {
-        const post = $(this).attr('data-post');
 
-        // Confirmar eliminación
-        const confirmed = confirm('¿Estás seguro de que deseas eliminar este taller?');
+    $(document).on('click', '.Edit', function() {
+        var id = $(this).data('id');
+        // Aquí puedes cargar los datos del taller para editarlos en el modal de edición
+        $('#editModal').modal('show');
+    });
 
-        if (confirmed) {
-            // Enviar una solicitud POST a delete_workshop.php con el valor post
-            $.ajax({
-                type: 'POST',
-                url: `${apiURL}registerAdmin/delete_workshop.php`,
-                data: JSON.stringify({ post: post }),
-                contentType: 'application/json',
-                dataType: 'json',
-                success: function(response) {
-                    if (response.success) {
-                        // Taller eliminado con éxito
-                        notifications('alert-success', 'Taller eliminado correctamente.');
-                        // Recargar datos de la tabla después de eliminar el taller
-                        searchToDatabase();
-                    } else {
-                        // Manejar errores
-                        notifications('alert-error', 'No se pudo eliminar el taller: ' + response.error);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    // Manejar errores de la solicitud AJAX
-                    notifications('alert-error', 'Error al eliminar el taller.');
-                    console.error(error);
-                }
-            });
-        }
+    $(document).on('click', '.Delete', function() {
+        var id = $(this).data('id');
+        // Aquí puedes cargar los datos del taller para eliminarlos en el modal de confirmación
+        $('#deleteModal').modal('show');
     });
 }
 
