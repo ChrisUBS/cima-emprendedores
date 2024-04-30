@@ -214,12 +214,9 @@ th {
     align-items: center;
 }
 
-
-
-
-    .searchButton {
-        margin-right: auto;
-    }
+.searchButton {
+    margin-right: auto;
+}
 
 .eliminarbtn{
     background-color: rgb(196, 35, 35) !important;
