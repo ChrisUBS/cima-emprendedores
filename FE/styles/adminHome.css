@@ -222,7 +222,7 @@ th {
     background-color: rgb(196, 35, 35) !important;
 }
 
-button.Info, button.Edit, button.Delete {
+button.info, button.edit, button.delete {
     border: none; 
     background-color: transparent; 
     padding: 8px; 
@@ -236,7 +236,7 @@ button.Info, button.Edit, button.Delete {
 }
 
 /* Estilo adicional para el ícono dentro de los botones */
-button.Info i, button.Edit i, button.Delete i {
+button.info i, button.edit i, button.delete i {
     font-size: 1.2rem; /* Ajusta el tamaño del ícono según sea necesario */
 }
 

@@ -1,43 +1,24 @@
+var apiURL = "http://localhost/cimarrones-emprendedores/BE/";
+
 function notifications(type, msg) {
-    let div = $("#notifications");
+    const div = $("#notifications");
     div.slideDown(1000);
     div.addClass(type);
     div.text(msg);
     div.slideUp(3000);
 }
 
-let apiURL = "http://localhost/cimarrones-emprendedores/BE/";
-
-function searchToDatabase() {
+// Función para obtener la lista de talleres desde el servidor
+function getWorkshops() {
     $.ajax({
         type: "GET",
         url: `${apiURL}registerAdmin/get_table_workshop.php`,
         dataType: "json",
         success: function(response) {
-            console.log(response);
             if (response.success) {
-                $('#listaTalleres').empty();
-                response.data.forEach(function(talleres) {
-                    $('#listaTalleres').append(`
-                        <tr>
-                            <td>${talleres.nameworkshop}</td>
-                            <td>${talleres.idfacultad}</td>
-                            <td>${talleres.campus}</td>
-                            <td>${talleres.date}</td>
-                            <td>${talleres.time}</td>
-                            <td>
-                                <button type="button" class="btn-class Info" data-id="${talleres.post}"><i class="fa-solid fa-circle-info"></i></button>
-                                <button type="button" class="btn-class Edit" data-id="${talleres.post}"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button type="button" class="btn-class Delete" data-id="${talleres.post}"><i class="fa-solid fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    `);
-                });
+                updateWorkshopList(response.data);
             } else {
-                var errorMessage = "Error en la respuesta del servidor.";
-                if (response.error) {
-                    errorMessage = response.error;
-                }
+                const errorMessage = response.error || "Error en la respuesta del servidor.";
                 notifications("alert-error", errorMessage);
             }
         },
@@ -48,29 +29,132 @@ function searchToDatabase() {
     });
 }
 
+//Actualiza la lista de talleres cada vez que se llame esta funcion.
+function updateWorkshopList(workshops) {
+    const listaTalleres = $('#listaTalleres');
+    listaTalleres.empty();
+    
+    workshops.forEach(workshop => {
+        listaTalleres.append(`
+                <tr>
+                <td id="${workshop.idworkshop}">${workshop.nameworkshop}</td>
+                <td>${workshop.facultad}</td>
+                <td>${workshop.campus}</td>
+                <td>${workshop.date}</td>
+                <td>${workshop.time}</td>
+                <td>
+                    <form id="options">
+                        <button type="button" class="btn-class info" data-id="${workshop.idworkshop}" id="info"><i class="fa-solid fa-circle-info"></i></button>
+                        <button type="button" class="btn-class edit" data-id="${workshop.idworkshop}" id="edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button type="button" class="btn-class delete" data-id="${workshop.idworkshop}" id="delete"><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                </td>
+                </tr>
+        `);
+    });
+}
+
+// Función para eliminar un taller
+function deleteWorkshop(selectedIdWorkshop) {
+    if (!selectedIdWorkshop) {
+        notifications("alert-error", "Error: ID de taller no seleccionado.");
+        return;
+    }
+    $.ajax({
+        url: `${apiURL}registerAdmin/delete_workshop.php`,
+        type: 'POST',
+        dataType: "json",
+        data: {
+            idworkshop: selectedIdWorkshop,
+        },
+        success: function(response) {
+            if (response.success) {
+                notifications("alert-success", `Taller eliminado con éxito: ${response.message}`);
+                getWorkshops();
+            } else {
+                notifications("alert-error", `Error al eliminar el taller: ${response.error}`);
+            }
+        },
+        error: function(xhr, status, error) {
+            notifications("alert-error", `Error en la solicitud: ${error}`);
+        }
+    });
+}
+
+// Cargar informacion de un taller.
+function getInfoModal(selectedIdWorkshop) {
+    if (!selectedIdWorkshop) {
+        notifications("alert-error", "Error: ID de taller no seleccionado.");
+        return;
+    }
+    $.ajax({
+        url: `${apiURL}registerAdmin/info_workshop.php`,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            idworkshop: selectedIdWorkshop,
+        },
+        success: function(response) {
+            if (response.success) {
+                $('#infoBody').empty();
+                    response.data.forEach(function(infoworkshop) {
+                        $('#infoBody').append(`
+                        <h3>${infoworkshop.nameworkshop}</h3>
+                        <p>Facultad: ${infoworkshop.facultad}</p>
+                        <p>Campus: ${infoworkshop.campus}</p>
+                        <p>Fecha: ${infoworkshop.date}</p>
+                        <p>Hora: ${infoworkshop.time}</p>
+                        <p>Descripción: ${infoworkshop.dworkshop}</p>
+                    `);
+                });
+            } else {
+                notifications("alert-error", `Error al mostrar info del taller: ${response.error}`);
+            }
+        },
+        error: function(xhr, status, error) {
+            notifications("alert-error", `Error en la solicitud: ${error}`);
+        }
+    });
+}
+
+
+// Inicialización de eventos y carga inicial de datos
 function init() {
-    searchToDatabase();
-    $('#searchForm').on('submit', function(event) {
-        event.preventDefault();
-        searchToDatabase();
-    });
+    getWorkshops();
+    $(document).on('click', '.btn-class', function(event) {
+        const action = event.currentTarget.id;
+        const selectedIdWorkshop = $(event.currentTarget).data('id');//Guardar el id del donde se clickea.
 
-    $(document).on('click', '.Info', function() {
-        var id = $(this).data('id');
-        // Aquí puedes cargar los datos del taller para mostrarlos en el modal de info
-        $('#infoModal').modal('show');
-    });
-
-    $(document).on('click', '.Edit', function() {
-        var id = $(this).data('id');
-        // Aquí puedes cargar los datos del taller para editarlos en el modal de edición
-        $('#editModal').modal('show');
-    });
-
-    $(document).on('click', '.Delete', function() {
-        var id = $(this).data('id');
-        // Aquí puedes cargar los datos del taller para eliminarlos en el modal de confirmación
-        $('#deleteModal').modal('show');
+        switch (action) {
+            case 'edit':
+                // console.log("Acción 'edit' seleccionada");
+                break;
+            case 'info':
+                // console.log("Acción 'info' seleccionada", selectedIdWorkshop);
+                $('#infoModal').modal('show');
+                getInfoModal(selectedIdWorkshop);
+                $('#infoModalClose').off('click').on('click', function() {
+                    $('#infoModal').modal('hide');
+                });
+                break;
+            case 'delete':
+                // console.log("Acción 'delete' seleccionada");
+                $('#deleteModal').modal('show');
+                $('#deleteModalClose').off('click').on('click', function() {
+                    $('#deleteModal').modal('hide');
+                });
+                $('#confirmDelete').off('click').on('click', function() {
+                    deleteWorkshop(selectedIdWorkshop);
+                    setTimeout(function () {
+                        location.reload();
+                    });
+                    closeModal('#deleteModal');
+                });
+                break;
+            default:
+                console.error(`Acción no reconocida: ${action}`);
+                break;
+        }
     });
 }
 
