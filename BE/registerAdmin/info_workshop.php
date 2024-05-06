@@ -18,9 +18,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     talleres.nameworkshop AS nameworkshop,
                     facultades.facultad AS facultad,
                     campus.campus AS campus,
+                    campus.idcampus AS idcampus,
                     talleres.date AS date,
                     talleres.time AS time,
-                    talleres.descriptionworkshop AS descriptionworkshop
+                    talleres.descriptionworkshop AS descriptionworkshop,
+                    talleres.status AS status,
+                    talleres.ability AS ability,
+                    talleres.idfacultad AS idfacultad,
+                    talleres.post AS post
                 FROM
                     talleres
                 INNER JOIN
@@ -44,11 +49,16 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 //nombre en js =>   nombre en bd
                 "idworkshop" => $row["idworkshop"],
                 "nameworkshop" => $row["nameworkshop"],
+                "idfacultad" => $row["idfacultad"],
                 "facultad" => $row["facultad"],
                 "campus" => $row["campus"],
+                "idcampus" => $row["idcampus"],
                 "date" => $row["date"],
                 "time" => $row["time"],
                 "dworkshop" => $row["descriptionworkshop"],
+                "status" => $row["status"],
+                "ability" => $row["ability"],
+                "post" => $row["post"],
             );
         }
         echo json_encode(array("success" => true, "data" => $data));
