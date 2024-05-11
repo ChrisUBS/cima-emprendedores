@@ -25,16 +25,12 @@ function searchToDatabase() {
                             <td>${registro.nameworkshop}</td>
                             <td>${registro.date}</td>
                             <td>
-                                <input type="checkbox" disabled ${registro.assist === 1 ? 'checked' : ''}>
+                                <input type="checkbox" ${registro.assist === 1 ? 'checked' : ''}>
                             </td>
                         </tr>
                     `);
                 });
             } else {
-                var errorMessage = "Error en la respuesta del servidor.";
-                if (response.error) {
-                    errorMessage = response.error;
-                }
                 notifications("alert-error", errorMessage);
             }
         },

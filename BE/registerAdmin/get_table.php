@@ -1,4 +1,5 @@
 <?php
+//get_table_users
 // Permitir solicitudes desde cualquier origen
 header("Access-Control-Allow-Origin: *");
 
@@ -16,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         die("Connection failed: " . $conn->connect_error);
     }
     
-    $query = "SELECT r.iduabc, u.type, t.nameworkshop, r.date, r.assist 
+    $query = "SELECT r.iduabc, r.type, t.nameworkshop, r.date, r.assist 
                 FROM registro r
                 LEFT JOIN usuarios u ON r.iduabc = u.iduabc
                 LEFT JOIN talleres t ON r.idworkshop = t.idworkshop;";

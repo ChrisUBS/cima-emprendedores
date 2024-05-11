@@ -8,7 +8,7 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 include("../conection.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['nameworkshop'], $_POST['descriptionworkshop'], $_POST['time'], $_POST['date'], $_POST['ability'], $_POST['post'], $_POST['idcampus'], $_POST['idfacultad'], $_POST['idworkshop'])) {
+    if (isset($_POST['nameworkshop'], $_POST['descriptionworkshop'], $_POST['time'], $_POST['date'], $_POST['ability'], $_POST['post'], $_POST['idcampus'], $_POST['idfacultad'], $_POST['idworkshop'], $_POST['idlecturer'])) {
         $nameworkshop = $_POST['nameworkshop'];
         $descriptionworkshop = $_POST['descriptionworkshop'];
         $time = $_POST['time'];
@@ -18,12 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $idcampus = $_POST['idcampus'];
         $idfacultad = $_POST['idfacultad'];
         $idworkshop = $_POST['idworkshop'];
+        $idlecturer = $_POST['idlecturer'];
 
-        $sql = "UPDATE talleres SET nameworkshop = ?, descriptionworkshop = ?, time = ?, date = ?, ability = ?, post = ?, idcampus = ?, idfacultad = ? WHERE idworkshop = ?";
+        $sql = "UPDATE talleres SET nameworkshop = ?, descriptionworkshop = ?, time = ?, date = ?, ability = ?, post = ?, idcampus = ?, idfacultad = ?, idlecturer = ? WHERE idworkshop = ?";
 
         $stmt = $conn->prepare($sql);
         if ($stmt) {
-            $stmt->bind_param("ssssssiii", $nameworkshop, $descriptionworkshop, $time, $date, $ability, $post, $idcampus, $idfacultad, $idworkshop);
+            $stmt->bind_param("ssssssiiii", $nameworkshop, $descriptionworkshop, $time, $date, $ability, $post, $idcampus, $idfacultad, $idlecturer, $idworkshop);
 
             if ($stmt->execute()) {
                 $response = array(

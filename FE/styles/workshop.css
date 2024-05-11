@@ -56,37 +56,6 @@ th {
     padding-right: 75px; 
 }
 
-.input-group {
-    display: flex;
-    justify-content: center;
-}
-
-/* inputs */
-.input-control {
-    margin: 5px ;
-}
-
-.input-control label {
-    display: block;
-    font-weight: bold;
-}
-
-.input-control input {
-    width: 100%;
-    padding: 5px;
-    box-sizing: border-box;
-}
-
-.input-control textarea{
-    width: 100%;
-    height: 150px;
-    padding: 5px;
-}
-.input-control select{
-    width: 100%;
-    height: 30px;
-}
-
 /* button */
 .btn-reg {
     display: block;
@@ -166,7 +135,7 @@ th {
 
 
 
-/* botton details */
+/* botton details workshop*/
 button.info, button.edit, button.delete {
     border: none; 
     background-color: transparent; 
@@ -182,4 +151,27 @@ button.info, button.edit, button.delete {
 
 button.info i, button.edit i, button.delete i {
     font-size: 1rem;
+}
+
+/* workshop info modal */
+.workshop-info {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.workshop-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.workshop-details p {
+    margin: 5px 0;
+    line-height: 1.4;
+}
+
+.workshop-details p strong {
+    color: #555;
 }

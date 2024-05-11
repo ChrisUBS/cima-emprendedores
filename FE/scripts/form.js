@@ -119,7 +119,7 @@ function validRegister(newPerson, selectedOption) {
             $("#btnRegister").click(function () {
                 checkExtra(newPerson, selectedOption);
                 if (isValid(newPerson)) {
-
+                    insertToDatabase(newPerson);
                 } else {
                     notifications("alert-error", "¡Campo requerido ó no valido!");
                 }
@@ -130,7 +130,7 @@ function validRegister(newPerson, selectedOption) {
             $("#btnRegister").click(function () {
                 checkExtra(newPerson, selectedOption);
                 if (isValid(newPerson)) {
-
+                    insertToDatabase(newPerson);
                 } else {
                     notifications("alert-error", "¡Campo requerido ó no valido!");
                 }
@@ -160,21 +160,44 @@ function checkExtra(newPerson, selectedOption) {
 
 //Registro inicial.
 function register() {
-    let selectedOption = $("#txtOption").val();
+    // let selectedOption = $("#txtOption").val();
     
-    let newPerson = {
-        idUabc: $("input[name='idUabc']").val(),
-        name: $("input[name='nombre']").val(),
-        lastName: $("input[name='apellidoP']").val(),
-        middleName: $("input[name='apellidoM']").val(),
-        email: $("input[name='email']").val(),
-    };
+    // let newPerson = {
+    //     idUabc: $("input[name='idUabc']").val(),
+    //     name: $("input[name='nombre']").val(),
+    //     lastName: $("input[name='apellidoP']").val(),
+    //     middleName: $("input[name='apellidoM']").val(),
+    //     email: $("input[name='email']").val(),
+    // };
 
-    if (!isValid(newPerson, selectedOption)) {
-        notifications("alert-error", "¡Campo requerido o no válido!");
-        return;
+    // if (!isValid(newPerson, selectedOption)) {
+    //     notifications("alert-error", "¡Campo requerido o no válido!");
+    //     return;
+    // }
+
+    // validNext(newPerson, selectedOption);
+    let selectedOption = $("#txtOption").val();
+    let newPerson = {};
+
+    switch (selectedOption) {
+        case "option1":
+            newPerson.idUabc = $("input[name='idUabc']").val();
+            break;
+        case "option2":
+            newPerson.idUabc = $("input[name='idUabc']").val();
+            break;
+        case "option3":
+        case "option4":
+            break;
     }
-
+    newPerson.nombre = $("input[name='nombre']").val();
+    newPerson.apellidoP = $("input[name='apellidoP']").val();
+    newPerson.apellidoM = $("input[name='apellidoM']").val();
+    newPerson.email = $("input[name='email']").val();
+    if (!isValid(newPerson, selectedOption)) {
+            notifications("alert-error", "¡Campo requerido o no válido!");
+            return;
+        }
     validNext(newPerson, selectedOption);
 }
 
@@ -459,21 +482,20 @@ function notifications(type, msg) {
 let apiURL = "http://localhost/cimarrones-emprendedores/BE/"
 //Provisional | base de dato y envio email.
 function insertToDatabase(newPerson) {
-    console.log("Datos: ",newPerson);
     $.ajax({
         url: `${apiURL}register/save_register.php`,
         method: 'POST',
         data: {
             id: newPerson.idUabc,
             idfacultad: newPerson.facultad,
-            nombre: newPerson.name,
-            apellidoP: newPerson.lastName,
-            apellidoM: newPerson.middleName,
+            nombre: newPerson.nombre,
+            apellidoP: newPerson.apellidoP,
+            apellidoM: newPerson.apellidoM,
             email: newPerson.email,
             option: newPerson.option,
-            idlic: newPerson.lic
-            // ubicacion: newPerson.ubicacion,
-            // taller: newPerson.taller
+            idlic: newPerson.lic,
+            idcampus: newPerson.ubicacion,
+            idworkshop: newPerson.taller
         },
         dataType: 'json',
         success: function (response) {
@@ -489,7 +511,7 @@ function insertToDatabase(newPerson) {
             }
         },
         error: function (xhr, status, error) {
-            console.error(error);
+            console.error(error, xhr, status);
             notifications("alert-error", "¡Error!. Por favor, inténtalo de nuevo.");
         }
     });

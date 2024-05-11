@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cimarrones Emprendedores</title>
     <link rel="stylesheet" href="styles/workshop.css">
+    <link rel="stylesheet" href="styles/general.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/b8ce32ba45.js" crossorigin="anonymous"></script>
 </head>
@@ -80,8 +81,8 @@
                         <div class="input-group">
                             <input type="text" class="form-control" id="searchBar" placeholder="Buscar...">
                             <div class="input-group-append">
-                                <button class="btn btn-primary searchButton" type="button" id="searchButton">Filtrar</button>
-                                <button class="btn btn-success searchButton" type="button" id="addButton">Agregar</button>
+                                <button class="btn-class btn btn-primary" type="button" id="searchButton">Filtrar</button>
+                                <button class="btn-class btn btn-success" type="button" id="addButton">Agregar</button>
                             </div>
                         </div>
                     </div>
@@ -98,7 +99,7 @@
                                 <th>Fecha</th>
                                 <th>Hora</th>
                                 <th>Detalles</th>
-
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody id="listaTalleres">
@@ -109,53 +110,16 @@
             </main>
         </div>
         <!-- Modals -->
-                <!-- Edit Modal -->
+                <!-- Add Modal -->
                 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">Editar Información del Taller</h5>                      
+                            <h5 class="modal-title" id="AddModalLabel">Agregar Taller</h5>                      
                         </div>
-                        <div class="modal-body" id="addModalBody">
-                            <div class="input-control">
-                                <label for="nameworkshop">Nombre del Taller</label>
-                                <input type="text" id="nameworkshop" name="nameworkshop" required>
-                            </div>
-                            <div class="input-control">
-                                <label for="descriptionworkshop">Descripción</label>
-                                <textarea id="descriptionworkshop" name="descriptionworkshop" ></textarea>
-                            </div>
-                            <div class="input-control">
-                                <label for="time">Hora</label>
-                                <input type="time" id="time" name="time" required>
-                            </div>
-                            <div class="input-control">
-                                <label for="date">Fecha</label>
-                                <input type="date" id="date" name="date" required>
-                            </div>
-                            <div class="input-control">
-                                <label for="ability">Habilidades requeridas</label>
-                                <input type="text" id="ability" name="ability" required>
-                            </div>
-                            <div class="input-control">
-                                <label for="post">Post link</label>
-                                <input type="text" id="post" name="post" required>
-                            </div>
-                            <div class="input-control">
-                                <label for="campus">Campus</label>
-                                <select name="campus" id="campus" required>
-                                    <option value="" disabled selected>-- selecciona una opción --</option>
-                                    <option value="3">Ensenada</option>
-                                    <option value="2">Mexicali</option>
-                                    <option value="1">Tijuana</option>
-                                </select>
-                            </div>
-                            <div class="input-control">
-                                <label for="facultad">Facultad</label>
-                                <select name="txtFacultad" id="txtFacultad">
-                                </select>
-                            </div>
+                        <div class="modal-body input-body" id="addModalBody">
+                            <!-- add modal body -->
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="addModalClose">Salir</button>
@@ -189,47 +153,10 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Editar Información del Taller</h5>                      
+                        <h5 class="modal-title" id="editModalLabel">Editar Taller</h5>                      
                     </div>
-                    <div class="modal-body" id="editModalBody">
-                        <div class="input-control">
-                            <label for="nameworkshop">Nombre del Taller</label>
-                            <input type="text" id="nameworkshop" name="nameworkshop" required>
-                        </div>
-                        <div class="input-control">
-                            <label for="descriptionworkshop">Descripción</label>
-                            <textarea id="descriptionworkshop" name="descriptionworkshop" ></textarea>
-                        </div>
-                        <div class="input-control">
-                            <label for="time">Hora</label>
-                            <input type="time" id="time" name="time" required>
-                        </div>
-                        <div class="input-control">
-                            <label for="date">Fecha</label>
-                            <input type="date" id="date" name="date" required>
-                        </div>
-                        <div class="input-control">
-                            <label for="ability">Habilidades requeridas</label>
-                            <input type="text" id="ability" name="ability" required>
-                        </div>
-                        <div class="input-control">
-                            <label for="post">Post link</label>
-                            <input type="text" id="post" name="post" required>
-                        </div>
-                        <div class="input-control">
-                            <label for="campus">Campus</label>
-                            <select name="campus" id="campus" required>
-                                <option value="" disabled selected>-- selecciona una opción --</option>
-                                <option value="3">Ensenada</option>
-                                <option value="2">Mexicali</option>
-                                <option value="1">Tijuana</option>
-                            </select>
-                        </div>
-                        <div class="input-control">
-                            <label for="facultad">Facultad</label>
-                            <select name="txtFacultad" id="txtFacultad">
-                            </select>
-                        </div>
+                    <div class="modal-body input-body" id="editModalBody">
+                        <!-- edit modal body -->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="editModalClose">Salir</button>
