@@ -1,4 +1,31 @@
 var apiURL = "http://localhost/cimarrones-emprendedores/BE/";
+function statusChange() {
+    $('#listaTalleres').on('click', '#workshopStatus', function() {
+        const workshopId = $(this).closest('tr').find('td:first').attr('id');
+        const isChecked = $(this).prop('checked') ? 1 : 0;
+        $.ajax({
+            url: `${apiURL}registerAdmin/status_change.php`,
+            type: 'POST',
+            dataType: "json",
+            data: {
+                idworkshop: workshopId,
+                status: isChecked
+            },
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    console.log("Estado del taller actualizado con éxito");
+                } else {
+                    console.log("Error al actualizar el estado del taller:", response.error);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("Error en la solicitud:",xhr, status,error);
+            }
+        });
+    });
+}
+
 function getLect(selectedLect) {
     $.ajax({
         type: 'GET',
@@ -149,7 +176,7 @@ function updateWorkshopList(workshops) {
                         </form>
                     </td>
                     <td>
-                        <input type="checkbox" ${workshop.status === 1 ? 'checked' : ''}>
+                        <input id="workshopStatus" type="checkbox" ${workshop.status === 1 ? 'checked' : ''}>
                     </td>
                 </tr>
         `);
@@ -353,14 +380,13 @@ function addWorkshop(){
     });
 }
 
-// Inicialización de eventos y carga inicial de datos
+// Inicialización de eventos y carga inicial de datos.
 function init() {
     getWorkshops();
-
+    statusChange(); 
     $(document).on('click', '.btn-class', function(event) {
         const action = event.currentTarget.id;
         const selectedIdWorkshop = $(event.currentTarget).data('id');//Guardar el id del donde se clickea.
-        
         switch (action) {
             case 'addButton':
                 var addModalBody = document.getElementById('editModalBody');
