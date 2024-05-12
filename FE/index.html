@@ -47,7 +47,7 @@
             <h1 class="form-middle">Inicio</h1>
             <!-- Barra de seleccion -->
             <div class="input-body">
-                <div class="input-general w-50">
+                <div class="input-general input-width">
                     <select name="txtOption" id="txtOption">
                         <option value="">Seleccionar</option>
                         <option value="option1">Alumno</option>
@@ -60,7 +60,7 @@
             <div>
                 <!-- Alumnos y Docentes -->
                 <div class="input-body">
-                    <div id="optionId" class="input-columns-flex m-3">
+                    <div id="optionId" class="input-columns-flex">
                         <div class="input-general input-group">
                             <div>
                                 <input type="text" name="idUabc" id="txtId" required>
@@ -78,9 +78,9 @@
                         <input type="text" name="nombre" id="txtNombre" required>
                         <label>Nombre(s)</label>
                     </div>
-                    <div class="input-general ">
+                    <div class="input-general">
                         <input type="text" name="apellidoP" id="txtApellidoP" required>
-                        <label class="animated-label">Apellido Paterno</label>
+                        <label>Apellido Paterno</label>
                     </div>
                     <div class="input-general">
                         <input type="text" name="apellidoM" id="txtApellidoM" required>
@@ -96,63 +96,47 @@
                 </div>
                 <!-- Optiones Extras -->
                 <!-- Ubicacion Y Facultad -->
-                <div id="ubicacion" class="">
-                    <div class="input-notColumns">
-                        <div>
-                            <h1 class="form-normal">Campus</h1>
-                        </div>
-                    </div>
-                    <div class="input-general input-body w-50">
-                        <select name="txtCampus" id="txtCampus">
-                            <option value="" disabled selected>-- selecciona una opción --</option>
+                <div id="ubicacion" class="input-body">
+                    <div class="input-general input-width">
+                        <select name="txtCampus" id="txtCampus" required>
+                            <option value=""></option>
                             <option value="3">Ensenada</option>
                             <option value="2">Mexicali</option>
                             <option value="1">Tijuana</option>
                         </select>
+                        <label for="campus">Campus</label>
                     </div>
                 </div>
                 <!-- Facultad -->
-                <div id="facultad">
-                    <div class="input-notColumns">
-                        <div>
-                            <h1 class="form-normal">Facultad</h1>
-                        </div>
-                    </div>
-                    <div class="input-general input-body">
-                        <select name="txtFacultad" id="txtFacultad">
+                <div id="facultad" class="input-body">
+                    <div class="input-general ">
+                        <select name="txtFacultad" id="txtFacultad" required>
                         </select>
+                        <label for="facultad">Facultad</label>
                     </div>
                 </div>
                 <!-- Licenciaturas -->
-                <div id="lic">
-                    <div class="input-notColumns">
-                        <div>
-                            <h1 class="form-normal">Licenciaturas</h1>
-                        </div>
-                    </div>
-                    <div class="input-general input-body">
-                        <select name="txtLic" id="txtLic">
+                <div id="lic" class="input-body">
+                    <div class="input-general">
+                        <select name="txtLic" id="txtLic" required>
                         </select>
+                        <label for="lic">Licenciaturas</label>
                     </div>
                 </div>
                 <!-- Taller -->
-                <div id="taller">
-                    <div class="input-notColumns">
-                        <div>
-                            <h1 class="form-normal">Taller</h1>
-                        </div>
-                    </div>
-                    <div class="input-general input-body">
-                        <select name="txtTaller" id="txtTaller">
+                <div id="taller" class="input-body">
+                    <div class="input-general">
+                        <select name="txtTaller" id="txtTaller" required>
                         </select>
+                        <label for="taller">Taller</label>
                     </div>
                 </div>
                 <!-- Boton siguiente. -->
-                <div class="input-body">
+                <div>
                     <button type="button" class="btn-reg" id="btnNext">Siguiente</button>
                     <div class="hide noti" id="notifications">Notificaciones Aqui.</div>
                 </div>
-                <div class="input-body">
+                <div>
                     <button type="button" class="btn-reg" id="btnRegister">Registrarse</button>
                     <div class="hide noti" id="notifications">Notificaciones Aqui.</div>
                 </div>

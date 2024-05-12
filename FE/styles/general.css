@@ -12,6 +12,7 @@
     position: relative;
     width: 75%;
     margin: 0 auto;
+    height: 45px;
 }
 
 .input-general textarea{
@@ -22,15 +23,7 @@
 
 .input-general select{
     width: 100%;
-    height: 40px;
-    border-radius: 5px;
-    padding: 10px;   
-    text-align: center;
-}
-
-.input-general select{
-    width: 100%;
-    height: 40px;
+    height: 45px;
     border-radius: 5px;
     padding: 10px;   
     text-align: center;
@@ -54,7 +47,6 @@
     pointer-events: none;
     font-size: 0.8em;
     color: gray;
-    text-transform: uppercase;
     transition: 0.5s;
 }
 
@@ -73,7 +65,7 @@
     background: white;
     border-left: 1px solid #00723F;
     border-right: 1px solid #00723F;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.05em;
 }
 
 /* .input-general input[type="date"],
@@ -98,7 +90,13 @@
     background: white;
     border-left: 1px solid #00723F;
     border-right: 1px solid #00723F;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.05em;
+}
+
+.input-general input:disabled,
+.input-general textarea:disabled,
+.input-general select:disabled {
+    border: 1px solid #00723F;
 }
 
 /* inputs phone */
@@ -116,22 +114,22 @@
     .input-general select:focus ~ label {
         color: #00723F;
         transform: translateX(10px) translateY(-7px);
-        font-size: 0.5em;
+        font-size: 0.6em;
         padding: 0 5px;
         background: white;
         border-left: 1px solid #00723F;
         border-right: 1px solid #00723F;
-        letter-spacing: 0.1em;
+        letter-spacing: 0.07em;
     }
     .input-general input:disabled ~ label {
         color: #00723F;
         transform: translateX(10px) translateY(-7px);
-        font-size: 0.5em;
+        font-size: 0.6em;
         padding: 0 5px;
         background: white;
         border-left: 1px solid #00723F;
         border-right: 1px solid #00723F;
-        letter-spacing: 0.1em;
+        letter-spacing: 0.07em;
     }
 }
 
