@@ -46,43 +46,48 @@
         <div class="form">
             <h1 class="form-middle">Inicio</h1>
             <!-- Barra de seleccion -->
-            <div class="input-control">
-                <select name="txtOption" id="txtOption">
-                    <option value="">Seleccionar</option>
-                    <option value="option1">Alumno</option>
-                    <option value="option2">Docente</option>
-                    <option value="option3">Egresado</option>
-                    <option value="option4">Exterior</option>
-                </select>
+            <div class="input-body">
+                <div class="input-general w-50">
+                    <select name="txtOption" id="txtOption">
+                        <option value="">Seleccionar</option>
+                        <option value="option1">Alumno</option>
+                        <option value="option2">Docente</option>
+                        <option value="option3">Egresado</option>
+                        <option value="option4">Exterior</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <!-- Alumnos y Docentes -->
-                <div id="optionId" class="input-columns-flex">
-                        <div class="input-control">
-                            <input type="text" name="idUabc" id="txtId" required="">
-                            <label></label>
+                <div class="input-body">
+                    <div id="optionId" class="input-columns-flex m-3">
+                        <div class="input-general input-group">
+                            <div>
+                                <input type="text" name="idUabc" id="txtId" required>
+                                <label for="txtId"></label>
+                                <button id="btnSearch" type="button" class="btn-search search">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
                         </div>
-                    <div>
-                        <button id="btnSearch" type="button" class="btn-reg btn-small search" id=""><i
-                                class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>
                 <!-- Inputs -->
-                <div id="inputGeneral" class="input-columns">
-                    <div class="input-control">
-                        <input type="text" name="nombre" id="txtNombre" required="">
+                <div id="inputGeneral" class="input-columns input-body">
+                    <div class="input-general">
+                        <input type="text" name="nombre" id="txtNombre" required>
                         <label>Nombre(s)</label>
                     </div>
-                    <div class="input-control">
-                        <input type="text" name="apellidoP" id="txtApellidoP" required="">
-                        <label>Apellido Paterno</label>
+                    <div class="input-general ">
+                        <input type="text" name="apellidoP" id="txtApellidoP" required>
+                        <label class="animated-label">Apellido Paterno</label>
                     </div>
-                    <div class="input-control">
-                        <input type="text" name="apellidoM" id="txtApellidoM" required="">
+                    <div class="input-general">
+                        <input type="text" name="apellidoM" id="txtApellidoM" required>
                         <label>Apellido Materno</label>
                     </div>
-                    <div class="input-control">
-                        <input type="text" name="email" id="txtEmail" required="">
+                    <div class="input-general">
+                        <input type="text" name="email" id="txtEmail" required>
                         <label>Correo Electronico</label>
                     </div>
                 </div>
@@ -91,13 +96,13 @@
                 </div>
                 <!-- Optiones Extras -->
                 <!-- Ubicacion Y Facultad -->
-                <div  id="ubicacion">
+                <div id="ubicacion" class="">
                     <div class="input-notColumns">
                         <div>
                             <h1 class="form-normal">Campus</h1>
                         </div>
                     </div>
-                    <div class="input-control">
+                    <div class="input-general input-body w-50">
                         <select name="txtCampus" id="txtCampus">
                             <option value="" disabled selected>-- selecciona una opción --</option>
                             <option value="3">Ensenada</option>
@@ -113,7 +118,7 @@
                             <h1 class="form-normal">Facultad</h1>
                         </div>
                     </div>
-                    <div class="input-control">
+                    <div class="input-general input-body">
                         <select name="txtFacultad" id="txtFacultad">
                         </select>
                     </div>
@@ -125,7 +130,7 @@
                             <h1 class="form-normal">Licenciaturas</h1>
                         </div>
                     </div>
-                    <div class="input-control">
+                    <div class="input-general input-body">
                         <select name="txtLic" id="txtLic">
                         </select>
                     </div>
@@ -137,17 +142,17 @@
                             <h1 class="form-normal">Taller</h1>
                         </div>
                     </div>
-                    <div class="input-control">
+                    <div class="input-general input-body">
                         <select name="txtTaller" id="txtTaller">
                         </select>
                     </div>
                 </div>
                 <!-- Boton siguiente. -->
-                <div>
+                <div class="input-body">
                     <button type="button" class="btn-reg" id="btnNext">Siguiente</button>
                     <div class="hide noti" id="notifications">Notificaciones Aqui.</div>
                 </div>
-                <div>
+                <div class="input-body">
                     <button type="button" class="btn-reg" id="btnRegister">Registrarse</button>
                     <div class="hide noti" id="notifications">Notificaciones Aqui.</div>
                 </div>

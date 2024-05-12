@@ -12,6 +12,9 @@ img {
     max-width: 100%;
 }
 
+/* utilities */
+h
+
 /* Estilos Header */
 .navbar {
     display: flex;
@@ -120,9 +123,16 @@ form .username {
 .input-columns-flex {
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 50%;
 }
 
-/* button */
+.input-general{
+    margin-bottom: 15px;
+}
+
+
+/* button register and next*/
 .btn-reg {
     display: block;
     margin: 0 auto;
@@ -137,9 +147,35 @@ form .username {
     padding: 10px 20px;
 }
 
-.btn-small {
+/* search btn */
+.btn-search {
+    display: block;
+    color: white;
+    background-color: black;
+    border: none;
+    border-radius: 50%;
     width: 50px;
-    border-radius: 25px;
+    height: 30px;
+}
+
+.input-group{
+    position: relative
+}
+
+.input-group input[type="text"] {
+    padding-right: 32px;
+}
+
+.input-group .btn-search {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    width: 20%;
 }
 
 .btn-reg:hover {

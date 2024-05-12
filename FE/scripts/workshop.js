@@ -169,10 +169,10 @@ function updateWorkshopList(workshops) {
                     <td>${workshop.time}</td>
                     <td>
                         <form id="options">
-                            <button type="button" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="infoButton"><i class="fa-solid fa-circle-info"></i></button>
-                            <button type="button" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="editButton"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button type="button" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="copyButton"><i class="fa-solid fa-copy"></i></button>
-                            <button type="button" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="deleteButton"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" title="Informacion" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="infoButton"><i class="fa-solid fa-circle-info"></i></button>
+                            <button type="button" title="Editar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="editButton"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" title="Copiar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="copyButton"><i class="fa-solid fa-copy"></i></button>
+                            <button type="button" title="Eliminar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="deleteButton"><i class="fa-solid fa-trash"></i></button>
                         </form>
                     </td>
                     <td>

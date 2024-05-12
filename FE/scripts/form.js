@@ -210,7 +210,6 @@ function changeForm(selectedOption) {
             $('#txtLic').prop('disabled', true);
             $('#txtTaller').prop('disabled', true);
             $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
-                $('label[for="' + $(this).attr('id') + '"]').removeClass('animated-label');
             });
             $("#btnNext").hide();
             $("#btnRegister").show();
@@ -231,7 +230,6 @@ function changeForm(selectedOption) {
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
                 $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
-                    $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 $("#btnNext").show();
                 let newPerson = {
@@ -252,7 +250,6 @@ function changeForm(selectedOption) {
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
                 $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
-                    $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 if ($(this).val() === "") {
                     $("#btnNext").hide();
@@ -272,7 +269,6 @@ function changeForm(selectedOption) {
             $('#txtFacultad').prop('disabled', true);
             $('#txtTaller').prop('disabled', true);
             $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
-                $('label[for="' + $(this).attr('id') + '"]').removeClass('animated-label');
             });
             $("#btnNext").hide();
             $("#btnRegister").show();
@@ -290,7 +286,6 @@ function changeForm(selectedOption) {
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
                 $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
-                    $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 $("#btnNext").show();
                 let newPerson = {
@@ -310,7 +305,6 @@ function changeForm(selectedOption) {
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
                 $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
-                    $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 if ($(this).val() === "") {
                     $("#btnNext").hide();
@@ -332,7 +326,6 @@ function changeForm(selectedOption) {
             $('#txtFacultad').prop('disabled', true);
             $('#txtTaller').prop('disabled', true);
             $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
-                $('label[for="' + $(this).attr('id') + '"]').removeClass('animated-label');
             });
             $("#btnNext").hide();
             $("#btnRegister").show();
@@ -348,7 +341,6 @@ function changeForm(selectedOption) {
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
                 $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
-                    $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 $("#btnNext").show();
                 let newPerson = {
@@ -367,7 +359,6 @@ function changeForm(selectedOption) {
                 $("#btnRegister").hide();
                 $("#btnEdit").hide();
                 $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
-                    $('label[for="' + $(this).attr('id') + '"]').addClass('animated-label');
                 });
                 if ($(this).val() === "") {
                     $("#btnNext").hide();
