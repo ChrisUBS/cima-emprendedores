@@ -14,7 +14,7 @@ function statusChange() {
             success: function(response) {
                 console.log(response);
                 if (response.success) {
-                    console.log("Estado del taller actualizado con éxito");
+                    // console.log("Estado del taller actualizado con éxito");
                 } else {
                     console.log("Error al actualizar el estado del taller:", response.error);
                 }
@@ -88,8 +88,7 @@ function getWorkshops() {
             if (response.success) {
                 updateWorkshopList(response.data);
             } else {
-                const errorMessage = response.error || "Error en la respuesta del servidor.";
-                console.log("alert-error", errorMessage);
+                console.log("alert-error", response.error);
             }
         },
         error: function(xhr, status, error) {
@@ -170,9 +169,10 @@ function updateWorkshopList(workshops) {
                     <td>${workshop.time}</td>
                     <td>
                         <form id="options">
-                            <button type="button" class="btn-class info" data-id="${workshop.idworkshop}" id="infoButton"><i class="fa-solid fa-circle-info"></i></button>
-                            <button type="button" class="btn-class edit" data-id="${workshop.idworkshop}" id="editButton"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button type="button" class="btn-class delete" data-id="${workshop.idworkshop}" id="deleteButton"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="infoButton"><i class="fa-solid fa-circle-info"></i></button>
+                            <button type="button" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="editButton"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="copyButton"><i class="fa-solid fa-copy"></i></button>
+                            <button type="button" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="deleteButton"><i class="fa-solid fa-trash"></i></button>
                         </form>
                     </td>
                     <td>
@@ -252,12 +252,14 @@ function getInfoModal(selectedIdWorkshop) {
     });
 }
 
-// Autorellenar el edit del workshop 
-function showEditWorkshop(selectedIdWorkshop){
+// Autorellenar datos del workshop 
+function showWorkshopData(selectedIdWorkshop, modalSelected) {
     if (!selectedIdWorkshop) {
         console.log("alert-error", "Error: ID de taller no seleccionado.");
         return;
     }
+    var $modalBody = $(modalSelected);
+
     $.ajax({
         url: `${apiURL}registerAdmin/info_workshop.php`,
         type: 'GET',
@@ -268,17 +270,17 @@ function showEditWorkshop(selectedIdWorkshop){
         success: function(response) {
             if (response.success) {
                 const workshopData = response.data[0];
-                $('#editModalBody #nameworkshop').val(workshopData.nameworkshop);
-                $('#editModalBody #descriptionworkshop').val(workshopData.dworkshop);
-                $('#editModalBody #time').val(workshopData.time);
-                $('#editModalBody #date').val(workshopData.date);
-                $('#editModalBody #ability').val(workshopData.ability);
-                $('#editModalBody #post').val(workshopData.post);
-                $('#editModalBody #campus').val(workshopData.idcampus);
+                $modalBody.find('#nameworkshop').val(workshopData.nameworkshop);
+                $modalBody.find('#descriptionworkshop').val(workshopData.dworkshop);
+                $modalBody.find('#time').val(workshopData.time);
+                $modalBody.find('#date').val(workshopData.date);
+                $modalBody.find('#ability').val(workshopData.ability);
+                $modalBody.find('#post').val(workshopData.post);
+                $modalBody.find('#campus').val(workshopData.idcampus);
                 getFacultad(workshopData.idfacultad);
-                $('#editModalBody #txtFacultad').val(workshopData.idfacultad);
+                $modalBody.find('#txtFacultad').val(workshopData.idfacultad);
                 getLect(workshopData.idlecturer);
-                $('#editModalBody #lect').val(workshopData.idlecturer);
+                $modalBody.find('#lect').val(workshopData.idlecturer);
             } else {
                 console.log("alert-error", `Error al mostrar info del taller: ${response.error}`);
             }
@@ -289,21 +291,14 @@ function showEditWorkshop(selectedIdWorkshop){
     });
 }
 
+
 // Editar el workshop
 function editWorkshop(selectedIdWorkshop){
     if (!selectedIdWorkshop) {
         console.log("alert-error", "Error: ID de taller no seleccionado.");
         return;
     }
-    var nameworkshop = $('#editModalBody #nameworkshop').val();
-    var descriptionworkshop = $('#editModalBody #descriptionworkshop').val();
-    var time = $('#editModalBody #time').val();
-    var date = $('#editModalBody #date').val();
-    var ability = $('#editModalBody #ability').val();
-    var post = $('#editModalBody #post').val();
-    var idcampus = $('#editModalBody #campus').val();
-    var idfacultad = $('#editModalBody #txtFacultad').val();
-    var idlecturer = $('#editModalBody #lect').val(); 
+
     $.ajax({
         url: `${apiURL}registerAdmin/edit_workshop.php`,
         type: 'POST',
@@ -338,16 +333,19 @@ function editWorkshop(selectedIdWorkshop){
     });
 }
 
-function addWorkshop(){
-    var nameworkshop = $('#addModalBody #nameworkshop').val();
-    var descriptionworkshop = $('#addModalBody #descriptionworkshop').val();
-    var time = $('#addModalBody #time').val();
-    var date = $('#addModalBody #date').val();
-    var ability = $('#addModalBody #ability').val();
-    var post = $('#addModalBody #post').val();
-    var idcampus = $('#addModalBody #campus').val();
-    var idfacultad = $('#addModalBody #txtFacultad').val();
-    var idlecturer = $('#addModalBody #lect').val();
+function addWorkshop(modalSelected) {
+    var $modalBody = $(modalSelected);
+
+    var nameworkshop = $modalBody.find('#nameworkshop').val();
+    var descriptionworkshop = $modalBody.find('#descriptionworkshop').val();
+    var time = $modalBody.find('#time').val();
+    var date = $modalBody.find('#date').val();
+    var ability = $modalBody.find('#ability').val();
+    var post = $modalBody.find('#post').val();
+    var idcampus = $modalBody.find('#campus').val();
+    var idfacultad = $modalBody.find('#txtFacultad').val();
+    var idlecturer = $modalBody.find('#lect').val();
+
     $.ajax({
         url: `${apiURL}registerAdmin/saved_workshop.php`,
         type: 'POST',
@@ -365,13 +363,13 @@ function addWorkshop(){
         },
         success: function(response) {
             if (response.success) {
-                $('#addModal').modal('hide');
+                // $modalBody.closest('.modal').modal('hide');
                 getWorkshops();
-                setTimeout(function () {
+                setTimeout(function() {
                     location.reload();
                 });
             } else {
-                console.log("alert-error", `Error al mostrar info del taller: ${response.error}`);
+                console.log("alert-error", `Error al agregar el taller: ${response.error}`);
             }
         },
         error: function(xhr, status, error) {
@@ -391,6 +389,8 @@ function init() {
             case 'addButton':
                 var addModalBody = document.getElementById('editModalBody');
                 addModalBody.innerHTML = '';
+                var addModalBody = document.getElementById('copyModalBody');
+                addModalBody.innerHTML = '';
                 $('#addModal').modal('show');
                 workshopTable('addModalBody');
                 getLect();
@@ -398,7 +398,7 @@ function init() {
                     getFacultad();
                 });
                 $('#addModalConfirm').on('click', function() {
-                    addWorkshop();
+                    addWorkshop('#addModalBody');
                 });
                 $('#addModalClose').on('click', function() {
                     $('#addModal').modal('hide');
@@ -414,12 +414,15 @@ function init() {
             case 'editButton':
                 var addModalBody = document.getElementById('addModalBody');
                 addModalBody.innerHTML = '';
+                var addModalBody = document.getElementById('copyModalBody');
+                addModalBody.innerHTML = '';
                 $('#editModal').modal('show');
                 workshopTable('editModalBody');
                 $('#campus').on('change', function() {
                     getFacultad();
                 });
-                showEditWorkshop(selectedIdWorkshop);
+                showWorkshopData(selectedIdWorkshop, '#editModalBody');
+                console.log(selectedIdWorkshop);
                 $('#editModalEdit').off('click').on('click', function() {
                     editWorkshop(selectedIdWorkshop);
                 });
@@ -427,12 +430,31 @@ function init() {
                     $('#editModal').modal('hide');
                 });
                 break;
+            case 'copyButton':
+                var addModalBody = document.getElementById('addModalBody');
+                addModalBody.innerHTML = '';
+                var addModalBody = document.getElementById('editModalBody');
+                addModalBody.innerHTML = '';
+                $('#copyModal').modal('show');
+                workshopTable('copyModalBody');
+                $('#campus').on('change', function() {
+                    getFacultad();
+                });
+                showWorkshopData(selectedIdWorkshop, '#copyModalBody');
+                console.log(selectedIdWorkshop);
+                $('#copyConfirm').off('click').on('click', function() {
+                    addWorkshop('#copyModalBody');
+                });
+                $('#copyModalClose').off('click').on('click', function() {
+                    $('#copyModal').modal('hide');
+                });
+                break;
             case 'deleteButton':
                 $('#deleteModal').modal('show');
                 $('#deleteModalClose').off('click').on('click', function() {
                     $('#deleteModal').modal('hide');
                 });
-                $('#confirmDelete').off('click').on('click', function() {
+                $('#deleteConfirm').off('click').on('click', function() {
                     deleteWorkshop(selectedIdWorkshop);
                     setTimeout(function () {
                         location.reload();

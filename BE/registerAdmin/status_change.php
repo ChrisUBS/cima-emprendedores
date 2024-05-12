@@ -21,12 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->execute()) {
                 $response = array(
                     "success" => true,
-                    "message" => "Estado del taller actualizado exitosamente"
+                    // "message" => "Estado del taller actualizado exitosamente"
                 );
             } else {
                 $response = array(
                     "success" => false,
-                    "error" => "Error al actualizar el estado del taller: " . $stmt->error
+                    // "error" => "Error al actualizar el estado del taller: " . $stmt->error
                 );
             }
 
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $response = array(
                 "success" => false,
-                "error" => "No se pudo preparar la consulta: " . $conn->error
+                // "error" => "No se pudo preparar la consulta: " . $conn->error
             );
         }
     } elseif (isset($_POST['assist'], $_POST['idregistro'])) {
@@ -50,12 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->execute()) {
                 $response = array(
                     "success" => true,
-                    "message" => "Asistencia actualizada exitosamente"
+                    // "message" => "Asistencia actualizada exitosamente"
                 );
             } else {
                 $response = array(
                     "success" => false,
-                    "error" => "Error al actualizar la asistencia: " . $stmt->error
+                    // "error" => "Error al actualizar la asistencia: " . $stmt->error
                 );
             }
 
@@ -63,13 +63,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $response = array(
                 "success" => false,
-                "error" => "No se pudo preparar la consulta: " . $conn->error
+                // "error" => "No se pudo preparar la consulta: " . $conn->error
             );
         }
     } else {
         $response = array(
             "success" => false,
-            "error" => "Faltan parámetros en la solicitud"
+            // "error" => "Faltan parámetros en la solicitud"
         );
     }
 

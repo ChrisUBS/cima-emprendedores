@@ -458,7 +458,9 @@ function getTalleres() {
                 selectTaller.append("<option value=''></option>");
                 
                 response.talleres.forEach(taller => {
-                    selectTaller.append(`<option value='${taller.idworkshop}'>${taller.nombre}</option>`);
+                    if (taller.status === 1) {
+                        selectTaller.append(`<option value='${taller.idworkshop}'>${taller.nombre}</option>`);
+                    }
                 });
             } else {
                 $('#txtTaller').prop('disabled', true);

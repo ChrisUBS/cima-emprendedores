@@ -136,7 +136,7 @@ th {
 
 
 /* botton details workshop*/
-button.info, button.edit, button.delete {
+.btnDetails{
     border: none; 
     background-color: transparent; 
     padding: 5px; 
@@ -149,7 +149,7 @@ button.info, button.edit, button.delete {
     cursor: pointer;
 }
 
-button.info i, button.edit i, button.delete i {
+.btnDetails i{
     font-size: 1rem;
 }
 

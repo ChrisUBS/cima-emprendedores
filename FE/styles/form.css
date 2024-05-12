@@ -122,56 +122,6 @@ form .username {
     justify-content: center;
 }
 
-.input-control input {
-    width: 100%;
-    padding: 10 0px;
-    font-size: 16px;
-    color: #000000;
-    margin-bottom: 30px;
-    border: none;
-    border-bottom: 1px solid black;
-    outline: none;
-    background: transparent;
-}
-
-.input-control label {
-    position: absolute;
-    top: 0;
-    left: 0px;
-    font-size: 0.8rem;
-    color: #585754;
-    pointer-events: none;
-    transition: .5s;
-    transform: translateY(-25%);
-}
-
-.input-control input:focus~label,
-.input-control input:valid~label,
-.input-control input:disabled~label {
-    top: -20px;
-    left: 0;
-    color: #585754;
-    font-size: 12px;
-}
-
-.animated-label {
-    transition: top 0.2s, left 0.2s, font-size 0.2s;
-}
-
-.input-control select {
-    display: block;
-    text-align: center;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    height: 40px;
-    border: 1px solid;
-    border-radius: 10px;
-    width: 200px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    max-width: calc(100% - 20px);
-}
-
 /* button */
 .btn-reg {
     display: block;
