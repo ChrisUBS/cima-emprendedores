@@ -86,13 +86,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     exit();
                 }
             }
+            $stmt_registro = $conn->prepare("INSERT INTO registro (iduabc, idcampus, idworkshop, name, lastname, middlename, type) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt_registro->bind_param("iiissss", $id, $idcampus, $idworkshop, $nombre, $apellidoP, $apellidoM, $option);
+            $stmt_registro->execute();
+            $idregistro = $conn->insert_id;
+            $stmt_registro->close();
+        }else{
+            $stmt_registro = $conn->prepare("INSERT INTO registro (idcampus, idworkshop, name, lastname, middlename, type) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt_registro->bind_param("iissss",$idcampus, $idworkshop, $nombre, $apellidoP, $apellidoM, $option);
+            $stmt_registro->execute();
+            $idregistro = $conn->insert_id;
+            $stmt_registro->close();
         }
 
-        $stmt_registro = $conn->prepare("INSERT INTO registro (iduabc, idcampus, idworkshop, name, lastname, middlename, type) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt_registro->bind_param("iiissss", $id, $idcampus, $idworkshop, $nombre, $apellidoP, $apellidoM, $option);
-        $stmt_registro->execute();
-        $idregistro = $conn->insert_id;
-        $stmt_registro->close();
 
         // Generación del código QR
         $dir = '../plugins/codes/';

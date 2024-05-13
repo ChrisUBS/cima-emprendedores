@@ -44,7 +44,7 @@
     <main class="log-bg">
         <!-- Panel del formulario -->
         <div class="form">
-            <h1 class="form-middle">Inicio</h1>
+            <h1 class="form-middle">Registro</h1>
             <!-- Barra de seleccion -->
             <div class="input-body">
                 <div class="input-general input-width">
@@ -62,33 +62,39 @@
                 <div class="input-body">
                     <div id="optionId" class="input-columns-flex">
                         <div class="input-general input-group">
-                            <div>
-                                <input type="text" name="idUabc" id="txtId" required>
+                            <div class="input-container">
+                                <input type="text" name="idUabc" id="txtId" required required data-error-message="¡Campo requerido!">
                                 <label for="txtId"></label>
                                 <button id="btnSearch" type="button" class="btn-search search">
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </button>
                             </div>
+                            <div class="error-search error"></div>
+                            <div class="success-search"></div>
                         </div>
                     </div>
                 </div>
                 <!-- Inputs -->
                 <div id="inputGeneral" class="input-columns input-body">
                     <div class="input-general">
-                        <input type="text" name="nombre" id="txtNombre" required>
+                        <input type="text" name="nombre" id="txtNombre" required data-error-message="¡Campo requerido!">
                         <label>Nombre(s)</label>
+                        <div class="error"></div>
                     </div>
                     <div class="input-general">
-                        <input type="text" name="apellidoP" id="txtApellidoP" required>
+                        <input type="text" name="apellidoP" id="txtApellidoP" required data-error-message="¡Campo requerido!">
                         <label>Apellido Paterno</label>
+                        <div class="error"></div>
                     </div>
                     <div class="input-general">
-                        <input type="text" name="apellidoM" id="txtApellidoM" required>
+                        <input type="text" name="apellidoM" id="txtApellidoM" required data-error-message="¡Campo requerido!">
                         <label>Apellido Materno</label>
+                        <div class="error"></div>
                     </div>
                     <div class="input-general">
-                        <input type="text" name="email" id="txtEmail" required>
-                        <label>Correo Electronico</label>
+                        <input type="text" name="email" id="txtEmail" required data-error-message="¡Campo requerido!">
+                        <label>Correo Electrónico</label>
+                        <div class="error"></div>
                     </div>
                 </div>
                 <div>
@@ -98,47 +104,50 @@
                 <!-- Ubicacion Y Facultad -->
                 <div id="ubicacion" class="input-body">
                     <div class="input-general input-width">
-                        <select name="txtCampus" id="txtCampus" required>
+                        <select name="txtCampus" id="txtCampus" required data-error-message="¡Campo requerido!">
                             <option value=""></option>
                             <option value="3">Ensenada</option>
                             <option value="2">Mexicali</option>
                             <option value="1">Tijuana</option>
                         </select>
                         <label for="campus">Campus</label>
+                        <div class="error"></div>
                     </div>
                 </div>
                 <!-- Facultad -->
                 <div id="facultad" class="input-body">
                     <div class="input-general ">
-                        <select name="txtFacultad" id="txtFacultad" required>
+                        <select name="txtFacultad" id="txtFacultad" required data-error-message="¡Campo requerido!">
                         </select>
                         <label for="facultad">Facultad</label>
+                        <div class="error"></div>
                     </div>
                 </div>
                 <!-- Licenciaturas -->
                 <div id="lic" class="input-body">
                     <div class="input-general">
-                        <select name="txtLic" id="txtLic" required>
+                        <select name="txtLic" id="txtLic" required data-error-message="¡Campo requerido!">
                         </select>
                         <label for="lic">Licenciaturas</label>
+                        <div class="error"></div>
                     </div>
                 </div>
                 <!-- Taller -->
                 <div id="taller" class="input-body">
                     <div class="input-general">
-                        <select name="txtTaller" id="txtTaller" required>
+                        <select name="txtTaller" id="txtTaller" required data-error-message="¡Campo requerido!">
                         </select>
                         <label for="taller">Taller</label>
+                        <div class="error"></div>
                     </div>
                 </div>
                 <!-- Boton siguiente. -->
                 <div>
-                    <button type="button" class="btn-reg" id="btnNext">Siguiente</button>
-                    <div class="hide noti" id="notifications">Notificaciones Aqui.</div>
+                    <button type="button" class="btn-reg btnNext" id="btnNext">Siguiente</button>
                 </div>
                 <div>
-                    <button type="button" class="btn-reg" id="btnRegister">Registrarse</button>
-                    <div class="hide noti" id="notifications">Notificaciones Aqui.</div>
+                    <button type="button" class="btn-reg btnRegister" id="btnRegister">Registrarse</button>
+                    <div class="success"></div>
                 </div>
             </div>
         </div>

@@ -133,18 +133,21 @@
     }
 }
 
-/* inputs error and success */
-.input-control.success input {
+/* Notificacion */
+.input-general.success input {
     border-color: #09c372;
 }
-
-.input-control.error input {
+.input-general.error input {
     border-color: #ff3860;
 }
-
-.input-control .error {
+.error {
     color: #ff3860;
     font-size: 9px;
     height: 13px;
 }
-
+.success {
+    color: #09c372;
+    font-size: 15px;
+    height: 13px;
+    text-align: center;
+}
