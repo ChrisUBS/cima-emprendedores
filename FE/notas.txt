@@ -1,0 +1,19 @@
+ <div class="eval-workshop question-two">
+                <p>Me fue de utilidad la informacion:</p>
+                <div class="feedback-container"> <!-- CONSIDERAR ID DIFERENTES PARA LA TOMA DE VALORES CON JS DE LAS PREGUNTAS -->
+                    <i class="fa-solid fa-face-frown" style="color: red;"></i>
+                    <div class="rating">
+                        <input id="star5-2" name="rating2" type="radio" value="5">
+                        <label for="star5-2">&#9733;</label>
+                        <input id="star4-2" name="rating2" type="radio" value="4">
+                        <label for="star4-2">&#9733;</label>
+                        <input id="star3-2" name="rating2" type="radio" value="3">
+                        <label for="star3-2">&#9733;</label>
+                        <input id="star2-2" name="rating2" type="radio" value="2">
+                        <label for="star2-2">&#9733;</label>
+                        <input id="star1-2" name="rating2" type="radio" value="1">
+                        <label for="star1-2">&#9733;</label>
+                    </div>
+                    <i class="fa-solid fa-face-smile" style="color: green;"></i>
+                </div>
+            </div>

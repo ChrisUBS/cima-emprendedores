@@ -1,31 +1,212 @@
+<!-- FORM -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/feedback.css">
-    <title>Document</title>
+    <title>Cimarrones Emprendedores</title>
+    <link rel="stylesheet" href="plugins/bootstrap.css">
+    <link rel="stylesheet" href="styles/feedback.css">
+    <script src="https://kit.fontawesome.com/b8ce32ba45.js" crossorigin="anonymous"></script>
 </head>
+
+
+
 <body>
-    <main>
-        <div class="log-bg">
-            <div  id="ubicacion">
-                <div class="input-notColumns">
-                    <div>
-                        <h1 class="form-normal">Campus</h1>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar navbar-light bg-light">
+            <div class="center-content">
+                <a href="https://www.uabc.mx/">
+                    <img src="assets/escudo-actualizado-2022.png" width="60" height="70"
+                        class="d-inline-block align-top" alt="">
+                </a>
+            </div>
+            <div class="center-content">
+                <h3 class="txtcentro">Cimarrones Emprendedores</h3>
+                <p class="txtcentro">Portal de Talleres UABC</p>
+            </div>
+            <div class="center-content">
+                <a class="logos" href="https://www.instagram.com/cimarronesemprendedores/">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a class="logos" href="https://www.facebook.com/CimarronesEmprendedoresUABC/?locale=es_LA">
+                    <i class="fa-brands fa-square-facebook"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- Panel principal -->
+    <main class="log-bg">
+        <div class="logo-box evaluacion-box">
+            <h1 class="evaluacion-text">Evaluación</h1>
+            <p class="box-text">¡Bienvenidos sean emprendedores!</p>
+            <p class="box-text"> Favor de contestar las siguientes preguntas lo más sincero posible para una mejora continua, su información es anónima y sólo se utilizará con fines estadísticos para seguir ofreciéndoles una buena experiencia en los talleres.</p>
+        </div>
+        <!-- Panel del formulario -->
+        <div class="form box-handler"> <!-- box dissapear borra la caja --> 
+            <!-- Barra de seleccion de campus-->
+            <div id="campus-selection">
+                <h6>Campus</h6>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="opcion1" name="opciones" value="Ensenada">
+                        <label for="opcion1">Ensenada</label>
                     </div>
-                </div>
-                <div class="input-control">
-                    <select name="txtCampus" id="txtCampus">
-                        <option value="" disabled selected>-- selecciona una opción --</option>
-                        <option value="3">Ensenada</option>
-                        <option value="2">Mexicali</option>
-                        <option value="1">Tijuana</option>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="opcion2" name="opciones" value="Mexicali">
+                        <label for="opcion2">Mexicali</label>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="opcion3" name="opciones" value="Tijuana">
+                        <label for="opcion3">Tijuana</label>
+                    </div>
+                    <input id="btnNext" type="submit" value="Siguiente" onclick="submitCampusForm()">
+            </div>
+        </div>
+        <div class="form event-box">
+            <div class="eval-event-box-container">
+                <h6 class="eval-event-box-title">Tijuana</h6>
+                <form class="eval-event-box-form">
+                    <label for="eval-event-box-select" class="eval-event-box-label">Evento a evaluar *</label>
+                    <select id="eval-event-box-select" name="evento" class="eval-event-box-select">
+                        <option value="evento1">Evento 1</option>
+                        <option value="evento2">Evento 2</option>
+                        <option value="evento3">Evento 3</option>
                     </select>
+                    <div class="eval-event-box-buttons">
+                        <button type="button" class="eval-event-box-button-back" onclick="backAgain()">Atrás</button>
+                        <button type="button" class="eval-event-box-button-next" onclick="submitEventForm()">Siguiente</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="question-box">
+            <div class="eval-workshop question-one">
+                <p>El evento cumplio mis expectativas:</p>
+                <div class="feedback-container"> <!-- CONSIDERAR ID DIFERENTES PARA LA TOMA DE VALORES CON JS DE LAS PREGUNTAS -->
+                    <i class="fa-solid fa-face-frown" style="color: red;"></i>
+                    <div class="rating">
+                        <input id="star5-1" name="rating1" type="radio" value="5">
+                        <label for="star5-1">&#9733;</label>
+                        <input id="star4-1" name="rating1" type="radio" value="4">
+                        <label for="star4-1">&#9733;</label>
+                        <input id="star3-1" name="rating1" type="radio" value="3">
+                        <label for="star3-1">&#9733;</label>
+                        <input id="star2-1" name="rating1" type="radio" value="2">
+                        <label for="star2-1">&#9733;</label>
+                        <input id="star1-1" name="rating1" type="radio" value="1">
+                        <label for="star1-1">&#9733;</label>
+                    </div>
+                    <i class="fa-solid fa-face-smile" style="color: green;"></i>
                 </div>
             </div>
         </div>
+        <div class="question-box">
+            <div class="eval-workshop question-two">
+                <p>Me fue de utilidad la informacion:</p>
+                <div class="feedback-container"> <!-- CONSIDERAR ID DIFERENTES PARA LA TOMA DE VALORES CON JS DE LAS PREGUNTAS -->
+                    <i class="fa-solid fa-face-frown" style="color: red;"></i>
+                    <div class="rating">
+                        <input id="star5-2" name="rating2" type="radio" value="5">
+                        <label for="star5-2">&#9733;</label>
+                        <input id="star4-2" name="rating2" type="radio" value="4">
+                        <label for="star4-2">&#9733;</label>
+                        <input id="star3-2" name="rating2" type="radio" value="3">
+                        <label for="star3-2">&#9733;</label>
+                        <input id="star2-2" name="rating2" type="radio" value="2">
+                        <label for="star2-2">&#9733;</label>
+                        <input id="star1-2" name="rating2" type="radio" value="1">
+                        <label for="star1-2">&#9733;</label>
+                    </div>
+                    <i class="fa-solid fa-face-smile" style="color: green;"></i>
+                </div>
+            </div>
+        </div>
+        <div class="question-box">
+            <div class="eval-workshop question-two">
+                <p>Como consideras el dominio del tema del conferencista?</p>
+                <div class="feedback-container"> <!-- CONSIDERAR ID DIFERENTES PARA LA TOMA DE VALORES CON JS DE LAS PREGUNTAS -->
+                    <i class="fa-solid fa-face-frown" style="color: red;"></i>
+                    <div class="rating">
+                        <input id="star5-3" name="rating3" type="radio" value="5">
+                        <label for="star5-3">&#9733;</label>
+                        <input id="star4-3" name="rating3" type="radio" value="4">
+                        <label for="star4-3">&#9733;</label>
+                        <input id="star3-3" name="rating3" type="radio" value="3">
+                        <label for="star3-3">&#9733;</label>
+                        <input id="star2-3" name="rating3" type="radio" value="2">
+                        <label for="star2-3">&#9733;</label>
+                        <input id="star1-3" name="rating3" type="radio" value="1">
+                        <label for="star1-3">&#9733;</label>
+                    </div>
+                    <i class="fa-solid fa-face-smile" style="color: green;"></i>
+                </div>
+            </div>
+        </div>
+        <div class="question-box">
+            <div class="eval-workshop question-3">
+                    <label for="eventFeedback">¿Qué fue lo que le gustó del evento? <span class="required">*</span></label>
+                    <input type="text" id="eventlike" name="eventFeedback" placeholder="Tu respuesta" required>
+                
+            </div>
+        </div>
+        <div class="question-box">
+            <div class="eval-workshop question-3">
+                    <label for="eventFeedback">¿Qué fue lo que no le gustó del evento? <span class="required">*</span></label>
+                    <input type="text" id="eventdislike" name="eventFeedback" placeholder="Tu respuesta" required>
+                
+            </div>
+        </div>
+        <div class="question-box select-box">
+            <p>¿Recomendaría los talleres? *</p>
+            <label><input type="radio" name="recommendation" value="yes"> Sí</label>
+            <label><input type="radio" name="recommendation" value="no"> No</label>
+            <label><input type="radio" name="recommendation" value="maybe"> Tal vez</label>
+        </div>
+        <div class="question-box select-box">
+            <p>¿Volveria a asistir a otro taller o evento de emprendimiento? *</p>
+            <label><input type="radio" name="assist" value="yes"> Sí</label>
+            <label><input type="radio" name="assist" value="no"> No</label>
+            <label><input type="radio" name="assist" value="maybe"> Tal vez</label>
+        </div>
+        <div class="question-box">
+            <div class="eval-workshop question-3">
+                    <label for="eventFeedback">¿Qué temas te gustaría que se hablarán en futuros talleres?
+                        <span class="required">*</span></label>
+                    <input type="text" id="upcomingEvents" name="eventFeedback" placeholder="Tu respuesta" required>
+            </div>
+        </div>
+        <div class="question-box">
+            <div class="eval-workshop question-3">
+                    <label for="eventFeedback">Comentarios o sugerencias para la mejora de los eventos
+                        <span class="required">*</span></label>
+                    <input type="text" id="eventImprovements" name="eventFeedback" placeholder="Tu respuesta" required>
+                </div>
+            </div>
+        </div>
+        <div class="question-box">
+            <p>Gracias por darnos su opinion :D</p>
+            <img src="../FE/assets/contacto.png">
+        </div>
+        <div class="buttons-form">
+            <button type="button" class="button-back" onclick="backAgain()">Atrás</button>
+            <button type="button" class="eval-event-box button-send" id="buttonSend" onclick="sendFeedback()">Enviar</button>
+        </div>
+        <div class="logo-box thanks-box">
+            <h1 class="evaluacion-text">Evaluación</h1>
+            <p class="box-text">¡Se han registrado sus respuestas!</p>
+        </div>
     </main>
+    <footer>
+        <div class="footer-box">
+            <p>emprendedores.tij@uabc.edu.mx</p>
+            <p>Calzada Universidad 14418 Parque Insdustrial Internacional Tijuana, Tijuana B.C UABC, Tijuana, Mexico</p>
+        </div>
+    </footer>
+    <!-- Scripts -->
     <script src="plugins/jquery3.7.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -33,5 +214,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+    <script src="scripts/feedback.js"></script>
+    <!-- <script src="scripts/prueba.js"></script> -->
 </body>
+
 </html>
