@@ -1,4 +1,5 @@
-
+// Función para realizar el inicio de sesión
+let apiURL="http://localhost/cimarronEmprendedor/cimarrones-emprendedores/BE/"
 let surveyResults = [
 
 ]
@@ -38,6 +39,7 @@ function isValid() {
 
 // Función para manejar la acción de click en siguiente en formulario de campus
 function submitCampusForm() {
+
     $(".box-handler").toggle(false);
     $(".event-box").toggle(true);
     $(".question-box").toggle(false);
@@ -45,6 +47,7 @@ function submitCampusForm() {
     var selectedValues = $('input[name="opciones"]:checked').map(function() { //Oculta la caja de escoger campus en feedback 
         return this.value;
     }).get();
+    getTalleres();
     console.log(selectedValues);
 
 }
@@ -196,3 +199,30 @@ document.addEventListener('DOMContentLoaded', function() {
     $(".thanks-box").toggle(false);
 
 });
+
+function getTalleres() {
+    var selectedUbicacion = $("#txtCampus").val();
+    $.ajax({
+        type: "GET",
+        url: `${apiURL}register/get_workshops.php`,
+        data: { ubicacion: selectedUbicacion },
+        success: function(response) {
+            var selectTaller = $("#txtTaller");
+            selectTaller.empty();
+            
+            if (response && response.success && response.talleres && response.talleres.length > 0) {
+                $('#txtTaller').prop('disabled', false);
+                selectTaller.append("<option value=''></option>");
+                
+                response.talleres.forEach(taller => {
+                    selectTaller.append(`<option value='${taller.idworkshop}'>${taller.nombre}</option>`);
+                });
+            } else {
+                $('#txtTaller').prop('disabled', true);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error al obtener los talleres:", error);
+        }
+    });
+}

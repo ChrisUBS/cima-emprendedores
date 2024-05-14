@@ -49,43 +49,53 @@
         <!-- Panel del formulario -->
         <div class="form box-handler"> <!-- box dissapear borra la caja --> 
             <!-- Barra de seleccion de campus-->
-            <div id="campus-selection">
+            <!-- <div id="campus-selection">
                 <h6>Campus</h6>
                     <div class="checkbox-container">
-                        <input type="checkbox" id="opcion1" name="opciones" value="Ensenada">
+                        <input type="checkbox" id="opcion1" name="opciones" value="1">
                         <label for="opcion1">Ensenada</label>
                     </div>
                     <div class="checkbox-container">
-                        <input type="checkbox" id="opcion2" name="opciones" value="Mexicali">
+                        <input type="checkbox" id="opcion2" name="opciones" value="2">
                         <label for="opcion2">Mexicali</label>
                     </div>
                     <div class="checkbox-container">
-                        <input type="checkbox" id="opcion3" name="opciones" value="Tijuana">
+                        <input type="checkbox" id="opcion3" name="opciones" value="3">
                         <label for="opcion3">Tijuana</label>
                     </div>
                     <input id="btnNext" type="submit" value="Siguiente" onclick="submitCampusForm()">
+            </div> -->
+            <div id="campus-selection" class="input-control">
+                <select name="txtCampus" id="txtCampus">
+                    <option value="" disabled selected>-- Selecciona una opción --</option>
+                    <option value="3">Ensenada</option>
+                    <option value="2">Mexicali</option>
+                    <option value="1">Tijuana</option>
+                </select>
+                <input id="btnNext" type="submit" value="Siguiente" onclick="submitCampusForm()">
             </div>
+
         </div>
         <div class="form event-box">
             <div class="eval-event-box-container">
                 <h6 class="eval-event-box-title">Tijuana</h6>
-                <form class="eval-event-box-form">
+                <div class="eval-event-box-form">
                     <label for="eval-event-box-select" class="eval-event-box-label">Evento a evaluar *</label>
-                    <select id="eval-event-box-select" name="evento" class="eval-event-box-select">
-                        <option value="evento1">Evento 1</option>
+                    <select id="txtTaller" name="evento" class="eval-event-box-select">
+                        <!-- <option value="evento1">Evento 1</option>
                         <option value="evento2">Evento 2</option>
-                        <option value="evento3">Evento 3</option>
+                        <option value="evento3">Evento 3</option> -->
                     </select>
                     <div class="eval-event-box-buttons">
                         <button type="button" class="eval-event-box-button-back" onclick="backAgain()">Atrás</button>
                         <button type="button" class="eval-event-box-button-next" onclick="submitEventForm()">Siguiente</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
         <div class="question-box">
             <div class="eval-workshop question-one">
-                <p>El evento cumplio mis expectativas:</p>
+                <p>El evento cumplió mis expectativas:</p>
                 <div class="feedback-container"> <!-- CONSIDERAR ID DIFERENTES PARA LA TOMA DE VALORES CON JS DE LAS PREGUNTAS -->
                     <i class="fa-solid fa-face-frown" style="color: red;"></i>
                     <div class="rating">
@@ -106,7 +116,7 @@
         </div>
         <div class="question-box">
             <div class="eval-workshop question-two">
-                <p>Me fue de utilidad la informacion:</p>
+                <p>Me fue de utilidad la información:</p>
                 <div class="feedback-container"> <!-- CONSIDERAR ID DIFERENTES PARA LA TOMA DE VALORES CON JS DE LAS PREGUNTAS -->
                     <i class="fa-solid fa-face-frown" style="color: red;"></i>
                     <div class="rating">
@@ -127,7 +137,7 @@
         </div>
         <div class="question-box">
             <div class="eval-workshop question-two">
-                <p>Como consideras el dominio del tema del conferencista?</p>
+                <p>Cómo consideras el dominio del tema del conferencista?</p>
                 <div class="feedback-container"> <!-- CONSIDERAR ID DIFERENTES PARA LA TOMA DE VALORES CON JS DE LAS PREGUNTAS -->
                     <i class="fa-solid fa-face-frown" style="color: red;"></i>
                     <div class="rating">
@@ -167,7 +177,7 @@
             <label><input type="radio" name="recommendation" value="maybe"> Tal vez</label>
         </div>
         <div class="question-box select-box">
-            <p>¿Volveria a asistir a otro taller o evento de emprendimiento? *</p>
+            <p>¿Volvería a asistir a otro taller o evento de emprendimiento? *</p>
             <label><input type="radio" name="assist" value="yes"> Sí</label>
             <label><input type="radio" name="assist" value="no"> No</label>
             <label><input type="radio" name="assist" value="maybe"> Tal vez</label>
@@ -188,7 +198,7 @@
             </div>
         </div>
         <div class="question-box">
-            <p>Gracias por darnos su opinion :D</p>
+            <p>Gracias por darnos su opinión :D</p>
             <img src="../FE/assets/contacto.png">
         </div>
         <div class="buttons-form">
@@ -203,7 +213,7 @@
     <footer>
         <div class="footer-box">
             <p>emprendedores.tij@uabc.edu.mx</p>
-            <p>Calzada Universidad 14418 Parque Insdustrial Internacional Tijuana, Tijuana B.C UABC, Tijuana, Mexico</p>
+            <p>Calzada Universidad 14418 Parque Insdustrial Internacional Tijuana, Tijuana B.C UABC, Tijuana, México</p>
         </div>
     </footer>
     <!-- Scripts -->

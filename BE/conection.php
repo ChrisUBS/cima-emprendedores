@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "13542";//Cambiar si tienes password en tu base de datos.
-$dbname = "cimarrones_emprendedores";
+$password = "1234";//Cambiar si tienes password en tu base de datos.
+$dbname = "cimaemprende-bdn";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
