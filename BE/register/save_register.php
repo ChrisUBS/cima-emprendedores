@@ -46,90 +46,87 @@ function sendEmail($to, $subject, $body, $attachment = null) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["nombre"], $_POST["apellidoP"], $_POST["apellidoM"], $_POST["email"], $_POST["option"], $_POST["id"], $_POST["idfacultad"])) {
+    if (isset($_POST["nombre"], $_POST["apellidoP"], $_POST["apellidoM"], $_POST["email"], $_POST["option"], $_POST["idcampus"], $_POST["idworkshop"])) {
         $nombre = $_POST["nombre"];
         $apellidoP = $_POST["apellidoP"];
         $apellidoM = $_POST["apellidoM"];
         $email = $_POST["email"];
         $option = $_POST["option"];
-        $id = $_POST["id"];
-        $idfacultad = $_POST["idfacultad"];
-        $idlic = $_POST["idlic"];
+        $idcampus = $_POST["idcampus"];
+        $idworkshop = $_POST["idworkshop"];
+        $idfacultad = isset($_POST["idfacultad"]) ? $_POST["idfacultad"] : null;
+        $id = isset($_POST["id"]) ? $_POST["id"] : null;
+        $idlic = isset($_POST["idlic"]) ? $_POST["idlic"] : null;
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             echo json_encode(array("success" => false, "message" => "El formato del correo electrónico no es válido."));
             exit();
         }
 
-        $stmt_check = $conn->prepare("SELECT iduabc FROM usuarios WHERE iduabc = ?");
-        $stmt_check->bind_param("s", $id);
-        if (!$stmt_check->execute()) {
-            echo json_encode(array("success" => false, "message" => "Error al verificar el ID en la base de datos."));
-            exit();
-        }
-        $result = $stmt_check->get_result();
+        if ($id !== null) {
+            $stmt_check = $conn->prepare("SELECT iduabc FROM usuarios WHERE iduabc = ?");
+            $stmt_check->bind_param("i", $id);
+            $stmt_check->execute();
+            $result = $stmt_check->get_result();
+            $stmt_check->close();
 
-        $isRecordUpdated = false;
-        if ($result->num_rows > 0) {
-            $stmt_update = $conn->prepare("UPDATE usuarios SET name = ?, lastname = ?, middlename = ?, email = ?, type = ?, idfacultad = ?, idlic = ? WHERE iduabc = ?");
-            $stmt_update->bind_param("ssssssii", $nombre, $apellidoP, $apellidoM, $email, $option, $idfacultad, $idlic, $id);
-            if (!$stmt_update->execute()) {
-                echo json_encode(array("success" => false, "message" => "Error al actualizar el registro."));
-                exit();
+            if ($result->num_rows > 0) {
+                $stmt_update = $conn->prepare("UPDATE usuarios SET name = ?, lastname = ?, middlename = ?, email = ?, type = ?, idfacultad = ?, idcampus = ?, idlic = ? WHERE iduabc = ?");
+                $stmt_update->bind_param("sssssiiii", $nombre, $apellidoP, $apellidoM, $email, $option, $idfacultad, $idcampus, $idlic, $id);
+                if (!$stmt_update->execute()) {
+                    echo json_encode(array("success" => false, "message" => "Error al actualizar el usuario."));
+                    exit();
+                }
+                $stmt_update->close();
+            } else {
+                $stmt_insert = $conn->prepare("INSERT INTO usuarios (name, lastname, middlename, email, type, idfacultad, idcampus, idlic, iduabc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt_insert->bind_param("sssssiiii", $nombre, $apellidoP, $apellidoM, $email, $option, $idfacultad, $idcampus, $idlic, $id);
+                if (!$stmt_insert->execute()) {
+                    echo json_encode(array("success" => false, "message" => "Error al insertar el usuario."));
+                    exit();
+                }
             }
-            $stmt_update->close();
-            $isRecordUpdated = true;
-        } else {
-            $stmt_insert = $conn->prepare("INSERT INTO usuarios (iduabc, idfacultad, name, lastname, middlename, email, type, idlic) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt_insert->bind_param("issssssi", $id, $idfacultad, $nombre, $apellidoP, $apellidoM, $email, $option, $idlic);
-            if (!$stmt_insert->execute()) {
-                echo json_encode(array("success" => false, "message" => "Error al insertar un nuevo registro."));
-                exit();
-            }
-            $stmt_insert->close();
-            $isRecordUpdated = true;
-        }
-        $stmt_check->close();
-
-        // Si se actualizó o insertó el registro, se genera el código QR
-        if ($isRecordUpdated) {
-            #REINCORPARAR LA RELACION DE IDWORKSHOP Y AÑADIR EN EL INSERT.
-            $stmt_registro = $conn->prepare("INSERT INTO registro (iduabc, idfacultad, name, lastname, middlename, type) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt_registro->bind_param("iissss", $id, $idfacultad, $nombre, $apellidoP, $apellidoM, $option);
+            $stmt_registro = $conn->prepare("INSERT INTO registro (iduabc, idcampus, idworkshop, name, lastname, middlename, type) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt_registro->bind_param("iiissss", $id, $idcampus, $idworkshop, $nombre, $apellidoP, $apellidoM, $option);
             $stmt_registro->execute();
             $idregistro = $conn->insert_id;
             $stmt_registro->close();
-
-            // Directorio donde se guardará la imagen QR
-            $dir = '../plugins/codes/';
-
-            // Crear el directorio si no existe
-            if (!file_exists($dir)) {
-                mkdir($dir, 0777, true);
-            }
-
-            // Ruta del archivo QR a generar
-            $filename = $dir . $idregistro . '_qr.png';
-
-            // Parámetros de configuración del código QR
-            $tamaño = 10;
-            $level = 'L';
-            $frameSize = 3;
-            $contenido = $idregistro;
-
-            // Generar el código QR
-            QRcode::png($contenido, $filename, $level, $tamaño, $frameSize);
-
-            // Enviar correo electrónico con el código QR adjunto
-            $to = $email;
-            $subject = 'Cimarrones Emprendedores';
-            $body = '¡Gracias por registrarte! Adjunto encontrarás tu código QR.';
-            
-            // Enviar el correo con el código QR adjunto
-            $isSent = sendEmail($to, $subject, $body, $filename);
-
-            echo json_encode(array("success" => true, "message" => "Operación realizada con éxito.", "emailSent" => $isSent));
+        }else{
+            $stmt_registro = $conn->prepare("INSERT INTO registro (idcampus, idworkshop, name, lastname, middlename, type) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt_registro->bind_param("iissss",$idcampus, $idworkshop, $nombre, $apellidoP, $apellidoM, $option);
+            $stmt_registro->execute();
+            $idregistro = $conn->insert_id;
+            $stmt_registro->close();
         }
+
+
+        // Generación del código QR
+        $dir = '../plugins/codes/';
+        if (!file_exists($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        // Ruta de archivo QR a generar
+        $filename = $dir . $idregistro . '_qr.png';
+
+        // Configuración del código QR
+        $tamaño = 10;
+        $level = 'L';
+        $frameSize = 3;
+        $contenido = $idregistro;
+
+        // Generar el código QR
+        QRcode::png($contenido, $filename, $level, $tamaño, $frameSize);
+
+        // Enviar correo electrónico con el código QR adjunto
+        $to = $email;
+        $subject = 'Cimarrones Emprendedores';
+        $body = '¡Gracias por registrarte! Adjunto encontrarás tu código QR.';
+        
+        // Enviar el correo con el código QR adjunto
+        $isSent = sendEmail($to, $subject, $body, $filename);
+
+        echo json_encode(array("success" => true, "message" => "Operación realizada con éxito.", "emailSent" => $isSent));
     } else {
         echo json_encode(array("success" => false, "message" => "Faltan parámetros requeridos."));
     }

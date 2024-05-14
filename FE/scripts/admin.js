@@ -1,3 +1,4 @@
+let apiURL = "http://localhost/cimarrones-emprendedores/BE/";
 function notifications(type, msg) {
     let div = $("#notifications");
     div.slideDown(1000);
@@ -6,7 +7,34 @@ function notifications(type, msg) {
     div.slideUp(3000);
 }
 
-let apiURL = "http://localhost/cimarrones-emprendedores/BE/";
+function statusChange() {
+    $('#listaAlumnos').on('click', '#registroAssist', function() {
+        const idregistro = $(this).closest('tr').attr('id');
+        const assist = $(this).prop('checked') ? 1 : 0;
+        console.log(idregistro, assist);
+        $.ajax({
+            url: `${apiURL}registerAdmin/status_change.php`,
+            type: 'POST',
+            dataType: "json",
+            data: {
+                idregistro: idregistro,
+                assist: assist,
+            },
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    console.log("Estado del taller actualizado con éxito");
+                } else {
+                    console.log("Error al actualizar el estado del taller:", response.error);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("Error en la solicitud:",xhr, status,error);
+            }
+        });
+    });
+}
+
 function searchToDatabase() {
     $.ajax({
         type: "GET", // Cambiar de POST a GET
@@ -19,22 +47,18 @@ function searchToDatabase() {
                 
                 response.data.forEach(function(registro) {
                     $('#listaAlumnos').append(`
-                        <tr>
+                        <tr id="${registro.idregistro}">
                             <td>${registro.iduabc}</td>
                             <td>${registro.type}</td>
                             <td>${registro.nameworkshop}</td>
                             <td>${registro.date}</td>
                             <td>
-                                <input type="checkbox" disabled ${registro.assist === 1 ? 'checked' : ''}>
+                                <input id="registroAssist" type="checkbox" ${registro.assist === 1 ? 'checked' : ''}>
                             </td>
                         </tr>
                     `);
                 });
             } else {
-                var errorMessage = "Error en la respuesta del servidor.";
-                if (response.error) {
-                    errorMessage = response.error;
-                }
                 notifications("alert-error", errorMessage);
             }
         },
@@ -48,7 +72,7 @@ function searchToDatabase() {
 
 function init() {
     searchToDatabase();
-
+    statusChange();
     $('#searchForm').on('submit', function(event) {
         event.preventDefault();
         searchToDatabase();

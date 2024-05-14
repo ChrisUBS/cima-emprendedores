@@ -19,6 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     facultades.facultad AS facultad,
                     campus.campus AS campus,
                     campus.idcampus AS idcampus,
+					conferencistas.idlecturer AS idlecturer,
+					conferencistas.name AS name,
                     talleres.date AS date,
                     talleres.time AS time,
                     talleres.descriptionworkshop AS descriptionworkshop,
@@ -32,6 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     facultades ON talleres.idfacultad = facultades.idfacultad
                 INNER JOIN
                     campus ON talleres.idcampus = campus.idcampus
+                INNER JOIN
+                    conferencistas ON talleres.idlecturer = conferencistas.idlecturer
                 WHERE
                     talleres.idworkshop = ?";
                     
@@ -59,6 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 "status" => $row["status"],
                 "ability" => $row["ability"],
                 "post" => $row["post"],
+                "idlecturer" => $row["idlecturer"],
+                "lecturer" => $row["name"],
             );
         }
         echo json_encode(array("success" => true, "data" => $data));

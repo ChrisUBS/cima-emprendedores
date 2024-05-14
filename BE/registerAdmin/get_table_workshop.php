@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     campus.campus AS campus,
                     talleres.date AS date,
                     talleres.time AS time,
+                    talleres.status AS status,
                     talleres.descriptionworkshop AS Descripcion_de_workshop
                 FROM
                     talleres
@@ -46,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 "campus" => $row["campus"],
                 "date" => $row["date"],
                 "time" => $row["time"],
+                "status" => $row["status"],
             );
         }
         echo json_encode(array("success" => true, "data" => $data));

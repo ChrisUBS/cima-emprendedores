@@ -54,10 +54,10 @@ img {
 }
 
 /* config inputs */
-.input-control {
+/* .input-control {
     position: relative;
     margin: 10px;
-}
+} */
 
 .input-format {
     display: grid;
@@ -76,7 +76,7 @@ img {
     justify-content: center;
 }
 
-.input-control input {
+/* .input-control input {
     width: 100%;
     padding: 10 0px;
     font-size: 16px;
@@ -106,11 +106,11 @@ img {
     left: 0;
     color: #585754;
     font-size: 12px;
-}
+} */
 
-.animated-label {
+/* .animated-label {
     transition: top 0.2s, left 0.2s, font-size 0.2s;
-}
+} */
 
 /* btn */
 .btn-general {
