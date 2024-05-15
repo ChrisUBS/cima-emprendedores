@@ -77,14 +77,16 @@
                 <!-- Search and filter bar -->
                 <div class="row mb-3">
                     <div class="col-md-12">
-                        <label for="searchBar"></label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="searchBar" placeholder="Buscar...">
-                            <div class="input-group-append">
-                                <button class="btn-class btn btn-primary" type="button" id="searchButton">Filtrar</button>
-                                <button class="btn-class btn btn-success" type="button" id="addButton">Agregar</button>
+                            <div class="input-container">
+                                <input type="text" name="idUabc" id="txtId" required required data-error-message="¡Campo requerido!">
+                                <label for="txtId"></label>
+                                <button id="btnSearch" type="button" class="btn-search search">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
                             </div>
                         </div>
+                        <button class="btn-class btn btn-success" type="button" id="addButton">Agregar</button>
                     </div>
                 </div>
 

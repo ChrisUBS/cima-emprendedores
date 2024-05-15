@@ -17,9 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         die("Connection failed: " . $conn->connect_error);
     }
     
-    $query = "SELECT r.idregistro,r.iduabc, r.type, t.nameworkshop, r.date, r.assist 
+    $query = "SELECT r.idregistro, r.iduabc, r.name, r.lastname, r.middlename, r.type, t.nameworkshop, c.campus, r.date, r.assist 
                 FROM registro r
-                LEFT JOIN usuarios u ON r.iduabc = u.iduabc
+                LEFT JOIN campus c ON r.idcampus = c.idcampus
                 LEFT JOIN talleres t ON r.idworkshop = t.idworkshop;";
 
     $stmt = $conn->prepare($query);
@@ -33,8 +33,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $data[] = array(
                 "idregistro" => $row["idregistro"],
                 "iduabc" => $row["iduabc"],
+                "name" => $row["name"],
+                "lastname" => $row["lastname"],
+                "middlename" => $row["middlename"],
                 "type" => $row["type"],
                 "nameworkshop" => $row["nameworkshop"],
+                "campus" => $row["campus"],
                 "date" => $row["date"],
                 "assist" => $row["assist"],
             );
@@ -43,7 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     } else {
         echo json_encode(array("success" => false, "error" => "No se encontraron datos en la base de datos."));
     }
-    
     $stmt->close();
 } else {
     echo json_encode(array("success" => false, "error" => "Solicitud no válida."));

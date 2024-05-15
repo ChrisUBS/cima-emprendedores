@@ -47,10 +47,13 @@ function searchToDatabase() {
                 
                 response.data.forEach(function(registro) {
                     $('#listaAlumnos').append(`
-                        <tr id="${registro.idregistro}">
-                            <td>${registro.iduabc}</td>
+                        <tr id="${registro.iduabc}">
+                            <td>${registro.idregistro}</td>
+                            <td>${registro.name}</td>
+                            <td>${registro.lastname} ${registro.middlename}</td>
                             <td>${registro.type}</td>
                             <td>${registro.nameworkshop}</td>
+                            <td>${registro.campus}</td> 
                             <td>${registro.date}</td>
                             <td>
                                 <input id="registroAssist" type="checkbox" ${registro.assist === 1 ? 'checked' : ''}>

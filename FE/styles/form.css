@@ -14,6 +14,7 @@ img {
 
 /* utilities */
 
+
 /* Estilos Header */
 .navbar {
     display: flex;
@@ -49,10 +50,10 @@ img {
         margin-left: 0;
         margin-right: 10px;
     }
-
+/* 
     .input-control select {
         max-width: 500px;
-    }
+    } */
 }
 
 /* general form */
@@ -78,7 +79,7 @@ img {
     text-align: center;
     padding: 0 0 10px 0;
     border-bottom: 1px solid silver;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .form-normal {
@@ -102,14 +103,10 @@ form .username {
     position: relative;
 }
 
-.input-body{
-    margin: 20px;
-}
-
 .input-general {
-    /* display: flex;
-    position: relative; */
-    margin-bottom: 8px;
+    display: flex;
+    position: relative;
+    margin-bottom: 15px;
 }
 
 .input-columns {
@@ -118,17 +115,18 @@ form .username {
     grid-gap: 10px;
 }
 
+.input-notColumns {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
 @media(max-width:768px) {
     .input-columns {
         grid-template-columns: repeat(1, 1fr);
     }
 }
 
-.input-notColumns {
-    width: 100%;
-    max-width: 200px;
-    margin: 0 auto;
-}
 
 .input-columns-flex {
     display: flex;
@@ -152,7 +150,9 @@ form .username {
 }
 
 .input-group{
-    position: relative
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .input-group input[type="text"] {
@@ -174,32 +174,33 @@ form .username {
 /* button register and next*/
 .btn-reg {
     display: block;
-    margin: 0 auto;
-    margin-bottom: 10px;
     border: none;
     border-radius: 10px;
-    background-color: black;
+    background-color: #000000;
     color: white;
     font-size: 0.8rem;
     cursor: pointer;
     transition: background-color 0.3s;
     padding: 10px 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .btn-search {
     display: block;
     color: white;
-    background-color: black;
+    background-color: #000000;
     border: none;
     width: 50px;
     height: 30px;
 }
 
-.btn-reg:hover {
+.btn-reg:hover,
+.btn-search:hover {
     background-color: rgb(206, 142, 0);
 }
 
-/* Noti form */
+/* Noti form */ 
 .input-general.success-search button {
     border-color: #09c372;
 }
@@ -207,15 +208,31 @@ form .username {
 .input-general.error-search button {
     border-color: #ff3860;
 }
-.error-search {
+
+/* Se modifico porque se usa .input-container */
+
+.error {
+    position: absolute;
+    top: 100%;
+    left: 0;
     color: #ff3860;
     font-size: 9px;
     height: 13px;
 }
-.success-search {
-    color: #09c372;
+.error-search {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    color: #ff3860;
     font-size: 9px;
     height: 13px;
 }
 
-
+.success-search {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    color: #09c372;
+    font-size: 9px;
+    height: 13px;
+}

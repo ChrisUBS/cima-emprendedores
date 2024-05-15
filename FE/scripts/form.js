@@ -62,7 +62,7 @@ function isValid(person) {
 //Validacion del boton registro.
 function validRegister(newPerson, selectedOption) {
     changeForm(selectedOption);
-    $("#btnRegister").off().click(function () {
+    $("#btnRegister").click(function () {
         checkExtra(newPerson, selectedOption);
         if (isValid(newPerson, selectedOption)) {
             insertToDatabase(newPerson);
@@ -406,7 +406,7 @@ function searchToDatabase() {
 
 //main
 function init() {
-    $("#optionId").show();
+    $("#optionId").hide();
     $("#inputGeneral").hide();
     $("#ubicacion").hide();
     $("#facultad").hide();
@@ -418,11 +418,11 @@ function init() {
 
     $("button").click(function() {
         console.log("btn");
-        var $button = $(this);
-        $button.prop('disabled', true);
+        var button = $(this);
+        button.prop('disabled', true);
         setTimeout(function() {
-            $button.prop('disabled', false);
-        }, 1000);
+            button.prop('disabled', false);
+        }, 2000);
     });
 
     // Hook eventos
