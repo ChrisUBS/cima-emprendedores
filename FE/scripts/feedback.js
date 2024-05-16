@@ -91,7 +91,7 @@ function getTalleres() {
 function saveFeedback(feedback) {
     console.log(feedback);
     $.ajax({
-        url: `${apiURL}registerAdmin/save_feedback.php`,
+        url: `${apiURL}dashboard/save_feedback.php`,
         method: 'POST',
         data: {
             idworkshop: feedback.taller,

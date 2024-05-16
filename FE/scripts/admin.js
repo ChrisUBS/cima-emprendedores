@@ -6,7 +6,7 @@ function statusChange() {
         const assist = $(this).prop('checked') ? 1 : 0;
         console.log(idregistro, assist);
         $.ajax({
-            url: `${apiURL}registerAdmin/status_change.php`,
+            url: `${apiURL}dashboard/status_change.php`,
             type: 'POST',
             dataType: "json",
             data: {
@@ -31,7 +31,7 @@ function statusChange() {
 function searchToDatabase() {
     $.ajax({
         type: "GET",
-        url: `${apiURL}registerAdmin/get_table.php`,
+        url: `${apiURL}dashboard/get_table.php`,
         dataType: "json",
         success: function(response) {
             if (response.success) {

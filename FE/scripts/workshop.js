@@ -5,7 +5,7 @@ function statusChange() {
         const isChecked = $(this).prop('checked') ? 1 : 0;
         console.log(workshopId, isChecked);
         $.ajax({
-            url: `${apiURL}registerAdmin/status_change.php`,
+            url: `${apiURL}dashboard/status_change.php`,
             type: 'POST',
             dataType: "json",
             data: {
@@ -30,7 +30,7 @@ function statusChange() {
 function getLect(selectedLect) {
     $.ajax({
         type: 'GET',
-        url: `${apiURL}registerAdmin/get_lect.php`,
+        url: `${apiURL}dashboard/get_lect.php`,
         dataType: 'json',
         success: function(response) {
             const selectLect = $("#lect");
@@ -83,7 +83,7 @@ function getFacultad(selectedFacultad) {
 function getWorkshops() {
     $.ajax({
         type: "GET",
-        url: `${apiURL}registerAdmin/get_table_workshop.php`,
+        url: `${apiURL}dashboard/get_table_workshop.php`,
         dataType: "json",
         success: function(response) {
             if (response.success) {
@@ -191,7 +191,7 @@ function deleteWorkshop(selectedIdWorkshop) {
         return;
     }
     $.ajax({
-        url: `${apiURL}registerAdmin/delete_workshop.php`,
+        url: `${apiURL}dashboard/delete_workshop.php`,
         type: 'POST',
         dataType: "json",
         data: {
@@ -218,7 +218,7 @@ function getInfoModal(selectedIdWorkshop) {
         return;
     }
     $.ajax({
-        url: `${apiURL}registerAdmin/info_workshop.php`,
+        url: `${apiURL}dashboard/info_workshop.php`,
         type: 'GET',
         dataType: "json",
         data: {
@@ -262,7 +262,7 @@ function showWorkshopData(selectedIdWorkshop, modalSelected) {
     var $modalBody = $(modalSelected);
 
     $.ajax({
-        url: `${apiURL}registerAdmin/info_workshop.php`,
+        url: `${apiURL}dashboard/info_workshop.php`,
         type: 'GET',
         dataType: "json",
         data: {
@@ -301,7 +301,7 @@ function editWorkshop(selectedIdWorkshop){
     }
 
     $.ajax({
-        url: `${apiURL}registerAdmin/edit_workshop.php`,
+        url: `${apiURL}dashboard/edit_workshop.php`,
         type: 'POST',
         dataType: "json",
         data: {
@@ -348,7 +348,7 @@ function addWorkshop(modalSelected) {
     var idlecturer = $modalBody.find('#lect').val();
 
     $.ajax({
-        url: `${apiURL}registerAdmin/saved_workshop.php`,
+        url: `${apiURL}dashboard/saved_workshop.php`,
         type: 'POST',
         dataType: "json",
         data: {
