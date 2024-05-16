@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cimarrones Emprendedores</title>
     <link rel="stylesheet" href="plugins/bootstrap.css">
+    <link rel="stylesheet" href="styles/general.css">
     <link rel="stylesheet" href="styles/feedback.css">
     <script src="https://kit.fontawesome.com/b8ce32ba45.js" crossorigin="anonymous"></script>
 </head>
@@ -41,179 +42,160 @@
 
     <!-- Panel principal -->
     <main class="log-bg">
-        <div class="logo-box evaluacion-box">
-            <h1 class="evaluacion-text">Evaluación</h1>
-            <p class="box-text">¡Bienvenidos sean emprendedores!</p>
-            <p class="box-text"> Favor de contestar las siguientes preguntas lo más sincero posible para una mejora continua, su información es anónima y sólo se utilizará con fines estadísticos para seguir ofreciéndoles una buena experiencia en los talleres.</p>
+        <div class="form">
+            <h1 class="">Evaluación</h1>
+            <p class="center-content">¡Bienvenidos sean emprendedores!</p>
+            <p class="center-content"> Favor de contestar las siguientes preguntas lo más sincero posible para una mejora continua, su información es anónima y sólo se utilizará con fines estadísticos para seguir ofreciéndoles una buena experiencia en los talleres.</p>
         </div>
         <!-- Panel del formulario -->
-        <div class="form box-handler"> <!-- box dissapear borra la caja --> 
-            <!-- Barra de seleccion de campus-->
-            <!-- <div id="campus-selection">
-                <h6>Campus</h6>
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="opcion1" name="opciones" value="1">
-                        <label for="opcion1">Ensenada</label>
-                    </div>
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="opcion2" name="opciones" value="2">
-                        <label for="opcion2">Mexicali</label>
-                    </div>
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="opcion3" name="opciones" value="3">
-                        <label for="opcion3">Tijuana</label>
-                    </div>
-                    <input id="btnNext" type="submit" value="Siguiente" onclick="submitCampusForm()">
-            </div> -->
-            <div id="campus-selection" class="input-control">
-                <select name="txtCampus" id="txtCampus">
-                    <option value="" disabled selected>-- Selecciona una opción --</option>
+        <!-- CAMPUS y Taller-->
+        <div id="select" class="form"> 
+            <div class="input-general w-50">
+                <select name="txtCampus" id="txtCampus" required data-error-message="¡Campo requerido!">
+                    <option value=""></option>
                     <option value="3">Ensenada</option>
                     <option value="2">Mexicali</option>
                     <option value="1">Tijuana</option>
                 </select>
-                <input id="btnNext" type="submit" value="Siguiente" onclick="submitCampusForm()">
+                <label for="campus">Campus</label>
+                <div class="error"></div>
             </div>
-
+            <div class="input-general">
+                <select name="txtTaller" id="txtTaller" required data-error-message="¡Campo requerido!">
+                </select>
+                <label for="taller">Taller</label>
+                <div class="error"></div>
+            </div>
         </div>
-        <div class="form event-box">
-            <div class="eval-event-box-container">
-                <h6 class="eval-event-box-title">Tijuana</h6>
-                <div class="eval-event-box-form">
-                    <label for="eval-event-box-select" class="eval-event-box-label">Evento a evaluar *</label>
-                    <select id="txtTaller" name="evento" class="eval-event-box-select">
-                        <!-- <option value="evento1">Evento 1</option>
-                        <option value="evento2">Evento 2</option>
-                        <option value="evento3">Evento 3</option> -->
-                    </select>
-                    <div class="eval-event-box-buttons">
-                        <button type="button" class="eval-event-box-button-back" onclick="backAgain()">Atrás</button>
-                        <button type="button" class="eval-event-box-button-next" onclick="submitEventForm()">Siguiente</button>
+        <!-- FEEDBACK -->
+        <div id="feedback" class="">
+            <!-- #1 -->
+            <div class="question-container">
+                <div class="question1">
+                    <p>¿El evento cumplió mis expectativas?</p>
+                    <div class="rating-box">
+                        <i class="fa-solid fa-face-frown" style="color: red;"></i>
+                        <div class="rating">
+                            <input id="star5-1" name="rating1" type="radio" value="5" required>
+                            <label for="star5-1">&#9733;</label>
+                            <input id="star4-1" name="rating1" type="radio" value="4" required>
+                            <label for="star4-1">&#9733;</label>
+                            <input id="star3-1" name="rating1" type="radio" value="3" required>
+                            <label for="star3-1">&#9733;</label>
+                            <input id="star2-1" name="rating1" type="radio" value="2" required>
+                            <label for="star2-1">&#9733;</label>
+                            <input id="star1-1" name="rating1" type="radio" value="1" required>
+                            <label for="star1-1">&#9733;</label>
+                        </div>
+                        <i class="fa-solid fa-face-smile" style="color: green;"></i>
                     </div>
+                    <div class="error"></div>
                 </div>
             </div>
-        </div>
-        <div class="question-box">
-            <div class="eval-workshop question-one">
-                <p>El evento cumplió mis expectativas:</p>
-                <div class="feedback-container"> <!-- CONSIDERAR ID DIFERENTES PARA LA TOMA DE VALORES CON JS DE LAS PREGUNTAS -->
-                    <i class="fa-solid fa-face-frown" style="color: red;"></i>
-                    <div class="rating">
-                        <input id="star5-1" name="rating1" type="radio" value="5">
-                        <label for="star5-1">&#9733;</label>
-                        <input id="star4-1" name="rating1" type="radio" value="4">
-                        <label for="star4-1">&#9733;</label>
-                        <input id="star3-1" name="rating1" type="radio" value="3">
-                        <label for="star3-1">&#9733;</label>
-                        <input id="star2-1" name="rating1" type="radio" value="2">
-                        <label for="star2-1">&#9733;</label>
-                        <input id="star1-1" name="rating1" type="radio" value="1">
-                        <label for="star1-1">&#9733;</label>
+            <!-- #2 -->
+            <div class="question-container">
+                <div class="question2">
+                    <p>¿Me fue de utilidad la información?</p>
+                    <div class="rating-box"> <!-- CONSIDERAR ID DIFERENTES PARA LA TOMA DE VALORES CON JS DE LAS PREGUNTAS -->
+                        <i class="fa-solid fa-face-frown" style="color: red;"></i>
+                        <div class="rating">
+                            <input id="star5-2" name="rating2" type="radio" value="5" required>
+                            <label for="star5-2">&#9733;</label>
+                            <input id="star4-2" name="rating2" type="radio" value="4" required>
+                            <label for="star4-2">&#9733;</label>
+                            <input id="star3-2" name="rating2" type="radio" value="3" required>
+                            <label for="star3-2">&#9733;</label>
+                            <input id="star2-2" name="rating2" type="radio" value="2" required>
+                            <label for="star2-2">&#9733;</label>
+                            <input id="star1-2" name="rating2" type="radio" value="1" required>
+                            <label for="star1-2">&#9733;</label>
+                        </div>
+                        <i class="fa-solid fa-face-smile" style="color: green;"></i>
                     </div>
-                    <i class="fa-solid fa-face-smile" style="color: green;"></i>
+                    <div class="error"></div>
                 </div>
             </div>
-        </div>
-        <div class="question-box">
-            <div class="eval-workshop question-two">
-                <p>Me fue de utilidad la información:</p>
-                <div class="feedback-container"> <!-- CONSIDERAR ID DIFERENTES PARA LA TOMA DE VALORES CON JS DE LAS PREGUNTAS -->
-                    <i class="fa-solid fa-face-frown" style="color: red;"></i>
-                    <div class="rating">
-                        <input id="star5-2" name="rating2" type="radio" value="5">
-                        <label for="star5-2">&#9733;</label>
-                        <input id="star4-2" name="rating2" type="radio" value="4">
-                        <label for="star4-2">&#9733;</label>
-                        <input id="star3-2" name="rating2" type="radio" value="3">
-                        <label for="star3-2">&#9733;</label>
-                        <input id="star2-2" name="rating2" type="radio" value="2">
-                        <label for="star2-2">&#9733;</label>
-                        <input id="star1-2" name="rating2" type="radio" value="1">
-                        <label for="star1-2">&#9733;</label>
+            <!-- #3 -->
+            <div class="question-container">
+                <div class="question3">
+                    <p>Cómo consideras el dominio del tema del conferencista?</p>
+                    <div class="rating-box"> <!-- CONSIDERAR ID DIFERENTES PARA LA TOMA DE VALORES CON JS DE LAS PREGUNTAS -->
+                        <i class="fa-solid fa-face-frown" style="color: red;"></i>
+                        <div class="rating">
+                            <input id="star5-3" name="rating3" type="radio" value="5" required>
+                            <label for="star5-3">&#9733;</label>
+                            <input id="star4-3" name="rating3" type="radio" value="4" required>
+                            <label for="star4-3">&#9733;</label>
+                            <input id="star3-3" name="rating3" type="radio" value="3" required>
+                            <label for="star3-3">&#9733;</label>
+                            <input id="star2-3" name="rating3" type="radio" value="2" required>
+                            <label for="star2-3">&#9733;</label>
+                            <input id="star1-3" name="rating3" type="radio" value="1" required>
+                            <label for="star1-3">&#9733;</label>
+                        </div>
+                        <i class="fa-solid fa-face-smile" style="color: green;"></i>
                     </div>
-                    <i class="fa-solid fa-face-smile" style="color: green;"></i>
+                    <div class="error"></div>
                 </div>
             </div>
-        </div>
-        <div class="question-box">
-            <div class="eval-workshop question-two">
-                <p>Cómo consideras el dominio del tema del conferencista?</p>
-                <div class="feedback-container"> <!-- CONSIDERAR ID DIFERENTES PARA LA TOMA DE VALORES CON JS DE LAS PREGUNTAS -->
-                    <i class="fa-solid fa-face-frown" style="color: red;"></i>
-                    <div class="rating">
-                        <input id="star5-3" name="rating3" type="radio" value="5">
-                        <label for="star5-3">&#9733;</label>
-                        <input id="star4-3" name="rating3" type="radio" value="4">
-                        <label for="star4-3">&#9733;</label>
-                        <input id="star3-3" name="rating3" type="radio" value="3">
-                        <label for="star3-3">&#9733;</label>
-                        <input id="star2-3" name="rating3" type="radio" value="2">
-                        <label for="star2-3">&#9733;</label>
-                        <input id="star1-3" name="rating3" type="radio" value="1">
-                        <label for="star1-3">&#9733;</label>
-                    </div>
-                    <i class="fa-solid fa-face-smile" style="color: green;"></i>
-                </div>
+            <!-- #4 -->
+            <div class=" input-general question-container input-label">
+                <textarea id="question4" required data-error-message="¡Campo requerido!"></textarea>
+                <label for="facultad">¿Qué fue lo que le gustó del evento?</label>
+                <div class="error"></div>
+            </div>
+            <!-- #5 -->
+            <div class=" input-general question-container input-label">
+                <textarea id="question5" required ></textarea>
+                <label for="facultad">¿Qué fue lo que no le gustó del evento?</label>
+                <div class="error"></div>
+            </div>
+            <!-- #6 -->
+            <div id="question6" class="question-container select-box">
+                <p>¿Recomendaría los talleres?</p>
+                <label><input type="radio" name="recommendation" value="1" required> Sí</label>
+                <label><input type="radio" name="recommendation" value="2" required> No</label>
+                <label><input type="radio" name="recommendation" value="3" required> Tal vez</label>
+                <div class="error"></div>
+            </div>
+            <!-- #7 -->
+            <div id="question7" class="question-container select-box">
+                <p>¿Volvería a asistir a otro taller o evento de emprendimiento?</p>
+                <label><input type="radio" name="assist" value="1" required> Sí</label>
+                <label><input type="radio" name="assist" value="2" required> No</label>
+                <label><input type="radio" name="assist" value="3" required> Tal vez</label>
+                <div class="error"></div>
+            </div>
+            <!-- #8 -->
+            <div class=" input-general question-container input-label">
+                <textarea id="question8" required data-error-message="¡Campo requerido!"></textarea>
+                <label for="facultad">¿Qué temas te gustaría que se hablarán en futuros talleres?</label>
+                <div class="error"></div>
+            </div>
+            <!-- #9 -->
+            <div class=" input-general question-container input-label">
+                <textarea id="comments" required data-error-message="¡Campo requerido!"></textarea>
+                <label for="facultad">Comentarios o sugerencias para la mejora de los eventos</label>
+                <div class="error"></div>
+            </div>
+                <!-- FIN -->
+            <div class="question-container">
+                <p>Gracias por darnos su opinión :D</p>
+                <img src="../FE/assets/contacto.png">
             </div>
         </div>
-        <div class="question-box">
-            <div class="eval-workshop question-3">
-                    <label for="eventFeedback">¿Qué fue lo que le gustó del evento? <span class="required">*</span></label>
-                    <input type="text" id="eventlike" name="eventFeedback" placeholder="Tu respuesta" required>
-                
-            </div>
-        </div>
-        <div class="question-box">
-            <div class="eval-workshop question-3">
-                    <label for="eventFeedback">¿Qué fue lo que no le gustó del evento? <span class="required">*</span></label>
-                    <input type="text" id="eventdislike" name="eventFeedback" placeholder="Tu respuesta" required>
-                
-            </div>
-        </div>
-        <div class="question-box select-box">
-            <p>¿Recomendaría los talleres? *</p>
-            <label><input type="radio" name="recommendation" value="yes"> Sí</label>
-            <label><input type="radio" name="recommendation" value="no"> No</label>
-            <label><input type="radio" name="recommendation" value="maybe"> Tal vez</label>
-        </div>
-        <div class="question-box select-box">
-            <p>¿Volvería a asistir a otro taller o evento de emprendimiento? *</p>
-            <label><input type="radio" name="assist" value="yes"> Sí</label>
-            <label><input type="radio" name="assist" value="no"> No</label>
-            <label><input type="radio" name="assist" value="maybe"> Tal vez</label>
-        </div>
-        <div class="question-box">
-            <div class="eval-workshop question-3">
-                    <label for="eventFeedback">¿Qué temas te gustaría que se hablarán en futuros talleres?
-                        <span class="required">*</span></label>
-                    <input type="text" id="upcomingEvents" name="eventFeedback" placeholder="Tu respuesta" required>
-            </div>
-        </div>
-        <div class="question-box">
-            <div class="eval-workshop question-3">
-                    <label for="eventFeedback">Comentarios o sugerencias para la mejora de los eventos
-                        <span class="required">*</span></label>
-                    <input type="text" id="eventImprovements" name="eventFeedback" placeholder="Tu respuesta" required>
-                </div>
-            </div>
-        </div>
-        <div class="question-box">
-            <p>Gracias por darnos su opinión :D</p>
-            <img src="../FE/assets/contacto.png">
-        </div>
-        <div class="buttons-form">
-            <button type="button" class="button-back" onclick="backAgain()">Atrás</button>
-            <button type="button" class="eval-event-box button-send" id="buttonSend" onclick="sendFeedback()">Enviar</button>
-        </div>
-        <div class="logo-box thanks-box">
-            <h1 class="evaluacion-text">Evaluación</h1>
-            <p class="box-text">¡Se han registrado sus respuestas!</p>
+        <div class="input-container">
+            <button type="button" class="btn" id="btnBack">Atras</button>
+            <button type="button" class="btn" id="btnNext">Siguiente</button>
+            <button type="button" class="btn" id="btnSend">Enviar</button>
+            <div class="success"></div>
+            <div class="error"></div>
         </div>
     </main>
     <footer>
-        <div class="footer-box">
+        <div class="footer-box center-content">
             <p>emprendedores.tij@uabc.edu.mx</p>
-            <p>Calzada Universidad 14418 Parque Insdustrial Internacional Tijuana, Tijuana B.C UABC, Tijuana, México</p>
+            <p>Calzada Universidad 14418 Parque Industrial Internacional Tijuana, Tijuana B.C UABC, Tijuana, México</p>
         </div>
     </footer>
     <!-- Scripts -->

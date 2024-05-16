@@ -3,11 +3,9 @@
     margin: 0;
     padding: 0;
 }
-
 a {
     text-decoration: none;
 }
-
 img {
     max-width: 100%;
 }
@@ -19,7 +17,6 @@ img {
     align-items: center;
     padding: 10px;
 }
-
 .center-content {
     text-align: center;
 }
@@ -47,10 +44,6 @@ img {
         margin-left: 0;
         margin-right: 10px;
     }
-
-    .input-control select {
-        max-width: 500px;
-    }
 }
 
 /* general form */
@@ -69,8 +62,10 @@ img {
     max-width: 600px;
     padding: 20px;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .form h1 {
@@ -88,16 +83,106 @@ img {
     font-size: 24px;
 }
 
-form .username {
-    position: relative;
-    border-bottom: 2px solid #adadad;
-    margin: 30px 0;
+/* form feedback */
+.question-container{
+    background-color: #fff; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px; 
+    margin: 20px; 
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box; 
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 16px;
 }
 
-/* config inputs */
-.input-control {
+
+/* rating */
+.rating-box {
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly; 
+    align-items: center; 
+    border-radius: 5px;
+}
+.rating {
+    display: flex;
+    justify-content: center;
+    unicode-bidi: bidi-override;
+    direction: rtl; /* Right to left */
+}
+.rating > label {
+    display: inline-block;
     position: relative;
-    margin: 10px;
+    width: 30px;
+    font-size: 30px;
+    color: #ccc; /* Color de estrella vacía */
+}
+.rating > input {
+    display: none;
+}
+.rating > label:hover,
+.rating > label:hover ~ label,
+.rating > input:checked ~ label {
+    color: gold; /* Color de estrella llena */
+}
+.fa-solid {
+    font-size: 30px;
+    width: 30px; 
+    text-align: center; 
+}
+
+/* button */
+.btn{
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 10px 20px;
+}
+
+/* input */
+.input-container {
+    display: flex;
+    position: relative;
+}
+
+.input-body{
+    margin: 20px;
+}
+
+.input-general {
+    margin-bottom: 15px;
+}
+
+.input-label label{
+    left: 5%;
+}
+
+.input-general textarea:valid ~ label,
+.input-general textarea:focus ~ label{
+    color: #00723F;
+    transform: translateX(5px) translateY(-10px);
+    font-size: 0.8em;
+    padding: 0 5px;
+    background: white;
+    border-left: 1px solid #00723F;
+    border-right: 1px solid #00723F;
+    letter-spacing: 0.05em;
+    color: black;
 }
 
 .input-columns {
@@ -121,404 +206,50 @@ form .username {
 .input-columns-flex {
     display: flex;
     justify-content: center;
-}
-
-.input-control input {
-    width: 100%;
-    padding: 10 0px;
-    font-size: 16px;
-    color: #000000;
-    margin-bottom: 30px;
-    border: none;
-    border-bottom: 1px solid black;
-    outline: none;
-    background: transparent;
-}
-
-.input-control label {
-    position: absolute;
-    top: 0;
-    left: 0px;
-    font-size: 0.8rem;
-    color: #585754;
-    pointer-events: none;
-    transition: .5s;
-    transform: translateY(-25%);
-}
-
-.input-control input:focus~label,
-.input-control input:valid~label,
-.input-control input:disabled~label {
-    top: -20px;
-    left: 0;
-    color: #585754;
-    font-size: 12px;
-}
-
-.animated-label {
-    transition: top 0.2s, left 0.2s, font-size 0.2s;
-}
-
-.input-control select {
-    display: block;
-    text-align: center;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    height: 40px;
-    border: 1px solid;
-    border-radius: 10px;
-    width: 200px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    max-width: calc(100% - 20px);
-}
-
-/* button */
-.btn-reg {
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: black;
-    color: white;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    padding: 10px 20px;
-}
-
-.btn-small {
-    width: 50px;
-    border-radius: 25px;
-}
-
-.btn-reg:hover {
-    background-color: rgb(206, 142, 0);
-}
-
-/* notifications */
-.hide {
-    display: none;
-}
-
-.alert-error {
-    color: red;
-    font-size: 0.8rem;
-}
-
-.alert-success {
-    color: green;
-    font-size: 0.8rem;
-}
-
-.noti {
-    font-size: 0.8rem;
-    text-align: center;
-}
-
-
-/* Feedback Styles */
-
-
-.box-text{
-    text-align: left;
-    line-height: 35px;
-}
-
-.evaluacion-text {
-    margin-bottom: 20px;
-}
-
-.evaluacion-text::after{
-    content: ''; 
-    display: block; 
-    height: 2px; 
-    background-color: #343333; 
-    margin-top: 10px; 
-}
-/*Caja Evaluacion con texto */
-.logo-box {
-    background-color: #fff; 
-    border-radius: 10px; 
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    padding: 20px; 
-    margin: 20px; 
-    width: 80%; 
-    max-width: 600px; 
-    box-sizing: border-box; 
-    text-align: center;
-}
-
-footer{
-    background-color: #f8f9fa;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.footer-box{
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    width: 50%;
 }
 
-/*Checkbox de Campus*/
-.checkbox-container {
-    margin: 10px 0;
+.input-width{
+    width: 35%;
 }
 
-/* Ocultar el checkbox original */
-.checkbox-container input[type="checkbox"] {
-    display: none;
-}
-
-/* Estilo para la etiqueta que actúa como el nuevo checkbox */
-.checkbox-container label {
-    cursor: pointer;
-    position: relative;
-    padding-left: 30px;
-}
-
-/* Círculo que representa el checkbox */
-.checkbox-container label:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #ddd;
-    border: 2px solid #333;
-}
-
-/* Estilo cuando el checkbox está marcado */
-.checkbox-container input[type="checkbox"]:checked + label:before {
-    background-color: #333;
-}
-
-/* Estilo para el botón de envío */
-input[type="submit"] {
-    width: 25%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* Hover efecto para el botón */
-input[type="submit"]:hover {
-    background-color: #45a049;
-}
-
-/*Estilos para la caja de eventos a evaluar*/
-.eval-event-box-container {
-    width: 500px;
-    border-radius: 5px;
-    margin: auto;
-}
-
-.eval-event-box-form {
-    display: flex;
-    flex-direction: column;
-}
-
-.eval-event-box-select {
-    height: 35px;
-    border-radius: 5px;
-    padding: 0 10px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-
-.eval-event-box-button-back, .eval-event-box-button-next {
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    margin-top: 10px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-}
-
-.eval-event-box-button-back:hover, .eval-event-box-button-next:hover {
-    background-color: #45a049;
-}
-
-.eval-event-box-buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-.eval-event-box-label {
-    margin-bottom: 5px;
-}
-
-/*Caja de evaluacion  estrellas y caritas*/
-.feedback-container {
-    padding: 20px;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly; 
-    align-items: center; 
-    border-radius: 5px;
-}
-
-.rating {
-    display: flex;
-    justify-content: center;
-    unicode-bidi: bidi-override;
-    direction: rtl; /* Right to left */
-}
-.rating > label {
-    display: inline-block;
-    position: relative;
-    width: 30px;
-    font-size: 30px;
-    color: #ccc; /* Color de estrella vacía */
-}
-.rating > input {
-    display: none;
-}
-.rating > label:hover,
-.rating > label:hover ~ label,
-.rating > input:checked ~ label {
-    color: gold; /* Color de estrella llena */
-}
-
-.fa-solid {
-    font-size: 30px;
-    width: 30px; 
-    text-align: center; 
-}
-
-.form{
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-}
-
-
-
-.question-box{
-    background-color: #fff; 
-    border-radius: 10px; 
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    padding: 20px; 
-    margin: 20px; 
-    width: 80%; 
-    max-width: 600px; 
-    box-sizing: border-box; 
-    text-align: left;
-}
-
-.form-main{
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background: #F4DCB0;
-    flex-direction: column;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.question-3 {
-    max-width: 600px; /* Ajusta según el ancho deseado */
-    margin: 20px;
-    background: #FFFFFF; /* Fondo blanco para el input */
-    padding: 15px;
+@media(max-width:400px) {
+    .input-columns-flex {
+        width: 100%;
+    }
+    .input-width{
+        width: 75%;
+    }
     
-    border-radius: 8px; /* Bordes redondeados */
+}
+.input-container button{
+    margin-inline: 5px;
 }
 
-.question-3 label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 16px;
-    color: #333; 
-}
-
-.question-3 input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc; /* Borde sutil */
-    border-radius: 4px;
-    box-sizing: border-box; /* Incluye padding y borde en el ancho */
-}
-
-.required {
-    color: red;
-}
-
-.select-box {
-    max-width: 600px; /* Ajusta el ancho máximo según necesites */
-    margin: 20px;
-    padding: 15px;
-    background: #FFFFFF; /* Fondo blanco para el contenedor */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil para el contenedor */
-    border-radius: 8px; /* Bordes redondeados del contenedor */
-}
-
-.select-box p {
-    margin-bottom: 10px; /* Espacio entre la pregunta y las opciones */
-    font-size: 16px;
+.input-general select:disabled ~ label{
+    color: #00723F;
+    transform: translateX(10px) translateY(-7px);
+    font-size: 0.65em;
+    padding: 0 5px;
+    background: white;
+    border-left: 1px solid #00723F;
+    border-right: 1px solid #00723F;
+    letter-spacing: 0.05em;
 }
 
 .select-box label {
-    display: block; /* Hace que cada opción se muestre en una nueva línea */
-    margin-bottom: 5px; /* Espacio entre las opciones */
-    font-size: 14px;
-    cursor: pointer;
+    display: block;
+    margin-bottom: 5px;
 }
 
 .select-box input[type="radio"] {
-    margin-right: 10px; /* Espacio entre el botón de radio y el texto */
+    margin-right: 10px;
 }
 
-.btn-back, .btn-submit {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    outline: none; /* Elimina el contorno al enfocar */
-    transition: background-color 0.3s; /* Transición suave de color */
+.error {
+    position: absolute;
+    color: #ff3860;
+    font-size: 9px;
+    height: 13px;
 }
-
-.btn-back {
-    background-color: #FFA500; /* Color naranja */
-    color: white;
-}
-
-.btn-back:hover {
-    background-color: #CC8400; /* Color naranja oscuro al pasar el ratón */
-}
-
-.btn-submit {
-    background-color: #FFCC00; /* Color amarillo */
-    color: white;
-    margin-left: 10px; /* Espacio entre los botones */
-}
-
-.btn-submit:hover {
-    background-color: #D4A900; /* Color amarillo oscuro al pasar el ratón */
-}
-
-.button-back, .button-send {
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    background-color: #923f0c;
-    color: white;
-}
-

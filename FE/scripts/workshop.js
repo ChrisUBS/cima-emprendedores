@@ -3,6 +3,7 @@ function statusChange() {
     $('#listaTalleres').on('click', '#workshopStatus', function() {
         const workshopId = $(this).closest('tr').find('td:first').attr('id');
         const isChecked = $(this).prop('checked') ? 1 : 0;
+        console.log(workshopId, isChecked);
         $.ajax({
             url: `${apiURL}registerAdmin/status_change.php`,
             type: 'POST',
