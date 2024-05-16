@@ -89,33 +89,36 @@ function getTalleres() {
 }
 
 function saveFeedback(feedback) {
+    console.log(feedback);
     $.ajax({
-        url: `${apiURL}register/save_feedback.php`,
+        url: `${apiURL}registerAdmin/save_feedback.php`,
         method: 'POST',
         data: {
-            idworkshop: feedback.idworkshop,
-            idcampus: feedback.idcampus,
-            question1: feedback.q1,
-            question2: feedback.q2,
-            question3: feedback.q3,
-            question4: feedback.q4,
-            question5: feedback.q5,
-            question6: feedback.q6,
-            question7: feedback.q7,
-            question8: feedback.q8,
-            question9: feedback.q9
+            idworkshop: feedback.taller,
+            idcampus: feedback.ubicacion,
+            q1: feedback.question1,
+            q2: feedback.question2,
+            q3: feedback.question3,
+            q4: feedback.question4,
+            q5: feedback.question5,
+            q6: feedback.question6,
+            q7: feedback.question7,
+            q8: feedback.question8,
+            q9: feedback.question9
         },
         dataType: 'json',
         success: function (response) {
+            console.log(response.data);
             if (response.success) {
-            $("#btnSend, #btnBack").fadeOut(300);
-            $(".success").text("¡Formulario Enviado!").slideDown(300, function() {
-                $(this).delay(1000).slideUp(100, function() {
-                    setTimeout(function () {
-                        location.reload();
-                    }, 1000);
+                $("#btnSend, #btnBack").fadeOut(140);
+                $(".success").text("¡Formulario Enviado!").slideDown(300, function() {
+                    $(this).delay(2000).slideUp(300, function() {
+                        setTimeout(function () {
+                            location.reload();
+                        }, 4000);
+                    });
                 });
-            });
+                console.log("Listo");
             } else {
                 console.log("alert-error", response.message || "¡Error! Por favor, inténtalo de nuevo.");
             }
@@ -127,6 +130,7 @@ function saveFeedback(feedback) {
     });
 }
 
+
 function endFeedback(){
     feedback.question1 = $("input[name='rating1']:checked").val();
     feedback.question2 = $("input[name='rating2']:checked").val();
@@ -137,7 +141,6 @@ function endFeedback(){
     feedback.question7 = $("input[name='assist']:checked").val();
     feedback.question8 = $("#question8").val();
     feedback.question9 = $("#comments").val();
-    console.log(feedback);
     if (secondValid(feedback)) {
         saveFeedback(feedback);
     } else {

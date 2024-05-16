@@ -99,6 +99,11 @@ img {
     font-size: 16px;
 }
 
+@media(max-width:765px) {
+    .question-container{
+        font-size: 10px;
+    }
+}
 
 /* rating */
 .rating-box {
@@ -175,7 +180,7 @@ img {
 .input-general textarea:valid ~ label,
 .input-general textarea:focus ~ label{
     color: #00723F;
-    transform: translateX(5px) translateY(-10px);
+    transform: translateX(-2px) translateY(-12px);
     font-size: 0.8em;
     padding: 0 5px;
     background: white;
@@ -185,44 +190,25 @@ img {
     color: black;
 }
 
-.input-columns {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px;
-}
-
-@media(max-width:768px) {
-    .input-columns {
-        grid-template-columns: repeat(1, 1fr);
+@media(max-width:765px) {
+    .input-general textarea:valid ~ label,
+    .input-general textarea:focus ~ label{
+    color: #00723F;
+    transform: translateX(12px) translateY(-6px);
+    font-size: 0.8em;
+    padding: 0 5px;
+    background: white;
+    border-left: 1px solid #00723F;
+    border-right: 1px solid #00723F;
+    letter-spacing: 0.05em;
+    color: black;
     }
-}
-
-.input-notColumns {
-    width: 100%;
-    max-width: 200px;
-    margin: 0 auto;
-}
-
-.input-columns-flex {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
 }
 
 .input-width{
     width: 35%;
 }
 
-@media(max-width:400px) {
-    .input-columns-flex {
-        width: 100%;
-    }
-    .input-width{
-        width: 75%;
-    }
-    
-}
 .input-container button{
     margin-inline: 5px;
 }
@@ -247,9 +233,16 @@ img {
     margin-right: 10px;
 }
 
+
+/* Noti */
 .error {
     position: absolute;
     color: #ff3860;
     font-size: 9px;
     height: 13px;
+}
+
+.success {
+    text-align: center;
+    margin-bottom: 25px;
 }

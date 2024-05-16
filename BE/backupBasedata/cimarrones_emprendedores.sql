@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2024 at 05:49 AM
+-- Generation Time: May 16, 2024 at 04:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -152,12 +152,43 @@ INSERT INTO `facultades` (`idfacultad`, `facultad`, `idcampus`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `feedback`
+--
+
+CREATE TABLE `feedback` (
+  `idfeedback` int(5) NOT NULL,
+  `idworkshop` int(5) NOT NULL,
+  `idcampus` int(5) NOT NULL,
+  `q1` int(1) NOT NULL,
+  `q2` int(1) NOT NULL,
+  `q3` int(1) NOT NULL,
+  `q4` varchar(255) NOT NULL,
+  `q5` varchar(255) NOT NULL,
+  `q6` int(1) NOT NULL,
+  `q7` int(1) NOT NULL,
+  `q8` varchar(255) NOT NULL,
+  `q9` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`idfeedback`, `idworkshop`, `idcampus`, `q1`, `q2`, `q3`, `q4`, `q5`, `q6`, `q7`, `q8`, `q9`) VALUES
+(1, 23, 2, 1, 1, 0, 'A', 'A', 1, 1, 'A', 'A'),
+(2, 23, 3, 4, 2, 4, 'a', 'a', 3, 2, 'a', 'a'),
+(3, 23, 3, 4, 2, 4, 'a', 'a', 3, 2, 'a', 'a'),
+(4, 23, 3, 3, 3, 2, 'a', 'a', 3, 2, 'a', 'a');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `licenciaturas`
 --
 
 CREATE TABLE `licenciaturas` (
   `idlic` int(5) NOT NULL,
-  `namelic` varchar(30) NOT NULL,
+  `namelic` varchar(50) NOT NULL,
   `idfacultad` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -389,7 +420,7 @@ INSERT INTO `licenciaturas` (`idlic`, `namelic`, `idfacultad`) VALUES
 
 CREATE TABLE `registro` (
   `idregistro` int(5) NOT NULL,
-  `iduabc` int(15) NOT NULL DEFAULT 0,
+  `iduabc` int(15) DEFAULT NULL,
   `idcampus` int(5) NOT NULL,
   `name` varchar(30) NOT NULL,
   `lastname` varchar(20) NOT NULL,
@@ -406,7 +437,20 @@ CREATE TABLE `registro` (
 
 INSERT INTO `registro` (`idregistro`, `iduabc`, `idcampus`, `name`, `lastname`, `middlename`, `type`, `idworkshop`, `date`, `assist`) VALUES
 (6, 1, 3, 'A', 'A', 'A', 'Alumno', 23, '2024-05-10', 1),
-(8, 1, 3, 'A', 'A', 'A', 'Alumno', 23, '2024-05-10', 1);
+(8, 1, 3, 'B', 'B', 'B', 'Exterior', 23, '2024-05-10', 1),
+(9, 1, 3, '', 'A', 'A', 'Alumno', 24, '2024-05-12', 0),
+(10, 1, 3, 'A', 'A', 'A', 'Alumno', 24, '2024-05-12', 0),
+(11, 1, 3, 'A', 'A', 'A', 'Alumno', 24, '2024-05-12', 0),
+(12, 1, 3, '', 'A', 'A', 'Alumno', 24, '2024-05-12', 0),
+(13, 1, 3, 'A', 'A', 'A', 'Alumno', 24, '2024-05-12', 0),
+(14, 1, 3, '', 'A', 'A', 'Alumno', 24, '2024-05-12', 0),
+(15, 1, 3, 'A', 'A', 'A', 'Alumno', 24, '2024-05-12', 0),
+(16, 1, 3, 'A', 'A', 'A', 'Alumno', 24, '2024-05-12', 0),
+(21, NULL, 3, '1', '1', '1', 'Egresado', 24, '2024-05-12', 0),
+(22, NULL, 3, '1', '1', '1', 'Egresado', 24, '2024-05-12', 0),
+(23, 1, 3, 'A', 'A', 'A', 'Alumno', 24, '2024-05-12', 0),
+(24, 3, 3, 'AB', 'B', 'B', 'Alumno', 24, '2024-05-12', 0),
+(25, 3, 3, 'AB', 'B', 'B', 'Alumno', 24, '2024-05-12', 0);
 
 -- --------------------------------------------------------
 
@@ -434,7 +478,11 @@ CREATE TABLE `talleres` (
 
 INSERT INTO `talleres` (`idworkshop`, `nameworkshop`, `idlecturer`, `idfacultad`, `idcampus`, `descriptionworkshop`, `time`, `date`, `ability`, `post`, `status`) VALUES
 (23, 'a', 3, 35, 3, 'a', '12:46:00', '2024-05-25', 'a', 'a', 1),
-(24, 'Toy', 1, 38, 3, 'toy', '10:00:00', '2024-12-31', 'a', 'example2.com', 0);
+(24, 'Toy', 1, 38, 3, 'toy', '10:00:00', '2024-12-31', 'a', 'example2.com', 1),
+(28, 'NS', 3, 1, 1, 'NA', '16:15:00', '2024-05-16', 'NA', 'example2.com', 1),
+(29, 'TEST', 1, 18, 2, 'TEST', '16:52:00', '2024-05-07', 'TEST', 'TEST', 0),
+(31, 'ABC', 3, 32, 2, 'ABC', '08:00:00', '2024-06-30', 'NA', 'example3.com', 0),
+(32, 'Toyota', 3, 2, 1, 'NA', '08:00:00', '2024-06-30', 'NA', 'example3.com', 1);
 
 -- --------------------------------------------------------
 
@@ -459,7 +507,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`iduabc`, `idfacultad`, `idcampus`, `idlic`, `name`, `lastname`, `middlename`, `email`, `type`) VALUES
-(1, 35, 3, 82, 'A', 'A', 'A', 'johan.barragan@uabc.edu.mx', 'Alumno');
+(1, 35, 3, 71, 'A', 'A', 'A', 'johan.barragan@uabc.edu.mx', 'Alumno'),
+(3, 35, 3, 73, 'AB', 'B', 'B', 'abc@gmail.com', 'Alumno');
 
 --
 -- Indexes for dumped tables
@@ -489,6 +538,14 @@ ALTER TABLE `conferencistas`
 ALTER TABLE `facultades`
   ADD PRIMARY KEY (`idfacultad`),
   ADD KEY `fk_idcampus` (`idcampus`);
+
+--
+-- Indexes for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`idfeedback`),
+  ADD KEY `idworkshop` (`idworkshop`),
+  ADD KEY `idcampus` (`idcampus`);
 
 --
 -- Indexes for table `licenciaturas`
@@ -553,6 +610,12 @@ ALTER TABLE `facultades`
   MODIFY `idfacultad` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
+-- AUTO_INCREMENT for table `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `idfeedback` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `licenciaturas`
 --
 ALTER TABLE `licenciaturas`
@@ -562,13 +625,13 @@ ALTER TABLE `licenciaturas`
 -- AUTO_INCREMENT for table `registro`
 --
 ALTER TABLE `registro`
-  MODIFY `idregistro` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idregistro` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `talleres`
 --
 ALTER TABLE `talleres`
-  MODIFY `idworkshop` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `idworkshop` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables
@@ -579,6 +642,13 @@ ALTER TABLE `talleres`
 --
 ALTER TABLE `facultades`
   ADD CONSTRAINT `fk_idcampus` FOREIGN KEY (`idcampus`) REFERENCES `campus` (`idcampus`);
+
+--
+-- Constraints for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`idworkshop`) REFERENCES `talleres` (`idworkshop`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`idcampus`) REFERENCES `campus` (`idcampus`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `licenciaturas`
