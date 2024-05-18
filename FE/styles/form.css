@@ -16,50 +16,42 @@ body{
 }
 
 /* utilities */
-
-
-/* Estilos Header */
-.navbar {
-    border-bottom: 8px solid #febe10;
-    background-color: #00723f;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    color: white;
-}
-
 .center-content {
     text-align: center;
 }
 
-.logos {
+/* Header */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 8px solid #febe10;
+    background-color: #00723f;
+    padding: 10px;
+    color: white;
+    align-items: center;
+    text-align: center;
+}
+
+.header-container a{
     display: inline-block;
     margin-left: 10px;
     font-size: 2rem;
     color: white;
+
 }
 
 @media (max-width: 768px) {
-    .navbar {
+    .header-container {
         flex-direction: column;
         align-items: stretch;
         padding: 20px;
     }
 
-    .center-content:last-child {
-        margin-left: 0;
-        margin-top: 10px;
-    }
-
-    .logos {
+    .header-container a {
         margin-left: 0;
         margin-right: 10px;
+        font-size: 2.5rem;
     }
-/* 
-    .input-control select {
-        max-width: 500px;
-    } */
 }
 
 /* general form */
@@ -134,7 +126,6 @@ form .username {
         grid-template-columns: repeat(1, 1fr);
     }
 }
-
 
 .input-columns-flex {
     display: flex;
@@ -218,7 +209,6 @@ form .username {
 }
 
 /* Se modifico porque se usa .input-container */
-
 .error {
     position: absolute;
     top: 100%;

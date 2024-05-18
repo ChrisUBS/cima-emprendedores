@@ -5,108 +5,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cimarrones Emprendedores</title>
-    <link rel="stylesheet" href="styles/adminHome.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/navbar.css">
+    <link rel="stylesheet" href="styles/adminHome.css">
     <script src="https://kit.fontawesome.com/b8ce32ba45.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 </head>
 
 <body>
+    <!-- Contenedor principal -->
+    <main class="main-container">
+        <!-- Barra de navegación izquierda -->
+        <div class="left-div">
+            <div class="navigation">
+                <ul>
+                    <p class="m-cima">
+                        Panel Administrador
+                    </p>
+                    <li class="list">
+                        <b></b>
+                        <b></b>
+                        <a href="#">
+                            <span class="icon">
+                                <box-icon type='solid' name='home' color="white"></box-icon>
+                            </span>
+                            <span class="title">Home</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <b></b>
+                        <b></b>
+                        <a href="#">
+                            <span class="icon">
+                                <box-icon type='solid' name='user-circle' color="white"></box-icon>
+                            </span>
+                            <span class="title">Usuarios</span>
+                        </a>
+                    </li>
+                    <li class="list active">
+                        <b></b>
+                        <b></b>
+                        <a href="#">
+                            <span class="icon">
+                                <box-icon type='solid' name='user-detail' color="white"></box-icon>
+                            </span>
+                            <span class="title">Registro</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <b></b>
+                        <b></b>
+                        <a href="./workshop.html">
+                            <span class="icon">
+                                <box-icon name='chat' type='solid' color="white"></box-icon>
+                            </span>
+                            <span class="title">Talleres</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <b></b>
+                        <b></b>
+                        <a href="#">
+                            <span class="icon">
+                                <box-icon type='solid' name='user-badge' color="white"></box-icon>
+                            </span>
+                            <span class="title">Conferencistas</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <b></b>
+                        <b></b>
+                        <a href="#">
+                            <span class="icon">
+                                <box-icon name='bar-chart-square' color="white"></box-icon>
+                            </span>
+                            <span class="title">Estadisticas</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <b></b>
+                        <b></b>
+                        <a href="#" id="btnLogOut">
+                            <span class="icon">
+                                <box-icon name='log-in-circle' color="white"></box-icon>
+                            </span>
+                            <span class="title">Salir</span>
+                        </a>
+                    </li>
 
-    <!-- Navbar -->
-    <header>
-        <nav class="navbar navbar-light">
-            <div class="center-content">
-                <a href="https://www.uabc.mx/">
-                    <img src="assets/escudo-actualizado-2022.png" width="60" height="70"
-                        class="d-inline-block align-top" alt="">
-                </a>
+                </ul>
             </div>
-            <div class="center-content">
-                <h3>Cimarrones Emprendedores</h3>
-                <p>Portal Administrador de Talleres UABC</p>
+            <div class="toggle">
+                <box-icon name='menu' color="white" class="open"></box-icon>
+                <box-icon name='x-circle' color="white" class="close"></box-icon>
             </div>
-            <div class="center-content">
-                <a class="logos" href="https://www.instagram.com/cimarronesemprendedores/">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a class="logos" href="https://www.facebook.com/CimarronesEmprendedoresUABC/?locale=es_LA">
-                    <i class="fa-brands fa-square-facebook"></i>
-                </a>
-            </div>
-        </nav>
-    </header>
-
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar navigation -->
-            <nav class="col-md-2 d-none d-md-block sidebar">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">
-                                General <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Usuarios
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                Registros
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./workshop.html">
-                                Talleres
-                            </a>
-                        </li>
-                        <li class="nav-item mt-auto">
-                            <a class="nav-link" href="#" id="btnLogOut">
-                                Cerrar sesión
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-            <!-- Main content -->
-            <main class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                <!-- Search and filter bar -->
-                <div class="row mb-3">
-                    <div class="col-md-12">
-                        <label for="searchBar"></label>
-                        <input type="text" class="form-control" id="searchBar" placeholder="Buscar...">
-                        <!-- <div class="input-group-append">
-                            <button class="btn btn-primary" type="button" id="searchButton">Buscar</button>
-                        </div>                 -->
-                    </div>
-                </div>
-
-                <!-- User table -->
-                <div class="table-responsive">
-                    <table id="table" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre(s)</th>
-                                <th>Apellidos</th>
-                                <th>Tipo</th>
-                                <th>Taller</th>
-                                <th>Campus</th>
-                                <th>Fecha de registro</th>
-                                <th>Asistencia</th>
-                            </tr>
-                        </thead>
-                        <tbody id="listaAlumnos">
-                            <!-- User rows will be filled here -->
-                        </tbody>
-                    </table>
-                </div>
-            </main>
         </div>
-    </div>
+        <!-- Contenido principal derecho -->
+        <div class="right-div">
+            <!-- Tabla de usuarios -->
+            <div>
+                <table id="table" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre(s)</th>
+                            <th>Apellidos</th>
+                            <th>Tipo</th>
+                            <th>Taller</th>
+                            <th>Campus</th>
+                            <th>Fecha de registro</th>
+                            <th>Asistencia</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaAlumnos">
+                        <!-- Los datos de la tabla irán aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
 
     <!-- Scripts -->
     <script src="plugins/jquery3.7.1.js"></script>
@@ -117,6 +134,7 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
     <script src="./scripts/logout.js"></script>
+    <script src="./scripts/navbar.js"></script>
     <script src="./scripts/admin.js"></script>
 </body>
 

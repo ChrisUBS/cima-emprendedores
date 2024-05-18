@@ -11,7 +11,7 @@ function logout() {
             window.location.href = "login.html";
         },
         error: function(xhr, status, error) {
-            console.error(error);
+            console.error(xhr, status, error);
         }
     });
 }
