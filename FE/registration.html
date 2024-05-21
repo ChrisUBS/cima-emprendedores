@@ -12,28 +12,24 @@
     <link rel="stylesheet" href="styles/table.css">
     <link rel="stylesheet" href="styles/datatablesResp.css">
     <link rel="stylesheet" href="styles/datatables.css">
-    <link rel="stylesheet" href="styles/stats.css">
+    <link rel="stylesheet" href="styles/adminHome.css">
     <script src="https://kit.fontawesome.com/b8ce32ba45.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 </head>
 
 <body>
-
+    <!-- Contenedor principal -->
     <main class="main-container">
         <!-- Barra de navegación izquierda -->
         <div class="left-div">
             <div class="navigation">
                 <ul>
-                    <p class="m-cima">
-                        Panel Administrador
-                    </p>
+                    <p class="m-cima">Panel Administrador</p>
                     <li class="list">
                         <b></b>
                         <b></b>
                         <a href="./adminHome.html">
-                            <span class="icon">
-                                <box-icon type='solid' name='home' color="white"></box-icon>
-                            </span>
+                            <span class="icon"><box-icon type='solid' name='home' color="white"></box-icon></span>
                             <span class="title">Home</span>
                         </a>
                     </li>
@@ -41,19 +37,15 @@
                         <b></b>
                         <b></b>
                         <a href="./users.html">
-                            <span class="icon">
-                                <box-icon type='solid' name='user-circle' color="white"></box-icon>
-                            </span>
+                            <span class="icon"><box-icon type='solid' name='user-circle' color="white"></box-icon></span>
                             <span class="title">Usuarios</span>
                         </a>
                     </li>
-                    <li class="list ">
+                    <li class="list active">
                         <b></b>
                         <b></b>
                         <a href="./registration.html">
-                            <span class="icon">
-                                <box-icon type='solid' name='user-detail' color="white"></box-icon>
-                            </span>
+                            <span class="icon"><box-icon type='solid' name='user-detail' color="white"></box-icon></span>
                             <span class="title">Registro</span>
                         </a>
                     </li>
@@ -61,9 +53,7 @@
                         <b></b>
                         <b></b>
                         <a href="./workshop.html">
-                            <span class="icon">
-                                <box-icon name='chat' type='solid' color="white"></box-icon>
-                            </span>
+                            <span class="icon"><box-icon name='chat' type='solid' color="white"></box-icon></span>
                             <span class="title">Talleres</span>
                         </a>
                     </li>
@@ -71,19 +61,15 @@
                         <b></b>
                         <b></b>
                         <a href="./lect.html">
-                            <span class="icon">
-                                <box-icon type='solid' name='user-badge' color="white"></box-icon>
-                            </span>
+                            <span class="icon"><box-icon type='solid' name='user-badge' color="white"></box-icon></span>
                             <span class="title">Conferencistas</span>
                         </a>
                     </li>
-                    <li class="list active">
+                    <li class="list">
                         <b></b>
                         <b></b>
                         <a href="./statsPage.html">
-                            <span class="icon">
-                                <box-icon name='bar-chart-square' color="white"></box-icon>
-                            </span>
+                            <span class="icon"><box-icon name='bar-chart-square' color="white"></box-icon></span>
                             <span class="title">Estadisticas</span>
                         </a>
                     </li>
@@ -91,13 +77,10 @@
                         <b></b>
                         <b></b>
                         <a href="#" id="btnLogOut">
-                            <span class="icon">
-                                <box-icon name='log-in-circle' color="white"></box-icon>
-                            </span>
+                            <span class="icon"><box-icon name='log-in-circle' color="white"></box-icon></span>
                             <span class="title">Salir</span>
                         </a>
                     </li>
-
                 </ul>
                 <div class="toggle">
                     <box-icon name='menu' color="white" class="open"></box-icon>
@@ -109,21 +92,37 @@
         <div class="right-div">
             <div class="head">
                 <div class="optionsLeft">
-                    <p class="nav">Estadisticas</p>
+                    <p class="nav">Registros</p>
+                </div>
+                <div class="optionsRight">
+                    <button id="btnExportCopy" class="btn-class btn btn-success" title="Copiar"><i class="fa-solid fa-clipboard"></i></button>
+                    <button id="btnExportCsv" class="btn-class btn btn-success" title="CSV"><i class="fa-solid fa-file-csv"></i></button>
+                    <button id="btnExportExcel" class="btn-class btn btn-success" title="Excel"><i class="fa-solid fa-file-excel"></i></button>
+                    <button id="btnExportPdf" class="btn-class btn btn-success" title="PDF"><i class="fa-solid fa-file-pdf"></i></button>
+                    <button id="btnExportPrint" class="btn-class btn btn-success" title="Imprimir"><i class="fa-solid fa-print"></i></button>
+                    <button class="btn-class btn btn-success" type="button" id="addButton" title="Agregar"><i class="fa-solid fa-plus"></i></button>
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <div class="graphics-container">
-                <div class="bar-graphic"  style="width: 350px; height: 350px;"> 
-                    <!-- <h6>Registros por campus</h6> -->
-                    <canvas id="graph1" width="400" height="400"></canvas>
-                    <button class="btn-class btn btn-success" type="button" id="btnGraph1">Extraer</button>
-                </div>
-                <div class="pie-graphic"  style="width: 350px; height: 350px;"> 
-                    <!-- <h6>Registros por Tipo</h6> -->
-                    <canvas id="graph2" width="400" height="400"></canvas>
-                    <button class="btn-class btn btn-success" type="button" id="btnGraph2">Extraer</button>
-                </div>
+            <!-- Tabla de usuarios -->
+            <div class="table-container mt-2">
+                <table id="table" class="table table-striped dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre(s)</th>
+                            <th>Apellidos</th>
+                            <th>Tipo</th>
+                            <th>Taller</th>
+                            <th>Campus</th>
+                            <th>Fecha de registro</th>
+                            <th>Asistencia</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaAlumnos" class="scrollable-tbody">
+                        <!-- Los datos de la tabla irán aquí -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>
@@ -144,8 +143,7 @@
     <script src="plugins/buttonsprint.js"></script>
     <script src="./scripts/logout.js"></script>
     <script src="./scripts/navbar.js"></script>
-    <script src="../FE/scripts/chart-config.js"></script>
-
+    <script src="./scripts/admin.js"></script>
 </body>
 
 </html>

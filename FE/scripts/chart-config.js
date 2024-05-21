@@ -183,3 +183,96 @@ function init() {
 document.addEventListener('DOMContentLoaded', function () {
     init();
 });
+
+
+
+// Bar chart
+// function generateChartsCampus() {
+//     $.ajax({
+//         url: `${apiURL}dashboard/get_register.php`,
+//         method: 'GET',
+//         dataType: 'json',
+//         success: function(response) {
+//             if (response.success) {
+//                 const usuariosRegistrados = response.data;
+//                 const conteoCampus = usuariosRegistrados.reduce((acc, usuario) => {
+//                     acc[usuario.campus] = (acc[usuario.campus] || 0) + 1;
+//                     return acc;
+//                 }, {});
+//                 const labelsCampus = Object.keys(conteoCampus);
+//                 const dataCampus = Object.values(conteoCampus);
+//                 const pctx = document.getElementById('graph1').getContext('2d');
+//                 const CampusChart = new Chart(pctx, {
+//                     type: 'bar',
+//                     data: {
+//                         labels: labelsCampus,
+//                         datasets: [{
+//                             label: 'Participación por Campus',
+//                             data: dataCampus,
+//                             backgroundColor: [
+//                                 'rgba(0, 255, 0, 0.5)', // Ensenada
+//                                 'rgba(54, 162, 235, 0.5)', // Mexicali
+//                                 'rgba(255, 206, 86, 0.5)' // Tijuana
+//                             ],
+//                             borderColor: [
+//                                 'rgba(0, 255, 0, 1)', // Ensenada
+//                                 'rgba(54, 162, 235, 1)', // Mexicali
+//                                 'rgba(255, 206, 86, 1)' // Tijuana
+//                             ],
+//                             borderWidth: 1
+//                         }]
+//                     },
+//                     options: {
+//                         responsive: true,
+//                         plugins: {
+//                             legend: {
+//                                 position: 'top',
+//                                 labels: {
+//                                     generateLabels: function(chart) {
+//                                         const dataset = chart.data.datasets[0];
+//                                         return chart.data.labels.map((label, index) => ({
+//                                             text: label,
+//                                             fillStyle: dataset.backgroundColor[index],
+//                                             strokeStyle: dataset.borderColor[index],
+//                                             lineWidth: dataset.borderWidth,
+//                                             hidden: chart.getDatasetMeta(0).data[index].hidden,
+//                                             index: index
+//                                         }));
+//                                     }
+//                                 },
+//                                 onClick: function(e, legendItem) {
+//                                     const index = legendItem.index;
+//                                     const chart = this.chart;
+//                                     const meta = chart.getDatasetMeta(0);
+
+//                                     meta.data[index].hidden = !meta.data[index].hidden;
+//                                     chart.update();
+//                                 }
+//                             },
+//                             title: {
+//                                 display: true,
+//                                 text: 'Participación por Campus'
+//                             }
+//                         },
+//                         scales: {
+//                             x: {
+//                                 display: false,
+//                                 grid: {
+//                                     display: false
+//                                 }
+//                             },
+//                             y: {
+//                                 beginAtZero: true
+//                             }
+//                         }
+//                     }
+//                 });
+//             } else {
+//                 console.error('Error en la respuesta de PHP:', response.error);
+//             }
+//         },
+//         error: function(xhr, status, error) {
+//             console.error('Error al obtener los datos:', error);
+//         }
+//     });
+// }

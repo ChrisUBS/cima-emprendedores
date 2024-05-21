@@ -12,13 +12,13 @@
     <link rel="stylesheet" href="styles/table.css">
     <link rel="stylesheet" href="styles/datatablesResp.css">
     <link rel="stylesheet" href="styles/datatables.css">
-    <link rel="stylesheet" href="styles/stats.css">
+    <link rel="stylesheet" href="styles/">
     <script src="https://kit.fontawesome.com/b8ce32ba45.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 </head>
 
 <body>
-
+    <!-- Contenedor principal -->
     <main class="main-container">
         <!-- Barra de navegación izquierda -->
         <div class="left-div">
@@ -37,7 +37,7 @@
                             <span class="title">Home</span>
                         </a>
                     </li>
-                    <li class="list">
+                    <li class="list active">
                         <b></b>
                         <b></b>
                         <a href="./users.html">
@@ -77,7 +77,7 @@
                             <span class="title">Conferencistas</span>
                         </a>
                     </li>
-                    <li class="list active">
+                    <li class="list">
                         <b></b>
                         <b></b>
                         <a href="./statsPage.html">
@@ -109,21 +109,36 @@
         <div class="right-div">
             <div class="head">
                 <div class="optionsLeft">
-                    <p class="nav">Estadisticas</p>
+                    <p class="nav">Usuarios</p>
+                </div>
+                <div class="optionsRight">
+                    <button id="btnExportCopy" class="btn-class btn btn-success" title="Copiar"><i class="fa-solid fa-clipboard"></i></button>
+                    <button id="btnExportCsv" class="btn-class btn btn-success" title="CSV"><i class="fa-solid fa-file-csv"></i></button>
+                    <button id="btnExportExcel" class="btn-class btn btn-success" title="Excel"><i class="fa-solid fa-file-excel"></i></button>
+                    <button id="btnExportPdf" class="btn-class btn btn-success" title="PDF"><i class="fa-solid fa-file-pdf"></i></button>
+                    <button id="btnExportPrint" class="btn-class btn btn-success" title="Imprimir"><i class="fa-solid fa-print"></i></button>
+                    <button class="btn-class btn btn-success" type="button" id="addButton" title="Agregar"><i class="fa-solid fa-plus"></i></button>
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <div class="graphics-container">
-                <div class="bar-graphic"  style="width: 350px; height: 350px;"> 
-                    <!-- <h6>Registros por campus</h6> -->
-                    <canvas id="graph1" width="400" height="400"></canvas>
-                    <button class="btn-class btn btn-success" type="button" id="btnGraph1">Extraer</button>
-                </div>
-                <div class="pie-graphic"  style="width: 350px; height: 350px;"> 
-                    <!-- <h6>Registros por Tipo</h6> -->
-                    <canvas id="graph2" width="400" height="400"></canvas>
-                    <button class="btn-class btn btn-success" type="button" id="btnGraph2">Extraer</button>
-                </div>
+            <!-- Tabla de usuarios -->
+            <div class="table-container mt-2">
+                <table id="table" class="table table-striped dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre(s)</th>
+                            <th>Apellidos</th>
+                            <th>Tipo</th>
+                            <th>Campus</th>
+                            <th>Facultad</th>
+                            <th>Licenciatura</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaAlumnos">
+                        <!-- Los datos de la tabla irán aquí -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>
@@ -144,8 +159,7 @@
     <script src="plugins/buttonsprint.js"></script>
     <script src="./scripts/logout.js"></script>
     <script src="./scripts/navbar.js"></script>
-    <script src="../FE/scripts/chart-config.js"></script>
-
+    <script src="./scripts/user.js"></script>
 </body>
 
 </html>

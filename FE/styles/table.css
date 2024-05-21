@@ -1,0 +1,73 @@
+.dataTables_filter {
+    text-align: right;
+}
+
+.dataTables_filter label {
+    font-weight: bold;
+    color: #333;
+}
+
+.dataTables_filter input {
+    border: 2px solid #007bff;
+    border-radius: 4px;
+    padding: 5px 10px;
+    width: 200px;
+    font-size: 16px;
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+    border-color: #0056b3;
+    outline: none;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 5px 10px;
+    margin: 2px;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    color: #007bff;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #007bff;
+    color: white;
+}
+
+.table-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.dataTables_scrollBody {
+    max-height: 400px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.dataTables_scrollHead, .dataTables_scrollFoot {
+    width: 100%;
+}
+
+.dataTables_scrollBody table {
+    width: 100%;
+    margin: 0;
+    border-collapse: separate;
+}
+
+table.dataTable tbody th,
+table.dataTable tbody td {
+    white-space: nowrap;
+}

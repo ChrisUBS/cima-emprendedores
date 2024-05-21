@@ -10,31 +10,29 @@ body{
     background: white;
 }
 
-/* main */
-.main-container {
-    display: flex;
-    width: 100%;
-    height: 100vh;
+.box{
+    width: 88%;
+    height: 130px;
+    background-color: #e3e3e3;
+    margin-left: 10px;
+    padding: 10px;
+    box-shadow: 2px 5px 10px #ddd;
+    position: relative;
+    border-radius: 15px;
 }
 
-.left-div {
-    width: 70px;
-    transition: 0.5s;
-    padding-top: 25px;
+.head {
+    padding: 0px 6px;
+    border-bottom: 1px solid #d6d6d8b8;
+    padding-bottom: 10px;
 }
-
-.left-div.active {
-    width: 300px;
+.optionsLeft {
+    float: left;
 }
-
-.right-div {
-    flex-grow: 1;
-    height: 85vh;
-    background: white;
-    margin: 25px;
-    border-radius: 8px;
-    padding: 30px;
-    overflow-y: auto;
+.optionsRight{
+    display: inline-block;
+    float: right;
+    margin-top: -10px;
 }
 
 
@@ -141,7 +139,6 @@ body{
     height: 60px;
     line-height: 60px;
     white-space: normal;
-
 }
 .m-cima{
     color: white;
@@ -153,18 +150,16 @@ body{
 }
 .toggle{
     position: relative;
-    top: -5px;
-    left: 27px;
+    display: block;
     float: left;
+    left: 23px;
+    top: 20px;
     cursor: pointer;
-    transition: 0.5s;
+    z-index: 1000;
 }
 .toggle.active{
-    left: 270px;
-    top: -5px;
-    left: 200px;
-    cursor: pointer;
-    transition: 0.5s;
+    left: 210px;
+    top: 10px;
 }
 .active a {
     color: white !important;
@@ -182,5 +177,14 @@ body{
 .toggle box-icon.close,
 .toggle.active box-icon.open{
     display: none;
+}
+
+
+/* Utils */
+.clearfix {
+    clear: both;
+}
+.no-transition {
+    transition: none !important;
 }
 

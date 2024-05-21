@@ -1,3 +1,5 @@
+//TALLERES JS
+
 var apiURL = "http://localhost/cimarrones-emprendedores/BE/";
 function statusChange() {
     $('#listaTalleres').on('click', '#workshopStatus', function() {
@@ -83,7 +85,7 @@ function getFacultad(selectedFacultad) {
 function getWorkshops() {
     $.ajax({
         type: "GET",
-        url: `${apiURL}dashboard/get_table_workshop.php`,
+        url: `${apiURL}dashboard/get_workshop.php`,
         dataType: "json",
         success: function(response) {
             if (response.success) {
@@ -169,6 +171,10 @@ function updateWorkshopList(workshops) {
                     <td>${workshop.date}</td>
                     <td>${workshop.time}</td>
                     <td>
+                        <input id="workshopStatus" type="checkbox" ${workshop.status === 1 ? 'checked' : ''}>
+                        <span class="status-text">${workshop.status === 1 ? 'Activo' : 'Inactivo'}</span>
+                    </td>
+                    <td>
                         <form id="options">
                             <button type="button" title="Informacion" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="infoButton"><i class="fa-solid fa-circle-info"></i></button>
                             <button type="button" title="Editar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="editButton"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -176,11 +182,93 @@ function updateWorkshopList(workshops) {
                             <button type="button" title="Eliminar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="deleteButton"><i class="fa-solid fa-trash"></i></button>
                         </form>
                     </td>
-                    <td>
-                        <input id="workshopStatus" type="checkbox" ${workshop.status === 1 ? 'checked' : ''}>
-                    </td>
                 </tr>
         `);
+    });
+    if ($.fn.dataTable.isDataTable('#table')) {
+        $('#table').DataTable().destroy();
+    }
+
+    const table = $('#table').DataTable({
+        language: {
+            url: 'http://localhost/cimarrones-emprendedores/FE/plugins/es-ES.json'
+            // url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
+        },
+        paging: true,
+        searching: true,
+        ordering: true,
+        lengthMenu: [5, 10, 25, 50],
+        pageLength: 10,
+        columnDefs: [
+            { className: "dt-center", targets: "_all" }
+        ],
+        buttons: [
+            {
+                extend: 'copy',
+            },
+            {
+                extend: 'csv',
+            },
+            {
+                extend: 'excel',
+            },
+            {
+                extend: 'pdf',
+            },
+            {
+                extend: 'print',
+            }
+        ],
+        responsive: true,
+        scrollY: "400px",
+        scrollCollapse: true
+    });
+    
+    $('#btnExportCopy').on('click', function() {
+        table.button('.buttons-copy').trigger();
+    });
+    $('#btnExportCsv').on('click', function() {
+        table.button('.buttons-csv').trigger();
+    });
+    $('#btnExportExcel').on('click', function() {
+        table.button('.buttons-excel').trigger();
+    });
+    $('#btnExportPdf').on('click', function() {
+        table.button('.buttons-pdf').trigger();
+    });
+    $('#btnExportPrint').on('click', function() {
+        table.button('.buttons-print').trigger();
+    });
+
+    // Actualiza el texto de asistencia cuando se cambia el checkbox
+    $('#listaTalleres').on('change', '#workshopStatus', function() {
+        const isChecked = $(this).is(':checked');
+        const statusText = isChecked ? 'Activo' : 'Inactivo';
+        $(this).siblings('.status-text').text(statusText);
+        const idworkshop = $(this).closest('tr').attr('id');
+        $.ajax({
+            url: `${apiURL}dashboard/status_change.php`,
+            type: 'POST',
+            dataType: "json",
+            data: {
+                idworkshop: idworkshop,
+                status: isChecked ? 1 : 0,
+            },
+            success: function(response) {
+                console.log(response);
+                if (response.success) {
+                    // Estado del usuario actualizado con éxito
+                } else {
+                    console.log("Error al actualizar el estado del usuario:", response.error);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("Error en la solicitud:", xhr, status, error);
+            }
+        });
+    });
+        $(window).on('resize', function() {
+        table.columns.adjust();
     });
 }
 
@@ -299,7 +387,15 @@ function editWorkshop(selectedIdWorkshop){
         console.log("alert-error", "Error: ID de taller no seleccionado.");
         return;
     }
-
+    var nameworkshop = $('#editModalBody #nameworkshop').val();
+    var descriptionworkshop = $('#editModalBody #descriptionworkshop').val();
+    var time = $('#editModalBody #time').val();
+    var date = $('#editModalBody #date').val();
+    var ability = $('#editModalBody #ability').val();
+    var post = $('#editModalBody #post').val();
+    var idcampus = $('#editModalBody #campus').val();
+    var idfacultad = $('#editModalBody #txtFacultad').val();
+    var idlecturer = $('#editModalBody #lect').val(); 
     $.ajax({
         url: `${apiURL}dashboard/edit_workshop.php`,
         type: 'POST',
@@ -464,7 +560,7 @@ function init() {
                 });
                 break;
             default:
-                console.error(`Acción no reconocida: ${action}`);
+                // console.error(`Acción no reconocida: ${action}`);
                 break;
         }
     });
