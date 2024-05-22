@@ -11,21 +11,3 @@ a {
 img {
     max-width: 100%;
 }
-
-
-
-.graphics-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 150px;
-    justify-content: center;
-}
-
-.bar-graphic, .pie-graphic {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 50px;
-    margin-top: 50px;
-}

@@ -160,6 +160,9 @@ function updateRegisterList(register) {
 function init() {
     searchToDatabase();
     statusChange();
+    $(window).on('resize', function() {
+        table.columns.adjust();
+        });
 }
 
 $(document).ready(function() {

@@ -1,38 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 body{
     min-height: 100vh; 
     background: white;
-}
-
-.box{
-    width: 88%;
-    height: 130px;
-    background-color: #e3e3e3;
-    margin-left: 10px;
-    padding: 10px;
-    box-shadow: 2px 5px 10px #ddd;
-    position: relative;
-    border-radius: 15px;
-}
-
-.head {
-    padding: 0px 6px;
-    border-bottom: 1px solid #d6d6d8b8;
-    padding-bottom: 10px;
-}
-.optionsLeft {
-    float: left;
-}
-.optionsRight{
-    display: inline-block;
-    float: right;
-    margin-top: -10px;
+    overflow: hidden !important;
 }
 
 
@@ -41,9 +15,9 @@ body{
     position: fixed;
     top: 0%;
     bottom: 0;
-    width: 60px;
+    width: 70px;
     box-sizing: initial;
-    border-left: 5px solid #00723F;
+    border-left: 1px solid #00723F;
     border-right: 10px solid #febe10;
     background: #00723F;
     transition: 0.5s;
@@ -72,8 +46,8 @@ body{
 }
 .navigation ul li b:nth-child(1){
     position: absolute;
-    top: -20px;
-    height: 20px;
+    top: -15px;
+    height: 15px;
     width: 100%;
     background:#febe10;
     display: none;
@@ -149,10 +123,10 @@ body{
     left: 17px;
 }
 .toggle{
-    position: relative;
+    position: absolute;
     display: block;
     float: left;
-    left: 23px;
+    left: 22px;
     top: 20px;
     cursor: pointer;
     z-index: 1000;

@@ -267,9 +267,6 @@ function updateWorkshopList(workshops) {
             }
         });
     });
-        $(window).on('resize', function() {
-        table.columns.adjust();
-    });
 }
 
 // Función para eliminar un taller
@@ -478,7 +475,10 @@ function addWorkshop(modalSelected) {
 // Inicialización de eventos y carga inicial de datos.
 function init() {
     getWorkshops();
-    statusChange(); 
+    $(window).on('resize', function() {
+        table.columns.adjust();
+    });
+    statusChange();
     $(document).on('click', '.btn-class', function(event) {
         const action = event.currentTarget.id;
         const selectedIdWorkshop = $(event.currentTarget).data('id');//Guardar el id del donde se clickea.

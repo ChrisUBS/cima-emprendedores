@@ -170,7 +170,7 @@ form .username {
     display: block;
     border: none;
     border-radius: 10px;
-    background-color: #000000;
+    background-color: #157347;
     color: white;
     font-size: 0.8rem;
     cursor: pointer;
@@ -183,7 +183,7 @@ form .username {
 .btn-search {
     display: block;
     color: white;
-    background-color: #000000;
+    background-color: #157347;
     border: none;
     width: 50px;
     height: 30px;
@@ -191,7 +191,7 @@ form .username {
 
 .btn-reg:hover,
 .btn-search:hover {
-    background-color: rgb(206, 142, 0);
+    background-color: #157347;
 }
 
 /* Noti form */ 

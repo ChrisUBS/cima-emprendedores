@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         exit();
     }
     
-    $query = "SELECT idlecturer, name, lastname FROM conferencistas";
+    $query = "SELECT idlecturer, name, lastname, middlename, info FROM conferencistas";
     $result = $conn->query($query);
     
     $conferencistas = array();
@@ -23,6 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 "idlecturer" => $row["idlecturer"],
                 "name" => $row["name"],
                 "lastname" => $row["lastname"],
+                "middlename" => $row["middlename"],
+                "info" => $row["info"],
             );
         }
 

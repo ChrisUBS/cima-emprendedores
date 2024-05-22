@@ -15,7 +15,7 @@ function generateChartsCampus() {
                 const dataCampus = Object.values(conteoCampus);
                 const pctx = document.getElementById('graph1').getContext('2d');
                 const CampusChart = new Chart(pctx, {
-                    type: 'pie',
+                    type: 'line',
                     data: {
                         labels: (labelsCampus),
                         datasets: [{
@@ -94,7 +94,7 @@ function generateChartType() {
                 const dataTipos = Object.values(conteoTipos);
                 const tctx = document.getElementById('graph2').getContext('2d');
                 const typeChart = new Chart(tctx, {
-                    type: 'pie',
+                    type: 'bar',
                     data: {
                         labels: labelsTipos,
                         datasets: [{

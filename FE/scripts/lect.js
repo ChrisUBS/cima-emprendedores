@@ -5,11 +5,12 @@ let apiURL = "http://localhost/cimarrones-emprendedores/BE/";
 function searchToDatabase() {
     $.ajax({
         type: "GET",
-        url: `${apiURL}dashboard/get_user.php`,
+        url: `${apiURL}dashboard/get_lect.php`,
         dataType: "json",
         success: function(response) {
             if (response.success) {
-                updateUserList(response.data);
+                console.log(response.lect);
+                updateLectList(response.lect);
             } else {
                 console.log("alert-error", errorMessage);
             }
@@ -21,20 +22,17 @@ function searchToDatabase() {
     });
 }
 
-function updateUserList(user){
-    const listaTalleres = $('#listaAlumnos');
-    listaTalleres.empty();
-    console.log(user);
-    user.forEach(function(user) {
-        $('#listaAlumnos').append(`
-            <tr id="${user.iduabc}">
-                <td>${user.iduabc}</td>
-                <td>${user.name}</td>
-                <td>${user.lastname} ${user.middlename}</td>
-                <td>${user.type}</td>
-                <td id="${user.idcampus}">${user.campus}</td> 
-                <td id="${user.idfacultad}">${user.facultad}</td> 
-                <td id="${user.idlic}">${user.namelic}</td> 
+function updateLectList(lect){
+    const listaConferencistas = $('#listaConferencistas');
+    listaConferencistas.empty();
+
+    lect.forEach(lect => {
+        listaConferencistas.append(`
+            <tr id="${lect.idlecturer}">
+                <td>${lect.idlecturer}</td>
+                <td>${lect.name}</td>
+                <td>${lect.lastname} ${lect.middlename}</td>
+                <td>${lect.info}</td>
             </tr>
         `);
     });
