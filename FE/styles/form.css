@@ -169,7 +169,7 @@ form .username {
 .btn-reg {
     display: block;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: #157347;
     color: white;
     font-size: 0.8rem;
@@ -179,6 +179,13 @@ form .username {
     margin-left: auto;
     margin-right: auto;
 }
+
+.btn-info{
+    height: 30px;
+    padding: 0px 5px;
+    margin: auto;
+    margin-left: 5px;
+} 
 
 .btn-search {
     display: block;

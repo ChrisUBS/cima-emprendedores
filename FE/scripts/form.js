@@ -1,3 +1,4 @@
+let apiURL = "http://localhost/cimarrones-emprendedores/BE/"
 // Vaciar al cambio de campos.
 function OriginalVal() {
     let ubicacionOriginal = $("#ubicacion").html();
@@ -301,6 +302,7 @@ function getLic() {
         }
     });
 }
+
 //Talleres
 function getTalleres() {
     var selectedUbicacion = $("#txtCampus").val();
@@ -315,7 +317,6 @@ function getTalleres() {
             if (response && response.success && response.talleres && response.talleres.length > 0) {
                 $('#txtTaller').prop('disabled', false);
                 selectTaller.append("<option value=''></option>");
-                
                 response.talleres.forEach(taller => {
                     if (taller.status === 1) {
                         selectTaller.append(`<option value='${taller.idworkshop}'>${taller.nombre}</option>`);
@@ -331,7 +332,49 @@ function getTalleres() {
     });
 }
 
-let apiURL = "http://localhost/cimarrones-emprendedores/BE/"
+function getInfoModal(selectedIdWorkshop) {
+    if (!selectedIdWorkshop) {
+        console.log("alert-error", "Error: ID de taller no seleccionado.");
+        return;
+    }
+    $.ajax({
+        url: `${apiURL}dashboard/info_workshop.php`,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            idworkshop: selectedIdWorkshop,
+        },
+        success: function(response) {
+            if (response.success) {
+                $('#infoModalBody').empty();
+                    response.data.forEach(function(infoworkshop) {
+                        $('#infoModalBody').append(`
+                        <div class="workshop-info">
+                            <h3 class="workshop-title">${infoworkshop.nameworkshop}</h3>
+                            <div class="workshop-details">
+                                <p><strong>Facultad:</strong> ${infoworkshop.facultad}</p>
+                                <p><strong>Campus:</strong> ${infoworkshop.campus}</p>
+                                <p><strong>Fecha:</strong> ${infoworkshop.date}</p>
+                                <p><strong>Hora:</strong> ${infoworkshop.time}</p>
+                                <p><strong>Descripción:</strong> ${infoworkshop.dworkshop}</p>
+                                <p><strong>Conferencista:</strong> ${infoworkshop.lecturer}</p>
+                                <p><strong>Post:</strong> ${infoworkshop.post}</p>
+                            </div>
+                        </div>
+                    `);
+                });
+                $('#infoModal').modal('show');
+            } else {
+                console.log("alert-error","Error al mostrar info del taller: ${response.error}");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log("alert-error", "Error en la solicitud: ${error}");
+        }
+    });
+}
+
+
 //Provisional | base de dato y envio email.
 function insertToDatabase(newPerson) {
     $.ajax({
@@ -404,8 +447,31 @@ function searchToDatabase() {
     });
 }
 
+function updateInfoButton() {
+    let selectedTaller = $("#txtTaller").val();
+    if(selectedTaller){
+        // console.log("A");
+        $("#infoButton").show();
+        $("#infoButton").data("id", selectedTaller);
+    }else{
+        // console.log("B");
+        $("#infoButton").hide();
+    }
+}
+
 //main
 function init() {
+
+    //-------- Timer to buttons --------
+    $("button").click(function() {
+        var button = $(this);
+        button.prop('disabled', true);
+        setTimeout(function() {
+            button.prop('disabled', false);
+        }, 2000);
+    });
+    //----------------------------------
+
     $("#optionId").hide();
     $("#inputGeneral").hide();
     $("#ubicacion").hide();
@@ -415,15 +481,7 @@ function init() {
     $("#btnNext").hide();
     $("#btnRegister").hide();
     $("#btnEdit").hide();
-
-    $("button").click(function() {
-        console.log("btn");
-        var button = $(this);
-        button.prop('disabled', true);
-        setTimeout(function() {
-            button.prop('disabled', false);
-        }, 2000);
-    });
+    $("#infoButton").hide();
 
     // Hook eventos
     $("#txtOption").change(function () {
@@ -456,6 +514,28 @@ function init() {
         }
     });
     $("#btnNext").click(register);
+
+    //--------------- Modal Info Workshop ----------------
+    
+    $("#infoButton").click(function() {
+        var idWorkshop = $(this).data("id");
+        if (idWorkshop) {
+            getInfoModal(idWorkshop);
+        } else {
+            console.log("No workshop ID.");
+        }
+    });
+    $("#ubicacion").change(function(){
+        $("#infoButton").hide();
+    });
+    $("#txtTaller").change(function(){
+        updateInfoButton();
+    });
+    $('#infoModalClose').off('click').on('click', function() {
+        $('#infoModal').modal('hide');
+    });
+
+    //-----------------------------------------------------
 }
 
 $(document).ready(function () {
