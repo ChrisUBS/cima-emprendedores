@@ -41,7 +41,7 @@
 
 .right-div {
     flex-grow: 1;
-    /* height: 85vh; */
+    height: 85vh;
     background: white;
     margin: 25px;
     border-radius: 8px;

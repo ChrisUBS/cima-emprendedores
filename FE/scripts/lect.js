@@ -54,25 +54,20 @@ function updateLectList(lect){
             { className: "dt-center", targets: "_all" }
         ],
         buttons: [
-            {
-                extend: 'copy',
-            },
-            {
-                extend: 'csv',
-            },
-            {
-                extend: 'excel',
-            },
-            {
-                extend: 'pdf',
-            },
-            {
-                extend: 'print',
-            }
+            { extend: 'copy' },
+            { extend: 'csv' },
+            { extend: 'excel' },
+            { extend: 'pdf' },
+            { extend: 'print' }
         ],
         responsive: true,
         scrollY: "400px",
-        scrollCollapse: true
+        scrollCollapse: true,
+        initComplete: function() {
+            $(window).on('resize', function() {
+                table.columns.adjust();
+            });
+        }
     });
     
     $('#btnExportCopy').on('click', function() {
@@ -95,9 +90,6 @@ function updateLectList(lect){
 
 function init() {
     searchToDatabase();
-    $(window).on('resize', function() {
-        table.columns.adjust();
-        });
 }
 
 $(document).ready(function() {

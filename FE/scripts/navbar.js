@@ -24,11 +24,21 @@ function toggleMenu() {
     mCima.style.display = menuToggle.classList.contains('active') ? 'block' : 'none';
 }
 
-// Alternar clases 'active' al hacer clic en el botón de toggle
 menuToggle.onclick = function() {
     toggleMenu();
     localStorage.setItem('toggleActive', menuToggle.classList.contains('active'));
+
+    function adjustColumns() {
+        $('#table').DataTable().columns.adjust().responsive.recalc();
+    }
+    requestAnimationFrame(adjustColumns);
 }
+
+navigation.addEventListener('transitionend', function() {
+    requestAnimationFrame(function() {
+        $('#table').DataTable().columns.adjust().responsive.recalc();
+    });
+});
 
 let list = document.querySelectorAll('.list');
 
@@ -52,3 +62,7 @@ window.onload = function() {
     disableTransition();
     setTimeout(enableTransition, 0);
 }
+
+window.addEventListener('beforeunload', function() {
+    localStorage.removeItem('toggleActive');
+});

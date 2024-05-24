@@ -203,25 +203,20 @@ function updateWorkshopList(workshops) {
             { className: "dt-center", targets: "_all" }
         ],
         buttons: [
-            {
-                extend: 'copy',
-            },
-            {
-                extend: 'csv',
-            },
-            {
-                extend: 'excel',
-            },
-            {
-                extend: 'pdf',
-            },
-            {
-                extend: 'print',
-            }
+            { extend: 'copy' },
+            { extend: 'csv' },
+            { extend: 'excel' },
+            { extend: 'pdf' },
+            { extend: 'print' }
         ],
         responsive: true,
         scrollY: "400px",
-        scrollCollapse: true
+        scrollCollapse: true,
+        initComplete: function() {
+            $(window).on('resize', function() {
+                table.columns.adjust();
+            });
+        }
     });
     
     $('#btnExportCopy').on('click', function() {
@@ -245,7 +240,7 @@ function updateWorkshopList(workshops) {
         const isChecked = $(this).is(':checked');
         const statusText = isChecked ? 'Activo' : 'Inactivo';
         $(this).siblings('.status-text').text(statusText);
-        const idworkshop = $(this).closest('tr').attr('id');
+        const idworkshop = $(this).closest('tr').find('td:first').attr('id');
         $.ajax({
             url: `${apiURL}dashboard/status_change.php`,
             type: 'POST',
@@ -475,9 +470,6 @@ function addWorkshop(modalSelected) {
 // Inicialización de eventos y carga inicial de datos.
 function init() {
     getWorkshops();
-    $(window).on('resize', function() {
-        table.columns.adjust();
-    });
     statusChange();
     $(document).on('click', '.btn-class', function(event) {
         const action = event.currentTarget.id;

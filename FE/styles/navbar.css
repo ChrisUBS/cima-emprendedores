@@ -21,7 +21,9 @@ body{
     border-right: 10px solid #febe10;
     background: #00723F;
     transition: 0.5s;
-    overflow-x:hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1000; 
 }
 .navigation.active{
     width: 250px;
@@ -103,7 +105,7 @@ body{
     line-height: 70px;
     text-align: center;
 }
-.navigation ul li a .icon box-icon{
+.navigation ul li a .icon box-icon i{
     font-size: 1.5em;
 }
 .navigation ul li a .title{
@@ -112,8 +114,28 @@ body{
     padding-left: 10px;
     height: 60px;
     line-height: 60px;
-    white-space: normal;
+    white-space: nowrap; 
+    text-overflow: ellipsis; 
 }
+.navigation::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+/* Transición suave para la navegación */
+.navigation {
+    transition: width 0.5s ease;
+}
+
+.left-div.active, .right-div.active {
+    transition: margin-left 0.5s ease;
+}
+
+/* Transición para el contenido */
+.right-div {
+    transition: margin-left 0.5s ease;
+}
+
 .m-cima{
     color: white;
     font-size: 16px;
@@ -121,6 +143,7 @@ body{
     position: absolute;
     top: 25px;
     left: 17px;
+    transition: 0.5s;
 }
 .toggle{
     position: absolute;
@@ -132,8 +155,8 @@ body{
     z-index: 1000;
 }
 .toggle.active{
-    left: 210px;
-    top: 10px;
+    left: 200px;
+    top: 11px;
 }
 .active a {
     color: white !important;
@@ -152,7 +175,9 @@ body{
 .toggle.active box-icon.open{
     display: none;
 }
-
+.icon{
+    align-content: center;
+}
 
 /* Utils */
 .clearfix {
@@ -161,4 +186,3 @@ body{
 .no-transition {
     transition: none !important;
 }
-
