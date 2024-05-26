@@ -1,9 +1,9 @@
 <?php
+error_reporting(E_ERROR | E_PARSE);
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
-
 
 include("../conection.php");
 require '../vendor/autoload.php';
@@ -12,7 +12,7 @@ require '../plugins/phpqrcode/qrlib.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-function sendEmail($to, $subject, $body, $attachment = null) {
+function sendEmail($to, $subject, $body, $qrPath, $cid) {
     $mail = new PHPMailer(true);
     
     try {
@@ -29,12 +29,14 @@ function sendEmail($to, $subject, $body, $attachment = null) {
         $mail->setFrom('cimarronesemprendedores@uabc.edu.mx', 'Cimarrones Emprendedores');
         $mail->addAddress($to);
         $mail->Subject = $subject;
-        $mail->Body = $body;
+        $mail->isHTML(true);
 
-        // Adjuntar archivo si se proporciona
-        if ($attachment) {
-            $mail->addAttachment($attachment, basename($attachment));
+        // Adjuntar imagen del código QR en el cuerpo del correo
+        if ($qrPath) {
+            $mail->AddEmbeddedImage($qrPath, $cid, basename($qrPath));
         }
+
+        $mail->Body = $body;
 
         // Enviar el correo
         $mail->send();
@@ -63,70 +65,130 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        if ($id !== null) {
-            $stmt_check = $conn->prepare("SELECT iduabc FROM usuarios WHERE iduabc = ?");
-            $stmt_check->bind_param("i", $id);
-            $stmt_check->execute();
-            $result = $stmt_check->get_result();
-            $stmt_check->close();
+        try {
+            if ($id !== null) {
+                $stmt_check = $conn->prepare("SELECT iduabc FROM usuarios WHERE iduabc = ?");
+                $stmt_check->bind_param("i", $id);
+                $stmt_check->execute();
+                $result = $stmt_check->get_result();
+                $stmt_check->close();
 
-            if ($result->num_rows > 0) {
-                $stmt_update = $conn->prepare("UPDATE usuarios SET name = ?, lastname = ?, middlename = ?, email = ?, type = ?, idfacultad = ?, idcampus = ?, idlic = ? WHERE iduabc = ?");
-                $stmt_update->bind_param("sssssiiii", $nombre, $apellidoP, $apellidoM, $email, $option, $idfacultad, $idcampus, $idlic, $id);
-                if (!$stmt_update->execute()) {
-                    echo json_encode(array("success" => false, "message" => "Error al actualizar el usuario."));
-                    exit();
+                if ($result->num_rows > 0) {
+                    $stmt_update = $conn->prepare("UPDATE usuarios SET name = ?, lastname = ?, middlename = ?, email = ?, type = ?, idfacultad = ?, idcampus = ?, idlic = ? WHERE iduabc = ?");
+                    $stmt_update->bind_param("sssssiiii", $nombre, $apellidoP, $apellidoM, $email, $option, $idfacultad, $idcampus, $idlic, $id);
+                    if (!$stmt_update->execute()) {
+                        throw new Exception("Error al actualizar el usuario.");
+                    }
+                    $stmt_update->close();
+                } else {
+                    $stmt_insert = $conn->prepare("INSERT INTO usuarios (name, lastname, middlename, email, type, idfacultad, idcampus, idlic, iduabc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt_insert->bind_param("sssssiiii", $nombre, $apellidoP, $apellidoM, $email, $option, $idfacultad, $idcampus, $idlic, $id);
+                    if (!$stmt_insert->execute()) {
+                        throw new Exception("Error al insertar el usuario.");
+                    }
+                    $stmt_insert->close();
                 }
-                $stmt_update->close();
+                $stmt_registro = $conn->prepare("INSERT INTO registro (iduabc, idcampus, idworkshop, name, lastname, middlename, type) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                $stmt_registro->bind_param("iiissss", $id, $idcampus, $idworkshop, $nombre, $apellidoP, $apellidoM, $option);
             } else {
-                $stmt_insert = $conn->prepare("INSERT INTO usuarios (name, lastname, middlename, email, type, idfacultad, idcampus, idlic, iduabc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt_insert->bind_param("sssssiiii", $nombre, $apellidoP, $apellidoM, $email, $option, $idfacultad, $idcampus, $idlic, $id);
-                if (!$stmt_insert->execute()) {
-                    echo json_encode(array("success" => false, "message" => "Error al insertar el usuario."));
-                    exit();
-                }
+                $stmt_registro = $conn->prepare("INSERT INTO registro (idcampus, idworkshop, name, lastname, middlename, type) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt_registro->bind_param("iissss", $idcampus, $idworkshop, $nombre, $apellidoP, $apellidoM, $option);
             }
-            $stmt_registro = $conn->prepare("INSERT INTO registro (iduabc, idcampus, idworkshop, name, lastname, middlename, type) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt_registro->bind_param("iiissss", $id, $idcampus, $idworkshop, $nombre, $apellidoP, $apellidoM, $option);
+
             $stmt_registro->execute();
             $idregistro = $conn->insert_id;
             $stmt_registro->close();
-        }else{
-            $stmt_registro = $conn->prepare("INSERT INTO registro (idcampus, idworkshop, name, lastname, middlename, type) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt_registro->bind_param("iissss",$idcampus, $idworkshop, $nombre, $apellidoP, $apellidoM, $option);
-            $stmt_registro->execute();
-            $idregistro = $conn->insert_id;
-            $stmt_registro->close();
+
+            // Generación del código QR
+            $dir = '../plugins/codes/';
+            if (!file_exists($dir)) {
+                mkdir($dir, 0777, true);
+            }
+
+            // Ruta de archivo QR a generar
+            $filename = $dir . $idregistro . '_qr.png';
+
+            // Configuración del código QR
+            $tamaño = 10;
+            $level = 'L';
+            $frameSize = 3;
+            $contenido = $idregistro;
+
+            // Generar el código QR
+            QRcode::png($contenido, $filename, $level, $tamaño, $frameSize);
+
+            // Crear el CID para el QR
+            $cid = md5(uniqid(time()));
+
+            // Crear el cuerpo del correo con el QR en HTML
+            $to = $email;
+            $subject = 'Cimarrones Emprendedores';
+            $body = "
+            <html>
+            <head>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        line-height: 1.6;
+                    }
+                    .container {
+                        padding: 20px;
+                        border: 1px solid #ddd;
+                        border-radius: 10px;
+                        max-width: 600px;
+                        margin: auto;
+                    }
+                    .header {
+                        background-color: #f8f8f8;
+                        padding: 10px;
+                        text-align: center;
+                        border-bottom: 1px solid #ddd;
+                    }
+                    .header h1 {
+                        margin: 0;
+                    }
+                    .content {
+                        padding: 20px;
+                    }
+                    .content p {
+                        margin: 0 0 10px;
+                    }
+                    .footer {
+                        text-align: center;
+                        padding: 10px;
+                        border-top: 1px solid #ddd;
+                        background-color: #f8f8f8;
+                        border-bottom-left-radius: 10px;
+                        border-bottom-right-radius: 10px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class='container'>
+                    <div class='header'>
+                        <h1>¡Gracias por Registrarte, $nombre!</h1>
+                    </div>
+                    <div class='content'>
+                        <p>Hola $nombre,</p>
+                        <p>Gracias por registrarte en el evento de Cimarrones Emprendedores. Estamos emocionados de que te unas a nosotros.</p>
+                        <p>A continuación, encontrarás tu código QR que necesitarás para el acceso al evento:</p>
+                        <p><img src='cid:$cid' alt='Código QR'></p>
+                        <p>¡Nos vemos pronto!</p>
+                    </div>
+                    <div class='footer'>
+                        <p>&copy; 2024 Cimarrones Emprendedores. Todos los derechos reservados.</p>
+                    </div>
+                </div>
+            </body>
+            </html>";
+
+            // Enviar el correo con el código QR en el cuerpo
+            $isSent = sendEmail($to, $subject, $body, $filename, $cid);
+
+            echo json_encode(array("success" => true, "message" => "Operación realizada con éxito.", "emailSent" => $isSent));
+        } catch (Exception $e) {
+            echo json_encode(array("success" => false, "message" => $e->getMessage()));
         }
-
-
-        // Generación del código QR
-        $dir = '../plugins/codes/';
-        if (!file_exists($dir)) {
-            mkdir($dir, 0777, true);
-        }
-
-        // Ruta de archivo QR a generar
-        $filename = $dir . $idregistro . '_qr.png';
-
-        // Configuración del código QR
-        $tamaño = 10;
-        $level = 'L';
-        $frameSize = 3;
-        $contenido = $idregistro;
-
-        // Generar el código QR
-        QRcode::png($contenido, $filename, $level, $tamaño, $frameSize);
-
-        // Enviar correo electrónico con el código QR adjunto
-        $to = $email;
-        $subject = 'Cimarrones Emprendedores';
-        $body = '¡Gracias por registrarte! Adjunto encontrarás tu código QR.';
-        
-        // Enviar el correo con el código QR adjunto
-        $isSent = sendEmail($to, $subject, $body, $filename);
-
-        echo json_encode(array("success" => true, "message" => "Operación realizada con éxito.", "emailSent" => $isSent));
     } else {
         echo json_encode(array("success" => false, "message" => "Faltan parámetros requeridos."));
     }
