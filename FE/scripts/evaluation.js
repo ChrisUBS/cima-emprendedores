@@ -5,11 +5,11 @@ let apiURL = "http://localhost/cimarrones-emprendedores/BE/";
 function searchToDatabase() {
     $.ajax({
         type: "GET",
-        url: `${apiURL}dashboard/get_user.php`,
+        url: `${apiURL}dashboard/get_feedback.php`,
         dataType: "json",
         success: function(response) {
             if (response.success) {
-                updateUserList(response.data);
+                updateFeedbackList(response.feedback);
             } else {
                 console.log("alert-error", errorMessage);
             }
@@ -21,20 +21,24 @@ function searchToDatabase() {
     });
 }
 
-function updateUserList(user){
-    const listaTalleres = $('#listaAlumnos');
-    listaTalleres.empty();
-    console.log(user);
-    user.forEach(function(user) {
+function updateFeedbackList(feedback){
+    const listaFeedback = $('#listaAlumnos');
+    listaFeedback.empty();
+    console.log(feedback);
+    feedback.forEach(function(feedback) {
         $('#listaAlumnos').append(`
-            <tr id="${user.iduabc}">
-                <td>${user.iduabc}</td>
-                <td>${user.name}</td>
-                <td>${user.lastname} ${user.middlename}</td>
-                <td>${user.type}</td>
-                <td id="${user.idcampus}">${user.campus}</td> 
-                <td id="${user.idfacultad}">${user.facultad}</td> 
-                <td id="${user.idlic}">${user.namelic}</td> 
+            <tr id="${feedback.idfeedback}">
+                <td>${feedback.workshop}</td>
+                <td>${feedback.campus}</td>
+                <td>${feedback.q1}</td>
+                <td>${feedback.q2}</td>
+                <td>${feedback.q3}</td>
+                <td>${feedback.q4}</td>
+                <td>${feedback.q5}</td>
+                <td>${feedback.q6}</td>
+                <td>${feedback.q7}</td>
+                <td>${feedback.q8}</td>
+                <td>${feedback.q9}</td>
             </tr>
         `);
     });

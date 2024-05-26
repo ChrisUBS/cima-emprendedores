@@ -42,7 +42,7 @@ function updateLectList(lect){
 
     const table = $('#table').DataTable({
         language: {
-            url: 'http://localhost/cimarrones-emprendedores/FE/plugins/es-ES.json'
+            url: './plugins/es-ES.json'
             // url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json'
         },
         paging: true,
