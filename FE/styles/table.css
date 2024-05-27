@@ -140,3 +140,8 @@ table.dataTable tbody tr:hover {
     overflow: auto;
 }
 
+/* extra */
+.table thead th {
+    background-color: #00723F !important;
+    color: white !important;
+}
