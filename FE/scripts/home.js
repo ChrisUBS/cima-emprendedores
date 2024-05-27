@@ -1,5 +1,74 @@
 let apiURL = "http://localhost/cimarrones-emprendedores/BE/";
 
+function totalRegistrations() {
+    $.ajax({
+        url: `${apiURL}dashboard/get_register.php`,
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                const totalRegistrations = response.data.length;
+                document.getElementById('totalRegistrations').textContent = totalRegistrations;
+
+            } else {
+                console.error('Error en la respuesta de PHP:', response.error);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al obtener los datos:', error);
+        }
+    });
+}
+
+function registrationsByCampus() {
+    $.ajax({
+        url: `${apiURL}dashboard/get_register.php`,
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                const usuariosRegistrados = response.data;
+                const campusCounts = usuariosRegistrados.reduce((acc, usuario) => {
+                    acc[usuario.campus] = (acc[usuario.campus] || 0) + 1;
+                    return acc;
+                }, {});
+
+                const tijuanaCount = campusCounts['Tijuana'] || 0;
+                const ensenadaCount = campusCounts['Ensenada'] || 0;
+                const mexicaliCount = campusCounts['Mexicali'] || 0;
+
+                document.getElementById('registrationsTijuana').textContent = tijuanaCount;
+                document.getElementById('registrationsEnsenada').textContent = ensenadaCount;
+                document.getElementById('registrationsMexicali').textContent = mexicaliCount;
+            } else {
+                console.error('Error en la respuesta de PHP:', response.error);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al obtener los datos:', error);
+        }
+    });
+}
+
+function activeWorkshops() {
+    $.ajax({
+        url: `${apiURL}dashboard/get_workshop.php`, 
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                const talleresActivos = response.data.filter(workshop => workshop.status == 1).length;
+                document.getElementById('activeWorkshops').textContent = talleresActivos;
+            } else {
+                console.error('Error en la respuesta de PHP:', response.error);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al obtener los datos:', error);
+        }
+    });
+}
+
 function generateChartsCampus() {
     $.ajax({
         url: `${apiURL}dashboard/get_register.php`,
@@ -206,7 +275,9 @@ function init() {
     generateChartsCampus();
     generateChartType();
     searchToDatabase();
-
+    totalRegistrations();
+    registrationsByCampus();
+    activeWorkshops();
     setInterval(searchToDatabase, 5000);
 
     $(document).ready(function() {
