@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2024 at 12:46 PM
+-- Generation Time: May 27, 2024 at 11:10 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -82,8 +82,8 @@ CREATE TABLE `conferencistas` (
 --
 
 INSERT INTO `conferencistas` (`idlecturer`, `name`, `lastname`, `middlename`, `info`) VALUES
-(1, 'ÀBC', 'ABC', 'ABC', '1'),
-(3, 'DD', 'DD', 'DD', '1');
+(1, 'TEST', 'TEST', 'TEST', 'TEST'),
+(3, 'TEST', 'TEST', 'TEST', 'TEST');
 
 -- --------------------------------------------------------
 
@@ -173,6 +173,13 @@ CREATE TABLE `feedback` (
   `q8` varchar(255) NOT NULL,
   `q9` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`idfeedback`, `idworkshop`, `idcampus`, `q1`, `q2`, `q3`, `q4`, `q5`, `q6`, `q7`, `q8`, `q9`) VALUES
+(1, 1, 3, 4, 3, 3, 'test', 'test', 2, 2, 'test', 'test');
 
 -- --------------------------------------------------------
 
@@ -494,13 +501,22 @@ CREATE TABLE `talleres` (
   `idlecturer` int(5) NOT NULL,
   `idfacultad` int(5) NOT NULL,
   `idcampus` int(5) NOT NULL,
-  `descriptionworkshop` varchar(250) NOT NULL,
+  `descriptionworkshop` varchar(255) NOT NULL,
   `time` time NOT NULL,
   `date` date NOT NULL,
-  `ability` varchar(100) NOT NULL,
-  `post` varchar(50) NOT NULL,
+  `place` varchar(255) NOT NULL,
+  `ability` varchar(255) NOT NULL,
+  `requirements` varchar(255) NOT NULL,
+  `slot` int(5) NOT NULL,
   `status` int(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `talleres`
+--
+
+INSERT INTO `talleres` (`idworkshop`, `nameworkshop`, `idlecturer`, `idfacultad`, `idcampus`, `descriptionworkshop`, `time`, `date`, `place`, `ability`, `requirements`, `slot`, `status`) VALUES
+(1, 'test', 1, 7, 3, 'test', '16:30:00', '2024-05-28', '', 'test', 'test', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -525,7 +541,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`iduabc`, `idfacultad`, `idcampus`, `idlic`, `name`, `lastname`, `middlename`, `email`, `type`) VALUES
-(1, 6, 3, 52, '1', '1', '1', '1@gmail.com', 'Alumno');
+(1, 7, 3, 224, '1', '1', '1', 'johan.barragan@uabc.edu.mx', 'Alumno'),
+(2, 9, 3, NULL, 'A', 'A', 'A', 'abc@gmail.com', 'Docente');
 
 --
 -- Indexes for dumped tables
@@ -618,7 +635,7 @@ ALTER TABLE `campus`
 -- AUTO_INCREMENT for table `conferencistas`
 --
 ALTER TABLE `conferencistas`
-  MODIFY `idlecturer` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idlecturer` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `facultades`
@@ -630,7 +647,7 @@ ALTER TABLE `facultades`
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `idfeedback` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `idfeedback` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `licenciaturas`
@@ -642,13 +659,13 @@ ALTER TABLE `licenciaturas`
 -- AUTO_INCREMENT for table `registro`
 --
 ALTER TABLE `registro`
-  MODIFY `idregistro` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idregistro` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `talleres`
 --
 ALTER TABLE `talleres`
-  MODIFY `idworkshop` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `idworkshop` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

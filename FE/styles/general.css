@@ -41,6 +41,24 @@
     }
 }
 
+/* botton details */
+.btnDetails{
+    border: none; 
+    background-color: transparent; 
+    padding: 5px; 
+    margin: 0; 
+    width: auto; 
+    height: auto; 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer;
+}
+
+.btnDetails i{
+    font-size: 1rem;
+}
+
 /* main */
 .main-container {
     display: flex;

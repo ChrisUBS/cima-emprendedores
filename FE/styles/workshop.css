@@ -36,27 +36,6 @@ img {
     background-color: rgb(206, 142, 0);
 }
 
-
-
-
-/* botton details workshop*/
-.btnDetails{
-    border: none; 
-    background-color: transparent; 
-    padding: 5px; 
-    margin: 0; 
-    width: auto; 
-    height: auto; 
-    display: inline-flex; 
-    align-items: center; 
-    justify-content: center; 
-    cursor: pointer;
-}
-
-.btnDetails i{
-    font-size: 1rem;
-}
-
 /* workshop info modal */
 .workshop-info {
     padding: 10px;

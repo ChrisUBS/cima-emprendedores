@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     talleres.date AS date,
                     talleres.time AS time,
                     talleres.status AS status,
-                    talleres.descriptionworkshop AS Descripcion_de_workshop
+                    talleres.descriptionworkshop AS descriptionworkshop
                 FROM
                     talleres
                 INNER JOIN

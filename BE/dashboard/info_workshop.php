@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     talleres.status AS status,
                     talleres.ability AS ability,
                     talleres.idfacultad AS idfacultad,
-                    talleres.post AS post
+                    talleres.requirements AS requirements
                 FROM
                     talleres
                 INNER JOIN
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 "dworkshop" => $row["descriptionworkshop"],
                 "status" => $row["status"],
                 "ability" => $row["ability"],
-                "post" => $row["post"],
+                "requirements" => $row["requirements"],
                 "idlecturer" => $row["idlecturer"],
                 "lecturer" => $row["name"],
             );
