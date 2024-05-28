@@ -158,6 +158,11 @@ function updateRegisterList(register) {
                     <input id="registroAssist" type="checkbox" ${registro.assist === 1 ? 'checked' : ''}>
                     <span class="assist-text">${registro.assist === 1 ? 'Presente' : 'Ausente'}</span>
                 </td>
+                <td>
+                    <form id="options">
+                        <button type="button" title="Eliminar" class="btn-class btnDetails" data-id="${registro.idregistro}" id="deleteButton"><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                </td>
             </tr>
         `);
     });
@@ -381,6 +386,34 @@ function registrationTable(modalBodyId) {
     });
 }
 
+// Función para eliminar un taller
+function deleteReg(selectedIdReg) {
+    if (!selectedIdReg) {
+        console.log("alert-error", "Error: ID de taller no seleccionado.");
+        return;
+    }
+    $.ajax({
+        url: `${apiURL}dashboard/delete_register.php`,
+        type: 'POST',
+        dataType: "json",
+        data: {
+            idregistro: selectedIdReg,
+        },
+        success: function(response) {
+            if (response.success) {
+                $('#deleteModal').modal('hide');
+                location.reload();
+                // console.log("alert-success", `Registro eliminado con éxito: ${response.message}`);
+            } else {
+                console.log("alert-error", `Error al eliminar el registro: ${response.error}`);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log("alert-error", `Error en la solicitud: ${error}`);
+        }
+    });
+}
+
 
 function init() {
     searchToDatabase();
@@ -388,6 +421,7 @@ function init() {
     initQrScanner();
     $(document).on('click', '.btn-class', function(event) {
         const action = event.currentTarget.id;
+        const selectedIdReg = $(event.currentTarget).data('id');
         switch (action) {
             case 'addButton':
                 $('#addModal').modal('show');
@@ -403,6 +437,15 @@ function init() {
                 $('#qrModal').modal('show');
                 $('#qrModalClose').on('click', function() {
                     $('#qrModal').modal('hide');
+                });
+                break;
+            case 'deleteButton':
+                $('#deleteModal').modal('show');
+                $('#deleteModalClose').off('click').on('click', function() {
+                    $('#deleteModal').modal('hide');
+                });
+                $('#deleteConfirm').off('click').on('click', function() {
+                    deleteReg(selectedIdReg);
                 });
                 break;
             default:

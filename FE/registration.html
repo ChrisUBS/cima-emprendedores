@@ -119,6 +119,7 @@
                             <th>Campus</th>
                             <th>Fecha de registro</th>
                             <th>Asistencia</th>
+                            <th>Detalles</th>
                         </tr>
                     </thead>
                     <tbody id="listaAlumnos" class="scrollable-tbody">
@@ -165,6 +166,24 @@
             </div>
         </div>
     </div>   
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que deseas eliminar este registro?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="deleteModalClose">Cancelar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="deleteConfirm">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="plugins/jquery3.7.1.js"></script>
