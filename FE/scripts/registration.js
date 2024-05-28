@@ -241,6 +241,147 @@ function updateRegisterList(register) {
     });
 }
 
+function getWorkshops() {
+    var selectedUbicacion = $("#campus").val();
+    $.ajax({
+        type: "GET",
+        url: `${apiURL}register/get_workshops.php`,
+        data: { ubicacion: selectedUbicacion },
+        dataType: "json",
+        success: function(response) {
+            var selectTaller = $("#workshop");
+            selectTaller.empty();
+            
+            if (response && response.success && response.talleres && response.talleres.length > 0) {
+                selectTaller.append("<option value=''></option>");
+                response.talleres.forEach(taller => {
+                    if (taller.status === 1) {
+                        selectTaller.append(`<option value='${taller.idworkshop}'>${taller.nombre}</option>`);
+                    }
+                });
+            } else {
+                selectTaller.append("<option disabled>No hay talleres disponibles.</option>");
+            }
+        },
+        error: function(xhr, status, error) {
+            var selectTaller = $("#workshop");
+            selectTaller.empty();
+            selectTaller.append("<option disabled>Error al cargar talleres.</option>");
+            console.error("Error al obtener los talleres:", error);
+        }
+    });
+}
+
+function addRegistration(modalSelected) {
+    var $modalBody = $(modalSelected);
+
+    var name = $modalBody.find('#name').val();
+    var lastname = $modalBody.find('#lastname').val();
+    var middlename = $modalBody.find('#middlename').val();
+    var type = $modalBody.find('#type').val();
+    var workshopId = $modalBody.find('#workshop').val();
+    var campus = $modalBody.find('#campus').val();
+    var assist = $modalBody.find('#status').val();
+    console.log(name,lastname,middlename,type,workshopId,campus,assist);
+
+    $.ajax({
+        url: `${apiURL}dashboard/save_register.php`,
+        type: 'POST',
+        dataType: "json",
+        data: {
+            nombre: name,
+            apellidoP: lastname,
+            apellidoM: middlename,
+            option: type,
+            idworkshop: workshopId,
+            idcampus: campus,
+            assist: assist
+        },
+        success: function(response) {
+            if (response.success) {
+                setTimeout(function() {
+                    location.reload();
+                });
+            } else {
+                console.log("alert-error", `Error al agregar el registro: ${response.error}`);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log("alert-error", `Error en la solicitud: ${xhr, status, error}`);
+        }
+    });
+}
+
+function registrationTable(modalBodyId) {
+    const modalBody = document.getElementById(modalBodyId);
+    
+    if (!modalBody) {
+        console.error(`El elemento con el ID "${modalBodyId}" no se encontró.`);
+        return;
+    }
+    
+    modalBody.innerHTML = '';
+    const newHTML = `
+        <div class="input-general">
+            <input type="text" id="name" name="name" required>
+            <label for="name">Nombre</label>
+        </div>
+        <div class="input-general">
+            <input type="text" id="lastname" name="lastname" required>
+            <label for="lastname">Apellido Paterno</label>
+        </div>
+        <div class="input-general">
+            <input type="text" id="middlename" name="middlename" required>
+            <label for="middlename">Apellido Materno</label>
+        </div>
+        <div class="input-general">
+            <select id="type" name="type" required>
+                <option value=""></option>
+                <option value="In situ" selected>In situ</option>
+                <option value="Alumno">Alumno</option>
+                <option value="Docente">Docente</option>
+                <option value="Egresado">Egresado</option>
+                <option value="Exterior">Exterior</option>
+            </select>
+            <label for="type">Tipo</label>
+        </div>
+        <div class="input-general">
+            <select name="campus" id="campus" required>
+                <option></option>
+                <option value="3">Ensenada</option>
+                <option value="2">Mexicali</option>
+                <option value="1">Tijuana</option>
+            </select>
+            <label for="campus">Campus</label>
+        </div>
+        <div class="input-general">
+            <select name="workshop" id="workshop" required>
+            <option disabled>No hay talleres disponibles.</option>
+            </select>
+            <label for="workshop">Taller</label>
+        </div>
+        <div class="input-general">
+            <select name="status" id="status" required>
+                <option value="1" selected>Presente</option>
+                <option value="0">Ausente</option>
+            </select>
+            <label for="status">Asistencia</label>
+        </div>
+    `;
+
+    modalBody.innerHTML = newHTML;
+
+    $('#campus').on('change', function() {
+        const campusId = $(this).val();
+        if (campusId) {
+            getWorkshops();
+        } else {
+            $("#workshop").empty().append("<option disabled>No hay talleres disponibles.</option>").prop('disabled', true);
+        }
+    });
+}
+
+
 function init() {
     searchToDatabase();
     statusChange();
@@ -250,7 +391,11 @@ function init() {
         switch (action) {
             case 'addButton':
                 $('#addModal').modal('show');
-                $('#addModalClose').on('click', function() {
+                registrationTable('addModalBody');
+                $('#addModalConfirm').off('click').on('click', function() {
+                    addRegistration('#addModalBody');
+                });
+                $('#addModalClose').off('click').on('click', function() {
                     $('#addModal').modal('hide');
                 });
                 break;

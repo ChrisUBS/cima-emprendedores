@@ -88,11 +88,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                     $stmt_insert->close();
                 }
-                $stmt_registro = $conn->prepare("INSERT INTO registro (iduabc, idcampus, idworkshop, name, lastname, middlename, type) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                $stmt_registro->bind_param("iiissss", $id, $idcampus, $idworkshop, $nombre, $apellidoP, $apellidoM, $option);
+                $stmt_registro = $conn->prepare("INSERT INTO registro (iduabc, idcampus, idworkshop, name, lastname, middlename, type, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt_registro->bind_param("iiisssss", $id, $idcampus, $idworkshop, $nombre, $apellidoP, $apellidoM, $option, $email);
             } else {
-                $stmt_registro = $conn->prepare("INSERT INTO registro (idcampus, idworkshop, name, lastname, middlename, type) VALUES (?, ?, ?, ?, ?, ?)");
-                $stmt_registro->bind_param("iissss", $idcampus, $idworkshop, $nombre, $apellidoP, $apellidoM, $option);
+                $stmt_registro = $conn->prepare("INSERT INTO registro (idcampus, idworkshop, name, lastname, middlename, type, email) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                $stmt_registro->bind_param("iisssss", $idcampus, $idworkshop, $nombre, $apellidoP, $apellidoM, $option, $email);
             }
 
             $stmt_registro->execute();
