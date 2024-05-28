@@ -11,6 +11,12 @@ function OriginalVal() {
     $("#taller").html(tallerOriginal);
 }
 
+function hideNotifications() {
+    $(".error").stop(true, true).slideUp(0);
+    $(".success").stop(true, true).slideUp(0);
+    $(".success-search").stop(true, true).slideUp(0);
+    $(".error-search").stop(true, true).slideUp(0);
+}
 
 //Validacion de todos los campos.
 function isValid(person) {
@@ -23,10 +29,10 @@ function isValid(person) {
                 $(this).css("border-color", "red");
                 let errorMessage = $(this).data("error-message");
                 let errorField = $(this).siblings('.error');
-                errorField.slideUp(0);
-                errorField.text(errorMessage).slideDown(300);
+                errorField.stop(true, true).slideUp(0);
+                errorField.text(errorMessage).stop(true, true).slideDown(300);
                 setTimeout(function() {
-                    errorField.slideUp(100);
+                    errorField.stop(true, true).slideUp(100);
                 }, 1000);
             } else {
                 $(this).css("border-color", "");
@@ -66,9 +72,12 @@ function validRegister(newPerson, selectedOption) {
     $("#btnRegister").click(function () {
         checkExtra(newPerson, selectedOption);
         if (isValid(newPerson, selectedOption)) {
+            $("#btnRegister, #btnEdit").fadeOut(300);
             insertToDatabase(newPerson);
             // console.log("listo");
         }else {
+            $("#btnRegister, #btnEdit").fadeIn(300);
+            $(".success").text("¡Registro Fallido!").css("color", "red").stop(true, true).slideDown(300).delay(1000).slideUp(300);
             // console.log("alert-error", "¡Campo requerido ó no valido!");
         }
     });
@@ -121,13 +130,14 @@ function register() {
 
 //Cambios en el formulario registro (dependiendo el evento y/o opciones).
 function changeForm(selectedOption) {
+    $('#txtFacultad').empty().prop('disabled', true);
+    $('#txtLic').empty().prop('disabled', true);
+    $('#txtTaller').append("<option disabled>No hay talleres disponibles.</option>");
+    
+
     switch (selectedOption) {
         case "option1":
-            $('#txtFacultad').prop('disabled', true);
-            $('#txtLic').prop('disabled', true);
-            $('#txtTaller').prop('disabled', true);
-            $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
-            });
+            $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail, #btnSearch').prop('disabled', true);
             $("#btnNext").hide();
             $("#btnRegister").show();
             $("#ubicacion").show();
@@ -135,70 +145,57 @@ function changeForm(selectedOption) {
             $("#lic").show();
             $("#taller").show();
             $("#btnEdit").show();
-            $("#ubicacion select").change(getFacultad);
+            $("#ubicacion select").change(function () {
+                getFacultad();
+                getTalleres();
+                $('#txtLic').empty().prop('disabled', true);
+            });
             $("#facultad select").change(getLic);
-            $("#ubicacion select").change(getTalleres);
             $("#btnEdit").click(function () {
-                $("#ubicacion").hide();
-                $("#facultad").hide();
-                $("#taller").hide();
-                $("#lic").hide();
+                hideNotifications();
+                $("#ubicacion, #facultad, #lic, #taller").hide();
                 OriginalVal();
-                $("#btnRegister").hide();
-                $("#btnEdit").hide();
-                $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
-                });
+                $("#btnRegister, #btnEdit").hide();
+                $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail, #btnSearch').prop('disabled', false);
                 $("#btnNext").show();
             });
             $("#txtOption").change(function () {
-                $("#ubicacion").hide();
-                $("#facultad").hide();
-                $("#lic").hide();
-                $("#taller").hide();
+                $("#ubicacion, #facultad, #lic, #taller").hide();
                 OriginalVal();
-                $("#btnRegister").hide();
-                $("#btnEdit").hide();
-                $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
-                });
+                $("#btnRegister, #btnEdit").hide();
+                $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail, #btnSearch').prop('disabled', false);
                 if ($(this).val() === "") {
                     $("#btnNext").hide();
                 } else {
                     $("#btnNext").show();
                 }
             });
+            break;
         case "option2":
-            $('#txtFacultad').prop('disabled', true);
-            $('#txtTaller').prop('disabled', true);
-            $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
-            });
+            $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail, #btnSearch').prop('disabled', true);
             $("#btnNext").hide();
             $("#btnRegister").show();
             $("#ubicacion").show();
             $("#facultad").show();
             $("#taller").show();
             $("#btnEdit").show();
-            $("#ubicacion select").change(getFacultad);
-            $("#ubicacion select").change(getTalleres);
+            $("#ubicacion select").change(function () {
+                getFacultad();
+                getTalleres();
+            });
             $("#btnEdit").click(function () {
-                $("#ubicacion").hide();
-                $("#facultad").hide();
-                $("#taller").hide();
+                hideNotifications();
+                $("#ubicacion, #facultad, #taller").hide();
                 OriginalVal();
-                $("#btnRegister").hide();
-                $("#btnEdit").hide();
-                $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
-                });
+                $("#btnRegister, #btnEdit").hide();
+                $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail, #btnSearch').prop('disabled', false);
                 $("#btnNext").show();
             });
             $("#txtOption").change(function () {
-                $("#ubicacion").hide();
-                $("#facultad").hide();
-                $("#taller").hide();
+                $("#ubicacion, #facultad, #taller").hide();
                 OriginalVal();
-                $("#btnRegister").hide();
-                $("#btnEdit").hide();
-                $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
-                });
+                $("#btnRegister, #btnEdit").hide();
+                $('#txtOption, #txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail, #btnSearch').prop('disabled', false);
                 if ($(this).val() === "") {
                     $("#btnNext").hide();
                 } else {
@@ -208,35 +205,26 @@ function changeForm(selectedOption) {
             break;
         case "option3":
         case "option4":
-            $('#txtFacultad').prop('disabled', true);
-            $('#txtTaller').prop('disabled', true);
-            $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true).each(function () {
-            });
+            $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail, #btnSearch').prop('disabled', true);
             $("#btnNext").hide();
             $("#btnRegister").show();
             $("#ubicacion").show();
             $("#taller").show();
             $("#btnEdit").show();
-            $("#ubicacion select").change(getFacultad);
             $("#ubicacion select").change(getTalleres);
             $("#btnEdit").click(function () {
-                $("#ubicacion").hide();
-                $("#taller").hide();
+                hideNotifications();
+                $("#ubicacion, #taller").hide();
                 OriginalVal();
-                $("#btnRegister").hide();
-                $("#btnEdit").hide();
-                $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
-                });
+                $("#btnRegister, #btnEdit").hide();
+                $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail, #btnSearch').prop('disabled', false);
                 $("#btnNext").show();
             });
             $("#txtOption").change(function () {
-                $("#ubicacion").hide();
-                $("#taller").hide();
+                $("#ubicacion, #taller").hide();
                 OriginalVal();
-                $("#btnRegister").hide();
-                $("#btnEdit").hide();
-                $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false).each(function () {
-                });
+                $("#btnRegister, #btnEdit").hide();
+                $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail, #btnSearch').prop('disabled', false);
                 if ($(this).val() === "") {
                     $("#btnNext").hide();
                 } else {
@@ -315,7 +303,6 @@ function getTalleres() {
             selectTaller.empty();
             
             if (response && response.success && response.talleres && response.talleres.length > 0) {
-                $('#txtTaller').prop('disabled', false);
                 selectTaller.append("<option value=''></option>");
                 response.talleres.forEach(taller => {
                     if (taller.status === 1) {
@@ -323,10 +310,13 @@ function getTalleres() {
                     }
                 });
             } else {
-                $('#txtTaller').prop('disabled', true);
+                selectTaller.append("<option disabled>No hay talleres disponibles.</option>");
             }
         },
         error: function(xhr, status, error) {
+            var selectTaller = $("#txtTaller");
+            selectTaller.empty();
+            selectTaller.append("<option disabled>Error al cargar talleres.</option>");
             console.error("Error al obtener los talleres:", error);
         }
     });
@@ -395,19 +385,23 @@ function insertToDatabase(newPerson) {
         dataType: 'json',
         success: function (response) {
             if (response.success) {
-            $("#btnRegister, #btnEdit").fadeOut(300);
-            $(".success").text("¡Registro exitoso!").slideDown(300, function() {
-                $(this).delay(1000).slideUp(100, function() {
-                    setTimeout(function () {
-                        location.reload();
-                    }, 1000);
+                $(".success").text("¡Registro exitoso!").css("color", "green").stop(true, true).slideDown(300, function() {
+                    $(this).delay(1000).slideUp(100, function() {
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1000);
+                    });
                 });
-            });
             } else {
+                $("#btnRegister, #btnEdit").fadeIn(300);
+                $("#infoButton").hide();
+                $(".success").text("¡Registro Fallido!").css("color", "red").stop(true, true).slideDown(300).delay(1000).slideUp(300);
                 console.log("alert-error", response.message || "¡Error! Por favor, inténtalo de nuevo.");
             }
         },
         error: function (xhr, status, error) {
+            $(".success").text("¡Registro Fallido!").css("color", "red").stop(true, true).slideDown(300).delay(1000).slideUp(300);
+            $("#btnRegister, #btnEdit").fadeIn(300);
             console.error(error, xhr, status);
             console.log("alert-error", "¡Error!. Por favor, inténtalo de nuevo.");
         }
@@ -428,12 +422,12 @@ function searchToDatabase() {
                 $('#txtApellidoP').val(response.apellidoP);
                 $('#txtApellidoM').val(response.apellidoM);
                 $('#txtEmail').val(response.email);
-                $(".success-search").text("Usuario encontrado.").slideDown(300, function() {
+                $(".success-search").text("Usuario encontrado.").stop(true, true).slideDown(300, function() {
                     $(this).delay(1000).slideUp(100, function() {
                     });
                 });
             } else {
-                $(".error-search").text("Usuario no encontrado.").slideDown(300, function() {
+                $(".error-search").text("Usuario no encontrado.").stop(true, true).slideDown(300, function() {
                     $(this).delay(1000).slideUp(100, function() {
                     });
                 });
@@ -463,6 +457,13 @@ function updateInfoButton() {
 function init() {
 
     //-------- Timer to buttons --------
+    $("#btnSearch").click(function() {
+        var button = $("#btnNext");
+        button.prop('disabled', true);
+        setTimeout(function() {
+            button.prop('disabled', false);
+        }, 2500);
+    });
     $("button").click(function() {
         var button = $(this);
         button.prop('disabled', true);

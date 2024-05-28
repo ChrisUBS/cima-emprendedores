@@ -36,7 +36,7 @@ function onScanSuccess(decodedText, decodedResult) {
     if (!isScannerPaused) {
         isScannerPaused = true;
         markAttendance(userId);
-        setTimeout(() => { isScannerPaused = false; }, 2000); // Evita múltiples escaneos en un corto período
+        setTimeout(() => { isScannerPaused = false; }, 2000);
     }
 }
 
