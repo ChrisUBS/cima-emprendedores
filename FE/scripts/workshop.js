@@ -128,12 +128,20 @@ function workshopTable(modalBodyId) {
             <label for="date">Fecha</label>
         </div>
         <div class="input-general">
+            <input type="text" id="place" name="place" required>
+            <label for="place">Lugar</label>
+        </div>
+        <div class="input-general">
+            <input type="number" id="slot" name="slot" required>
+            <label for="slot">Cupos</label>
+        </div>
+        <div class="input-general">
             <input type="text" id="ability" name="ability" required>
             <label for="ability">Habilidades requeridas</label>
         </div>
         <div class="input-general">
-            <input type="text" id="post" name="post" required>
-            <label for="post">Post link</label>
+            <input type="text" id="requirements" name="requirements" required>
+            <label for="requirements">Requerimientos</label>
         </div>
         <div class="input-general">
             <select name="campus" id="campus" required>
@@ -152,7 +160,7 @@ function workshopTable(modalBodyId) {
             <select name="lect" id="lect" required></select>
             <label for="lect">Conferencista</label>
         </div>
-        `;
+    `;
 
     modalBody.innerHTML = newHTML;
 }
@@ -170,8 +178,10 @@ function updateWorkshopList(workshops) {
                     <td>${workshop.campus}</td>
                     <td>${workshop.date}</td>
                     <td>${workshop.time}</td>
+                    <td>${workshop.place}</td>
+                    <td>${workshop.occupied_slots}/${workshop.slot}</td>
                     <td>
-                        <input id="workshopStatus" type="checkbox" ${workshop.status === 1 ? 'checked' : ''}>
+                        <input id="workshopStatus" type="checkbox" ${workshop.status === 1 ? 'checked' : ''} ${workshop.occupied_slots >= workshop.slot ? 'disabled' : ''}>
                         <span class="status-text">${workshop.status === 1 ? 'Activo' : 'Inactivo'}</span>
                     </td>
                     <td>
@@ -318,7 +328,7 @@ function getInfoModal(selectedIdWorkshop) {
                                 <p><strong>Hora:</strong> ${infoworkshop.time}</p>
                                 <p><strong>Descripción:</strong> ${infoworkshop.dworkshop}</p>
                                 <p><strong>Conferencista:</strong> ${infoworkshop.lecturer}</p>
-                                <p><strong>Post:</strong> ${infoworkshop.post}</p>
+                                <p><strong>Requerimientos:</strong> ${infoworkshop.requirements}</p>
                             </div>
                         </div>
                     `);
@@ -355,8 +365,10 @@ function showWorkshopData(selectedIdWorkshop, modalSelected) {
                 $modalBody.find('#descriptionworkshop').val(workshopData.dworkshop);
                 $modalBody.find('#time').val(workshopData.time);
                 $modalBody.find('#date').val(workshopData.date);
+                $modalBody.find('#place').val(workshopData.place);
+                $modalBody.find('#slot').val(workshopData.slot);
                 $modalBody.find('#ability').val(workshopData.ability);
-                $modalBody.find('#post').val(workshopData.post);
+                $modalBody.find('#requirements').val(workshopData.requirements);
                 $modalBody.find('#campus').val(workshopData.idcampus);
                 getFacultad(workshopData.idfacultad);
                 $modalBody.find('#txtFacultad').val(workshopData.idfacultad);
@@ -372,7 +384,6 @@ function showWorkshopData(selectedIdWorkshop, modalSelected) {
     });
 }
 
-
 // Editar el workshop
 function editWorkshop(selectedIdWorkshop){
     if (!selectedIdWorkshop) {
@@ -383,8 +394,10 @@ function editWorkshop(selectedIdWorkshop){
     var descriptionworkshop = $('#editModalBody #descriptionworkshop').val();
     var time = $('#editModalBody #time').val();
     var date = $('#editModalBody #date').val();
+    var place = $('#editModalBody #place').val();
+    var slot = $('#editModalBody #slot').val();
     var ability = $('#editModalBody #ability').val();
-    var post = $('#editModalBody #post').val();
+    var requirements = $('#editModalBody #requirements').val();
     var idcampus = $('#editModalBody #campus').val();
     var idfacultad = $('#editModalBody #txtFacultad').val();
     var idlecturer = $('#editModalBody #lect').val(); 
@@ -397,8 +410,10 @@ function editWorkshop(selectedIdWorkshop){
             descriptionworkshop: descriptionworkshop,
             time: time,
             date: date,
+            place: place,
+            slot: slot,
             ability: ability,
-            post: post,
+            requirements: requirements,
             idcampus: idcampus,
             idfacultad: idfacultad,
             idworkshop: selectedIdWorkshop,
@@ -429,8 +444,10 @@ function addWorkshop(modalSelected) {
     var descriptionworkshop = $modalBody.find('#descriptionworkshop').val();
     var time = $modalBody.find('#time').val();
     var date = $modalBody.find('#date').val();
+    var place = $modalBody.find('#place').val();
+    var slot = $modalBody.find('#slot').val();
     var ability = $modalBody.find('#ability').val();
-    var post = $modalBody.find('#post').val();
+    var requirements = $modalBody.find('#requirements').val();
     var idcampus = $modalBody.find('#campus').val();
     var idfacultad = $modalBody.find('#txtFacultad').val();
     var idlecturer = $modalBody.find('#lect').val();
@@ -444,15 +461,16 @@ function addWorkshop(modalSelected) {
             descriptionworkshop: descriptionworkshop,
             time: time,
             date: date,
+            place: place,
+            slot: slot,
             ability: ability,
-            post: post,
+            requirements: requirements,
             idcampus: idcampus,
             idfacultad: idfacultad,
             idlecturer: idlecturer,
         },
         success: function(response) {
             if (response.success) {
-                // $modalBody.closest('.modal').modal('hide');
                 getWorkshops();
                 setTimeout(function() {
                     location.reload();

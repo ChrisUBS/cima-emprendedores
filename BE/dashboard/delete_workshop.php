@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             }
             $stmt_delete->close();
+            echo json_encode(array("success" => true, "message" => "Taller eliminado exitosamente."));
         } else {
             echo json_encode(array("success" => false, "message" => "No hay talleres con ese ID."));
         }

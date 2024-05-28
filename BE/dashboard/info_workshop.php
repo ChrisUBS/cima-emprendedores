@@ -4,75 +4,74 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header('Content-Type: application/json');
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
 include("../conection.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    if (isset($_GET["idworkshop"])) {
+        $idworkshop = $_GET["idworkshop"];
 
-    // Verificar la conexión a la base de datos
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    $idworkshop = $_GET['idworkshop'];
-    $query = "SELECT
-                    talleres.idworkshop AS idworkshop,
-                    talleres.nameworkshop AS nameworkshop,
-                    facultades.facultad AS facultad,
-                    campus.campus AS campus,
-                    campus.idcampus AS idcampus,
-					conferencistas.idlecturer AS idlecturer,
-					conferencistas.name AS name,
-                    talleres.date AS date,
-                    talleres.time AS time,
-                    talleres.descriptionworkshop AS descriptionworkshop,
-                    talleres.status AS status,
-                    talleres.ability AS ability,
-                    talleres.idfacultad AS idfacultad,
-                    talleres.requirements AS requirements
-                FROM
-                    talleres
-                INNER JOIN
-                    facultades ON talleres.idfacultad = facultades.idfacultad
-                INNER JOIN
-                    campus ON talleres.idcampus = campus.idcampus
-                INNER JOIN
-                    conferencistas ON talleres.idlecturer = conferencistas.idlecturer
-                WHERE
-                    talleres.idworkshop = ?";
-                    
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $idworkshop);
-    $stmt->execute();
-    
-    $result = $stmt->get_result();
-    
-    if ($result->num_rows > 0) {
-        $data = array();
-        while ($row = $result->fetch_assoc()) {
-            $data[] = array(
-                //"idworkshop" => $row["idworkshop"]
-                //nombre en js =>   nombre en bd
-                "idworkshop" => $row["idworkshop"],
-                "nameworkshop" => $row["nameworkshop"],
-                "idfacultad" => $row["idfacultad"],
-                "facultad" => $row["facultad"],
-                "campus" => $row["campus"],
-                "idcampus" => $row["idcampus"],
-                "date" => $row["date"],
-                "time" => $row["time"],
-                "dworkshop" => $row["descriptionworkshop"],
-                "status" => $row["status"],
-                "ability" => $row["ability"],
-                "requirements" => $row["requirements"],
-                "idlecturer" => $row["idlecturer"],
-                "lecturer" => $row["name"],
-            );
+        $query = "SELECT
+                        talleres.idworkshop,
+                        talleres.nameworkshop,
+                        talleres.descriptionworkshop,
+                        talleres.time,
+                        talleres.date,
+                        talleres.ability,
+                        talleres.requirements,
+                        talleres.place,
+                        talleres.slot,
+                        talleres.idcampus,
+                        talleres.idfacultad,
+                        talleres.idlecturer,
+                        facultades.facultad,
+                        campus.campus,
+                        conferencistas.name AS lecturer_name,
+                        conferencistas.lastname AS lecturer_lastname
+                    FROM
+                        talleres
+                    INNER JOIN facultades ON talleres.idfacultad = facultades.idfacultad
+                    INNER JOIN campus ON talleres.idcampus = campus.idcampus
+                    INNER JOIN conferencistas ON talleres.idlecturer = conferencistas.idlecturer
+                    WHERE
+                        talleres.idworkshop = ?";
+        
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $idworkshop);
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            $data = array();
+            while ($row = $result->fetch_assoc()) {
+                $data[] = array(
+                    "idworkshop" => $row["idworkshop"],
+                    "nameworkshop" => $row["nameworkshop"],
+                    "dworkshop" => $row["descriptionworkshop"],
+                    "time" => $row["time"],
+                    "date" => $row["date"],
+                    "ability" => $row["ability"],
+                    "requirements" => $row["requirements"],
+                    "place" => $row["place"],
+                    "slot" => $row["slot"],
+                    "idcampus" => $row["idcampus"],
+                    "idfacultad" => $row["idfacultad"],
+                    "idlecturer" => $row["idlecturer"],
+                    "facultad" => $row["facultad"],
+                    "campus" => $row["campus"],
+                    "lecturer" => $row["lecturer_name"] . " " . $row["lecturer_lastname"]
+                );
+            }
+            echo json_encode(array("success" => true, "data" => $data));
+        } else {
+            echo json_encode(array("success" => false, "error" => "No se encontraron datos para el taller con el ID proporcionado."));
         }
-        echo json_encode(array("success" => true, "data" => $data));
+        
+        $stmt->close();
     } else {
-        echo json_encode(array("success" => false, "error" => "No se encontraron datos en la base de datos."));
+        echo json_encode(array("success" => false, "error" => "ID de taller no proporcionado."));
     }
-    
-    $stmt->close();
 } else {
     echo json_encode(array("success" => false, "error" => "Solicitud no válida."));
 }

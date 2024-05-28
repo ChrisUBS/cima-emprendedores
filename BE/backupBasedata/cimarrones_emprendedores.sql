@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2024 at 11:10 AM
+-- Generation Time: May 28, 2024 at 10:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -484,10 +484,50 @@ CREATE TABLE `registro` (
   `lastname` varchar(20) NOT NULL,
   `middlename` varchar(20) NOT NULL,
   `type` varchar(10) NOT NULL,
+  `email` varchar(60) DEFAULT NULL,
   `idworkshop` int(5) NOT NULL,
   `date` date NOT NULL DEFAULT current_timestamp(),
   `assist` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Triggers `registro`
+--
+DELIMITER $$
+CREATE TRIGGER `check_slots_before_insert` BEFORE INSERT ON `registro` FOR EACH ROW BEGIN
+    DECLARE available_slots INT;
+    
+    -- Obtener el número de inscripciones actuales para el taller
+    SELECT COUNT(*) INTO available_slots
+    FROM registro
+    WHERE idworkshop = NEW.idworkshop;
+    
+    -- Obtener el número de slots disponibles para el taller
+    SELECT slot - available_slots INTO available_slots
+    FROM talleres
+    WHERE idworkshop = NEW.idworkshop;
+
+    -- Verificar si hay slots disponibles
+    IF available_slots <= 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No slots available for this workshop';
+    END IF;
+
+    -- Decrementar el número de slots disponibles
+    UPDATE talleres
+    SET slot = slot - 1
+    WHERE idworkshop = NEW.idworkshop;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_slots_after_delete` AFTER DELETE ON `registro` FOR EACH ROW BEGIN
+    -- Incrementar el número de slots disponibles en la tabla talleres
+    UPDATE talleres
+    SET slot = slot + 1
+    WHERE idworkshop = OLD.idworkshop;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -516,7 +556,7 @@ CREATE TABLE `talleres` (
 --
 
 INSERT INTO `talleres` (`idworkshop`, `nameworkshop`, `idlecturer`, `idfacultad`, `idcampus`, `descriptionworkshop`, `time`, `date`, `place`, `ability`, `requirements`, `slot`, `status`) VALUES
-(1, 'test', 1, 7, 3, 'test', '16:30:00', '2024-05-28', '', 'test', 'test', 0, 1);
+(1, 'test', 1, 7, 3, 'Test', '16:30:00', '2024-05-28', 'Aula Magna', 'test', 'test', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -532,17 +572,9 @@ CREATE TABLE `usuarios` (
   `name` varchar(30) NOT NULL,
   `lastname` varchar(25) NOT NULL,
   `middlename` varchar(25) NOT NULL,
-  `email` varchar(40) NOT NULL,
+  `email` varchar(60) NOT NULL,
   `type` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `usuarios`
---
-
-INSERT INTO `usuarios` (`iduabc`, `idfacultad`, `idcampus`, `idlic`, `name`, `lastname`, `middlename`, `email`, `type`) VALUES
-(1, 7, 3, 224, '1', '1', '1', 'johan.barragan@uabc.edu.mx', 'Alumno'),
-(2, 9, 3, NULL, 'A', 'A', 'A', 'abc@gmail.com', 'Docente');
 
 --
 -- Indexes for dumped tables
@@ -659,7 +691,7 @@ ALTER TABLE `licenciaturas`
 -- AUTO_INCREMENT for table `registro`
 --
 ALTER TABLE `registro`
-  MODIFY `idregistro` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idregistro` int(5) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `talleres`
