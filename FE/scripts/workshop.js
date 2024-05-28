@@ -190,6 +190,7 @@ function updateWorkshopList(workshops) {
                             <button type="button" title="Editar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="editButton"><i class="fa-solid fa-pen-to-square"></i></button>
                             <button type="button" title="Copiar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="copyButton"><i class="fa-solid fa-copy"></i></button>
                             <button type="button" title="Eliminar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="deleteButton"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" title="Enviar formulario" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="sendButton"><i class="fa-solid fa-paper-plane"></i></button>
                         </form>
                     </td>
                 </tr>
@@ -485,6 +486,35 @@ function addWorkshop(modalSelected) {
     });
 }
 
+function sendFeedback(selectedIdWorkshop) {
+    if (!selectedIdWorkshop) {
+        console.log("alert-error", "Error: ID de taller no seleccionado.");
+        return;
+    }
+
+    $.ajax({
+        url: `${apiURL}users/send_feedback.php`,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            idworkshop: selectedIdWorkshop,
+        },
+        success: function(response) {
+            if (response.success) {
+                // console.log("alert-success", "Correos de evaluación enviados exitosamente.");
+                setTimeout(function() {
+                    location.reload();
+                }, 1000);
+            } else {
+                console.log("alert-error", `Error al enviar los correos de evaluación: ${response.error}`);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log("alert-error", `Error en la solicitud: ${error}`);
+        }
+    });
+}
+
 // Inicialización de eventos y carga inicial de datos.
 function init() {
     getWorkshops();
@@ -567,6 +597,16 @@ function init() {
                         location.reload();
                     });
                     closeModal('#deleteModal');
+                });
+                break;
+            case 'sendButton':
+                console.log(selectedIdWorkshop);
+                $('#sendModal').modal('show');
+                $('#sendModalClose').off('click').on('click', function() {
+                    $('#sendModal').modal('hide');
+                });
+                $('#sendConfirm').off('click').on('click', function() {
+                    sendFeedback(selectedIdWorkshop);
                 });
                 break;
             default:

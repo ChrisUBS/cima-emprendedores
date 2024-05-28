@@ -128,98 +128,116 @@
         </div>
     </main>
 
-        <!-- Modals -->
-        <!-- Info Modal -->
-        <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="infoModalLabel">Información del Taller</h5>
-                    </div>
-                    <div class="modal-body" id="infoModalBody">
-                        <!-- Contenido del modal -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="infoModalClose">Salir</button>
-                    </div>
+    <!-- Modals -->
+    <!-- Info Modal -->
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoModalLabel">Información del Taller</h5>
+                </div>
+                <div class="modal-body" id="infoModalBody">
+                    <!-- Contenido del modal -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="infoModalClose">Salir</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Edit Modal -->
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Editar Taller</h5>                      
-                    </div>
-                    <div class="modal-body input-body" id="editModalBody">
-                        <!-- edit modal body -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="editModalClose">Salir</button>
-                        <button type="button" class="btn btn-success" data-dismiss="modal" id="editModalEdit">Editar taller</button>
-                    </div>
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Editar Taller</h5>                      
+                </div>
+                <div class="modal-body input-body" id="editModalBody">
+                    <!-- edit modal body -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="editModalClose">Salir</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="editModalEdit">Editar taller</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Add Modal -->
-        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="AddModalLabel">Agregar Taller</h5>                      
-                    </div>
-                    <div class="modal-body input-body" id="addModalBody">
-                        <!-- add modal body -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="addModalClose">Salir</button>
-                        <button type="button" class="btn btn-success" data-dismiss="modal" id="addModalConfirm">Agregar taller</button>
-                    </div>
+    <!-- Add Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AddModalLabel">Agregar Taller</h5>                      
                 </div>
-            </div>
-        </div>    
-
-        <!-- Copy Modal -->
-        <div class="modal fade" id="copyModal" tabindex="-1" role="dialog" aria-labelledby="copyModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="copyModalLabel">Copiar Taller</h5>                      
-                    </div>
-                    <div class="modal-body input-body" id="copyModalBody">
-                        <!-- copy modal body -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="copyModalClose">Salir</button>
-                        <button type="button" class="btn btn-success" data-dismiss="modal" id="copyConfirm">Copiar taller</button>
-                    </div>
+                <div class="modal-body input-body" id="addModalBody">
+                    <!-- add modal body -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="addModalClose">Salir</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="addModalConfirm">Agregar taller</button>
                 </div>
             </div>
         </div>
+    </div>    
 
-        <!-- Delete Modal -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
-                    </div>
-                    <div class="modal-body">
-                        <p>¿Estás seguro de que deseas eliminar este taller?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="deleteModalClose">Cancelar</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="deleteConfirm">Eliminar</button>
-                    </div>
+    <!-- Copy Modal -->
+    <div class="modal fade" id="copyModal" tabindex="-1" role="dialog" aria-labelledby="copyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="copyModalLabel">Copiar Taller</h5>                      
+                </div>
+                <div class="modal-body input-body" id="copyModalBody">
+                    <!-- copy modal body -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="copyModalClose">Salir</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="copyConfirm">Copiar taller</button>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que deseas eliminar este taller?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="deleteModalClose">Cancelar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="deleteConfirm">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Send Modal -->
+    <div class="modal fade" id="sendModal" tabindex="-1" role="dialog" aria-labelledby="sendModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sendModalLabel">Confirmar Envio</h5>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que deseas enviar el formulario?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="sendModalClose">Cancelar</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="sendConfirm">Enviar Formulario</button>
+                </div>
+            </div>
+        </div>
+    </div>
         
     <!-- Scripts -->
     <script src="plugins/jquery3.7.1.js"></script>
