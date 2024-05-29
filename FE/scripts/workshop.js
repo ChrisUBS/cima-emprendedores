@@ -190,7 +190,7 @@ function updateWorkshopList(workshops) {
                             <button type="button" title="Editar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="editButton"><i class="fa-solid fa-pen-to-square"></i></button>
                             <button type="button" title="Copiar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="copyButton"><i class="fa-solid fa-copy"></i></button>
                             <button type="button" title="Eliminar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="deleteButton"><i class="fa-solid fa-trash"></i></button>
-                            <button type="button" title="Enviar formulario" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="sendButton"><i class="fa-solid fa-paper-plane"></i></button>
+                            <button type="button" title="Enviar formulario" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="sendButton" ${workshop.occupied_slots >= workshop.slot ? 'disabled' : ''}><i class="fa-solid fa-paper-plane"></i></button>
                         </form>
                     </td>
                 </tr>
@@ -517,6 +517,13 @@ function sendFeedback(selectedIdWorkshop) {
 
 // Inicialización de eventos y carga inicial de datos.
 function init() {
+    $("sendConfirm").click(function() {
+        var button = $(this);
+        button.prop('disabled', true);
+        setTimeout(function() {
+            button.prop('disabled', false);
+        }, 2000);
+    });
     getWorkshops();
     statusChange();
     $(document).on('click', '.btn-class', function(event) {

@@ -57,7 +57,21 @@ function updateLectList(lect){
         lengthMenu: [5, 10, 25, 50],
         pageLength: 10,
         columnDefs: [
-            { className: "dt-center", targets: "_all" }
+            {
+                className: "dt-center",
+                targets: "_all"
+            },
+            {
+                targets: 3,
+                render: function(data, type, row) {
+                    if (type === 'display' && data.length > 100) {
+                        return data.substr(0, 50) + '…';
+                        // '… <a href="#" class="more">Más</a>'
+                    } else {
+                        return data;
+                    }
+                }
+            }
         ],
         buttons: [
             { extend: 'copy' },

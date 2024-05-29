@@ -64,7 +64,7 @@ if (isset($_GET['idworkshop'])) {
                 <p>Hora: " . $row['time'] . "</p>
                 <p>Lugar: " . $row['place'] . "</p>
             ";
-            $subject = "Evaluación del Taller: " . $row['nameworkshop'];
+            $subject = "Evaluacion del Taller: " . $row['nameworkshop'];
             $body = "
                 <html>
                 <head>
