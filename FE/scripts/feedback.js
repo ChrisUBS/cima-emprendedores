@@ -165,8 +165,12 @@ function startFeedback() {
             $("#btnBack").hide();
             $("#feedback .input, #feedback .select").empty();
         });
-        $("#btnSend").click(function(){
+        $('#btnSend').off('click').on('click', function() {
+            $('#btnSend').prop('disabled', true);
             endFeedback();
+            setTimeout(() => {
+                $('#btnSend').prop('disabled', false);
+            }, 3000);
         });
     } else {
         console.log("¡Campo requerido o no válido!");

@@ -462,7 +462,14 @@ function init() {
         button.prop('disabled', true);
         setTimeout(function() {
             button.prop('disabled', false);
-        }, 2500);
+        }, 2000);
+    });
+    $("btnRegister").click(function() {
+        var button = $(this);
+        button.prop('disabled', true);
+        setTimeout(function() {
+            button.prop('disabled', false);
+        }, 2000);
     });
     $("button").click(function() {
         var button = $(this);

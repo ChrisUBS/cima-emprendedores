@@ -171,6 +171,7 @@ function updateWorkshopList(workshops) {
     listaTalleres.empty();
     
     workshops.forEach(workshop => {
+        //El status del workshop cambia automaticamente desde el get_workshop que identifica si hay slots o si no cambia el status.
         listaTalleres.append(`
                 <tr>
                     <td id="${workshop.idworkshop}">${workshop.nameworkshop}</td>
@@ -181,7 +182,7 @@ function updateWorkshopList(workshops) {
                     <td>${workshop.place}</td>
                     <td>${workshop.occupied_slots}/${workshop.slot}</td>
                     <td>
-                        <input id="workshopStatus" type="checkbox" ${workshop.status === 1 ? 'checked' : ''} ${workshop.occupied_slots >= workshop.slot ? 'disabled' : ''}>
+                        <input id="workshopStatus" type="checkbox" ${workshop.status === 1 ? 'checked' : ''}> 
                         <span class="status-text">${workshop.status === 1 ? 'Activo' : 'Inactivo'}</span>
                     </td>
                     <td>
@@ -190,7 +191,7 @@ function updateWorkshopList(workshops) {
                             <button type="button" title="Editar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="editButton"><i class="fa-solid fa-pen-to-square"></i></button>
                             <button type="button" title="Copiar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="copyButton"><i class="fa-solid fa-copy"></i></button>
                             <button type="button" title="Eliminar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="deleteButton"><i class="fa-solid fa-trash"></i></button>
-                            <button type="button" title="Enviar formulario" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="sendButton" ${workshop.occupied_slots >= workshop.slot ? 'disabled' : ''}><i class="fa-solid fa-paper-plane"></i></button>
+                            <button type="button" title="Enviar formulario" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="sendButton"><i class="fa-solid fa-paper-plane"></i></button>
                         </form>
                     </td>
                 </tr>
@@ -607,13 +608,18 @@ function init() {
                 });
                 break;
             case 'sendButton':
+                
                 console.log(selectedIdWorkshop);
                 $('#sendModal').modal('show');
                 $('#sendModalClose').off('click').on('click', function() {
                     $('#sendModal').modal('hide');
                 });
                 $('#sendConfirm').off('click').on('click', function() {
+                    $('#sendConfirm').prop('disabled', true);
                     sendFeedback(selectedIdWorkshop);
+                    setTimeout(() => {
+                        $('#sendConfirm').prop('disabled', false);
+                    }, 5000);
                 });
                 break;
             default:
