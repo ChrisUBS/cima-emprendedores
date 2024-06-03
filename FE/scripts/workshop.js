@@ -182,7 +182,7 @@ function updateWorkshopList(workshops) {
                     <td>${workshop.place}</td>
                     <td>${workshop.occupied_slots}/${workshop.slot}</td>
                     <td>
-                        <input id="workshopStatus" type="checkbox" ${workshop.status === 1 ? 'checked' : ''}> 
+                        <input id="workshopStatus" type="checkbox" ${workshop.status === 1 ? 'checked' : ''} ${workshop.occupied_slots >= workshop.slot ? 'disabled' : ''}>
                         <span class="status-text">${workshop.status === 1 ? 'Activo' : 'Inactivo'}</span>
                     </td>
                     <td>

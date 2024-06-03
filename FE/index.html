@@ -63,8 +63,8 @@
                         <button id="btnSearch" type="button" class="btn-search search">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
-                        <div class="error-search error"></div>
-                        <div class="success-search"></div>
+                        <div class="hide error-search error"></div>
+                        <div class="hide success-search"></div>
                     </div>
                 </div>
             </div>
@@ -73,22 +73,22 @@
                 <div class="input-general">
                     <input type="text" name="nombre" id="txtNombre" required data-error-message="¡Campo requerido!">
                     <label>Nombre(s)</label>
-                    <div class="error"></div>
+                    <div class="hide error"></div>
                 </div>
                 <div class="input-general">
                     <input type="text" name="apellidoP" id="txtApellidoP" required data-error-message="¡Campo requerido!">
                     <label>Apellido Paterno</label>
-                    <div class="error"></div>
+                    <div class="hide error"></div>
                 </div>
                 <div class="input-general">
                     <input type="text" name="apellidoM" id="txtApellidoM" required data-error-message="¡Campo requerido!">
                     <label>Apellido Materno</label>
-                    <div class="error"></div>
+                    <div class="hide error"></div>
                 </div>
                 <div class="input-general">
                     <input type="text" name="email" id="txtEmail" required data-error-message="¡Campo requerido!">
                     <label>Correo Electrónico</label>
-                    <div class="error"></div>
+                    <div class="hide error"></div>
                 </div>
             </div>
             <div>
@@ -105,7 +105,7 @@
                         <option value="1">Tijuana</option>
                     </select>
                     <label for="campus">Campus</label>
-                    <div class="error"></div>
+                    <div class="hide error"></div>
                 </div>
             </div>
             <!-- Facultad -->
@@ -114,7 +114,7 @@
                     <select name="txtFacultad" id="txtFacultad" required data-error-message="¡Campo requerido!">
                     </select>
                     <label for="facultad">Facultad</label>
-                    <div class="error"></div>
+                    <div class="hide error"></div>
                 </div>
             </div>
             <!-- Licenciaturas -->
@@ -123,7 +123,7 @@
                     <select name="txtLic" id="txtLic" required data-error-message="¡Campo requerido!">
                     </select>
                     <label for="lic">Licenciaturas</label>
-                    <div class="error"></div>
+                    <div class="hide error"></div>
                 </div>
             </div>
             <!-- Taller -->
@@ -133,7 +133,7 @@
                     </select>
                     <label for="taller">Taller</label>
                     <button type="button" title="Informacion" class="btn-reg btn-info" id="infoButton"><i class="fa-solid fa-circle-info"></i></button>
-                    <div class="error"></div>
+                    <div class="hide error"></div>
                 </div>
             </div>
             <!-- Boton siguiente. -->
@@ -142,7 +142,7 @@
             </div>
             <div>
                 <button type="button" class="btn-reg btnRegister" id="btnRegister">Registrarse</button>
-                <div class="success"></div>
+                <div class="hide success"></div>
             </div>
         </div>
     </main>

@@ -45,6 +45,13 @@ function SuccessLogin() {
 }
 
 function init() {
+    $("#btnLogin").click(function() {
+        var button = $(this);
+        button.prop('disabled', true);
+        setTimeout(function() {
+            button.prop('disabled', false);
+        }, 2000);
+    });
     $("#login").show();
     $("#admin").hide();
     $("#btnLogin").click(validateLogin);

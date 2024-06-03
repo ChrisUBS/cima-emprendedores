@@ -307,6 +307,8 @@ function getTalleres() {
                 response.talleres.forEach(taller => {
                     if (taller.status === 1) {
                         selectTaller.append(`<option value='${taller.idworkshop}'>${taller.nombre}</option>`);
+                    }else{
+                        selectTaller.append("<option disabled>No hay talleres disponibles.</option>");
                     }
                 });
             } else {
