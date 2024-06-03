@@ -65,7 +65,7 @@ function updateLectList(lect){
                 targets: 3,
                 render: function(data, type, row) {
                     if (type === 'display' && data.length > 100) {
-                        return data.substr(0, 50) + '…';
+                        return data.substr(0, 30) + '…';
                         // '… <a href="#" class="more">Más</a>'
                     } else {
                         return data;

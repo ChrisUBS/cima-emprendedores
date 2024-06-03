@@ -1,30 +1,19 @@
-//Animacion de las notificaciones
-function notifications(type, msg) {
-    let div = $("#notifications");
-    div.slideDown(1000);
-    div.addClass(type);
-    div.text(msg);
-    div.slideUp(3000);
-}
-
-
 // Función para validar los campos del formulario
-function validateForm() {
+function validateLogin() {
     let username = $("#username").val().trim();
     let password = $("#password").val().trim();
 
     if (username === '' || password === '') {
-        notifications('alert-error', 'Por favor, completa todos los campos.');
-        return false;
+        $(".error").text("Por favor, completa todos los campos.").css("color", "red").stop(true, true).slideDown(300).delay(1000).slideUp(300);
+    }else{
+        SuccessLogin();
     }
-
-    return true;
 }
 
 // Función para realizar el inicio de sesión
 let apiURL="http://localhost/cimarrones-emprendedores/BE/"
 
-function login() {
+function SuccessLogin() {
     var username = $("#username").val();
     var password = $("#password").val();
 
@@ -41,12 +30,12 @@ function login() {
                 // Guardar el token en el almacenamiento local
                 localStorage.setItem('token', response.token);
                 localStorage.setItem('username', response.userName);
-                notifications('alert-success','Inicio de sesión exitoso');
+                $(".success").text("Inicio de sesión exitoso!").css("color", "green").stop(true, true).slideDown(300).delay(1000).slideUp(300);
                 setTimeout(function () {
-                    window.location.href = "adminHome.html";
-                }, 4000);
+                    window.location.href = "home.html";
+                }, 2000);
             } else {
-                notifications('alert-error', response.error);
+                $(".error").text(response.error).css("color", "red").stop(true, true).slideDown(300).delay(1000).slideUp(300);
             }
         },
         error: function(xhr, status, error) {
@@ -58,7 +47,7 @@ function login() {
 function init() {
     $("#login").show();
     $("#admin").hide();
-    $("#btnLogin").click(login);
+    $("#btnLogin").click(validateLogin);
 }
 
 $(document).ready(function () {
