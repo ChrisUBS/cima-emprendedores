@@ -16,7 +16,15 @@ function logout() {
     });
 }
 
+function validToken(){
+    var token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = "login.html";
+    }
+}
+
 function initLogout() {
+    validToken();
     $("#btnLogOut").click(logout);
 }
 
