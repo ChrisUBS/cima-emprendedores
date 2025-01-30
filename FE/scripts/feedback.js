@@ -53,6 +53,14 @@ function secondValid(feedback) {
     return validation;
 }
 
+// Función que compara la fecha actual con la fecha del taller
+function isEventToday(eventDate) {
+    const today = new Date().toLocaleDateString('sv-SE');
+    // console.log("Fecha de hoy:", today);
+    // console.log("Fecha del taller:", eventDate);
+
+    return today === eventDate;
+}
 function getTalleres() {
     var selectedUbicacion = $("#txtCampus").val();
     $.ajax({
@@ -60,7 +68,7 @@ function getTalleres() {
         url: `${apiURL}register/get_workshops.php`,
         data: { ubicacion: selectedUbicacion },
         success: function(response) {
-            console.log("Respuesta de talleres:", response);
+            // console.log("Respuesta de talleres:", response);
             var selectTaller = $("#txtTaller");
             selectTaller.empty();
             
@@ -68,18 +76,17 @@ function getTalleres() {
                 $('#txtTaller').prop('disabled', false);
                 selectTaller.append("<option value=''></option>");
                 var talleresDisponibles = false;
-                
                 response.talleres.forEach(taller => {
-                    if (taller.status === 1) {
+                    if (isEventToday(taller.date)) {
                         talleresDisponibles = true;
                         selectTaller.append(`<option value='${taller.idworkshop}'>${taller.nombre}</option>`);
                     }
                 });
                 if (!talleresDisponibles) {
-                    selectTaller.append(`<option disabled>No hay talleres disponibles.</option>`);
+                    selectTaller.append(`<option disabled>No hay talleres disponibles1.</option>`);
                 }
             } else {
-                selectTaller.append(`<option disabled>No hay talleres disponibles.</option>`);
+                selectTaller.append(`<option disabled>No hay talleres disponibles2.</option>`);
             }
         },
         error: function(xhr, status, error) {

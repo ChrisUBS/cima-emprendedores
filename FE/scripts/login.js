@@ -27,9 +27,9 @@ function SuccessLogin() {
         dataType: "json",
         success: function(response) {
             if(response.success) {
-                // Guardar el token en el almacenamiento local
-                localStorage.setItem('token', response.token);
-                localStorage.setItem('username', response.userName);
+                // Guardar el token en el sessionStorage
+                sessionStorage.setItem('token', response.token);
+                sessionStorage.setItem('username', response.userName);
                 $(".success").text("Inicio de sesión exitoso!").css("color", "green").stop(true, true).slideDown(300).delay(1000).slideUp(300);
                 setTimeout(function () {
                     window.location.href = "home.html";

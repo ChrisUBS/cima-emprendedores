@@ -6,8 +6,8 @@ function logout() {
         url: `${logoutURL}users/logout.php`,
         dataType: "json",
         success: function(response) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('username');
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('username');
             window.location.href = "login.html";
         },
         error: function(xhr, status, error) {
@@ -17,17 +17,18 @@ function logout() {
 }
 
 function validToken(){
-    var token = localStorage.getItem('token');
+    var token = sessionStorage.getItem('token');
     if (!token) {
         window.location.href = "login.html";
     }
 }
 
 function initLogout() {
-    validToken();
+    
     $("#btnLogOut").click(logout);
 }
 
 $(document).ready(function () {
+    validToken();
     initLogout();
 });

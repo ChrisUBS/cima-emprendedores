@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     $ubicacion = $_GET['ubicacion'];
 
-    $query = "SELECT idworkshop, nameworkshop, status FROM talleres WHERE idcampus = ?";
+    $query = "SELECT idworkshop, nameworkshop, status, date FROM talleres WHERE idcampus = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $ubicacion);
     $stmt->execute();
@@ -26,7 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $talleres[] = array(
             "idworkshop" => $row["idworkshop"],
             "nombre" => $row["nameworkshop"],
-            "status" => $row["status"]
+            "status" => $row["status"],
+            "date" => $row["date"]
         );
     }
     if (count($talleres) > 0) {
