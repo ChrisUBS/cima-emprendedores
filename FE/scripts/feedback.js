@@ -7,7 +7,7 @@ function firstValid(feedback) {
 
     function markEmptyFields() {
         $(".input-general input, .input-general select").each(function () {
-            if ($(this).val() === "") {
+            if ($(this).val() === "" || $(this).val() === null || $(this).val() === undefined) {
                 $(this).css("border-color", "red");
                 let errorMessage = "¡Campo requerido!";
                 let errorField = $(this).siblings('.error');
@@ -25,7 +25,7 @@ function firstValid(feedback) {
     }
 
     // Validar campos vacíos
-    if (feedback.ubicacion === "" || feedback.taller === "") {
+    if (!feedback.ubicacion || !feedback.taller) {
         validation = false;
         markEmptyFields();
     }
@@ -83,10 +83,10 @@ function getTalleres() {
                     }
                 });
                 if (!talleresDisponibles) {
-                    selectTaller.append(`<option disabled>No hay talleres disponibles1.</option>`);
+                    selectTaller.append(`<option disabled>No hay talleres disponibles.</option>`);
                 }
             } else {
-                selectTaller.append(`<option disabled>No hay talleres disponibles2.</option>`);
+                selectTaller.append(`<option disabled>No hay talleres disponibles.</option>`);
             }
         },
         error: function(xhr, status, error) {
@@ -158,7 +158,9 @@ function endFeedback(){
 function startFeedback() {
     feedback.ubicacion = $("#txtCampus").val();
     feedback.taller  = $("#txtTaller").val();
+
     if (firstValid(feedback)) {
+        console.log(feedback);
         $("#select").hide();
         $("#btnNext").hide();
         $("#feedback").show();
@@ -181,6 +183,7 @@ function startFeedback() {
         });
     } else {
         console.log("¡Campo requerido o no válido!");
+        console.log(feedback);
     }
 }
 
