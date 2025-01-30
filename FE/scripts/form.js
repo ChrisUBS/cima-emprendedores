@@ -19,13 +19,14 @@ function hideNotifications() {
 }
 
 //Validacion de todos los campos.
-function isValid(person) {
+function isValid(person, phase) {
+
     let validation = true;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     function markEmptyFields() {
         $(".input-general input, .input-general select").each(function () {
-            if ($(this).val() === "") {
+            if ($(this).val() === "" || $(this).val() === null || $(this).val() === undefined) {
                 $(this).css("border-color", "red");
                 let errorMessage = $(this).data("error-message");
                 let errorField = $(this).siblings('.error');
@@ -41,10 +42,28 @@ function isValid(person) {
         });
     }
 
-    // Validar campos vacíos
-    if (person.nombre === "" || person.apellidoP === "" || person.apellidoM === "" || person.email === "" || person.idUabc === "" || person.ubicacion === "" || person.taller === "" || person.lic === "") {
-        validation = false;
-        markEmptyFields();
+    // Validación de los primeros campos disponibles
+    if (phase === "initial") {
+        if (person.nombre === "" || person.nombre === null || person.nombre === undefined ||
+            person.apellidoP === "" || person.apellidoP === null || person.apellidoP === undefined ||
+            person.apellidoM === "" || person.apellidoM === null || person.apellidoM === undefined ||
+            person.email === "" || person.email === null || person.email === undefined ||
+            person.idUabc === "" || person.idUabc === null || person.idUabc === undefined) {
+            validation = false;
+            markEmptyFields();
+            console.log(person)
+        }
+    }
+
+    // Validación de la segunda fase, cuando los otros campos están disponibles
+    if (phase === "complete") {
+        if (person.ubicacion === "" || person.ubicacion === null || person.ubicacion === undefined ||
+            person.taller === "" || person.taller === null || person.taller === undefined ||
+            person.facultad === "" || person.facultad === null || person.facultad === undefined ||
+            person.lic === "" || person.lic === null || person.lic === undefined) {
+            validation = false;
+            markEmptyFields();
+        }
     }
 
     // Validar formato de correo electrónico
@@ -69,15 +88,17 @@ function isValid(person) {
 //Validacion del boton registro.
 function validRegister(newPerson, selectedOption) {
     changeForm(selectedOption);
-    $("#btnRegister").click(function () {
+    $("#btnRegister").off('click').on('click', function () {
         checkExtra(newPerson, selectedOption);
-        if (isValid(newPerson, selectedOption)) {
+        console.log(newPerson);
+        if (isValid(newPerson, "complete")) {
             $("#btnRegister, #btnEdit").fadeOut(300);
             insertToDatabase(newPerson);
+            console.log(newPerson);
             // console.log("listo");
         }else {
             $("#btnRegister, #btnEdit").fadeIn(300);
-            $(".success").text("¡Registro Fallido!").css("color", "red").stop(true, true).slideDown(300).delay(1000).slideUp(300);
+            $(".success").text("¡Registro Fallido o Slots insuficientes!").css("color", "red").stop(true, true).slideDown(300).delay(1000).slideUp(300);
             // console.log("alert-error", "¡Campo requerido ó no valido!");
         }
     });
@@ -118,8 +139,8 @@ function register() {
             newPerson.idUabc = $("input[name='idUabc']").val();
             break;
     }
-
-    if (isValid(newPerson)) {
+    console.log(newPerson);
+    if (isValid(newPerson, "initial")) {
         // Si la validación es exitosa, procede con el registro
         validRegister(newPerson, selectedOption);
     } else {
@@ -151,7 +172,7 @@ function changeForm(selectedOption) {
                 $('#txtLic').empty().prop('disabled', true);
             });
             $("#facultad select").change(getLic);
-            $("#btnEdit").click(function () {
+            $("#btnEdit").off('click').on('click', function () {
                 hideNotifications();
                 $("#ubicacion, #facultad, #lic, #taller").hide();
                 OriginalVal();
@@ -183,7 +204,7 @@ function changeForm(selectedOption) {
                 getFacultad();
                 getTalleres();
             });
-            $("#btnEdit").click(function () {
+            $("#btnEdit").off('click').on('click', function () {
                 hideNotifications();
                 $("#ubicacion, #facultad, #taller").hide();
                 OriginalVal();
@@ -212,7 +233,7 @@ function changeForm(selectedOption) {
             $("#taller").show();
             $("#btnEdit").show();
             $("#ubicacion select").change(getTalleres);
-            $("#btnEdit").click(function () {
+            $("#btnEdit").off('click').on('click', function () {
                 hideNotifications();
                 $("#ubicacion, #taller").hide();
                 OriginalVal();
@@ -466,7 +487,7 @@ function init() {
             button.prop('disabled', false);
         }, 2000);
     });
-    $("btnRegister").click(function() {
+    $("btnRegister").click(function () {
         var button = $(this);
         button.prop('disabled', true);
         setTimeout(function() {
