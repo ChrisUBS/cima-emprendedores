@@ -4,30 +4,46 @@ let apiURL="http://localhost/cimarrones-emprendedores/BE/"
 let feedback = {};
 function firstValid(feedback) {
     let validation = true;
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     function markEmptyFields() {
+        let isValid = true;
+    
         $(".input-general input, .input-general select").each(function () {
             if ($(this).val() === "" || $(this).val() === null || $(this).val() === undefined) {
                 $(this).css("border-color", "red");
                 let errorMessage = "¡Campo requerido!";
                 let errorField = $(this).siblings('.error');
-                errorField.slideUp(0);
                 errorField.text(errorMessage).slideDown(300);
                 setTimeout(function() {
-                    errorField.slideUp(100);
-                }, 1000);
-                validation = false;
+                    errorField.slideUp(300);
+                }, 1500);
+                isValid = false;
             } else {
                 $(this).css("border-color", "");
                 $(this).siblings('.error').text("").hide();
             }
         });
+    
+        if (!emailRegex.test(feedback.email)) {
+            $("#txtEmail").css("border-color", "red");
+            let errorMessage = "¡Formato de correo no válido!";
+            let errorField = $("#txtEmail").siblings('.error');
+            errorField.text(errorMessage).slideDown(300);
+            setTimeout(function() {
+                errorField.slideUp(300);
+            }, 1500);
+            isValid = false;
+        }
+    
+        return isValid;
     }
+    
 
     // Validar campos vacíos
-    if (!feedback.ubicacion || !feedback.taller) {
-        validation = false;
+    if (!feedback.ubicacion || !feedback.taller || !emailRegex.test(feedback.email)) {
         markEmptyFields();
+        validation = false;
     }
 
     if (!validation) {
@@ -56,11 +72,9 @@ function secondValid(feedback) {
 // Función que compara la fecha actual con la fecha del taller
 function isEventToday(eventDate) {
     const today = new Date().toLocaleDateString('sv-SE');
-    // console.log("Fecha de hoy:", today);
-    // console.log("Fecha del taller:", eventDate);
-
     return today === eventDate;
 }
+
 function getTalleres() {
     var selectedUbicacion = $("#txtCampus").val();
     $.ajax({
@@ -158,9 +172,8 @@ function endFeedback(){
 function startFeedback() {
     feedback.ubicacion = $("#txtCampus").val();
     feedback.taller  = $("#txtTaller").val();
-
+    feedback.email = $("#txtEmail").val();
     if (firstValid(feedback)) {
-        console.log(feedback);
         $("#select").hide();
         $("#btnNext").hide();
         $("#feedback").show();

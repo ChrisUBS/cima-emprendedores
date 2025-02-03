@@ -43,12 +43,17 @@
     <main class="log-bg">
         <div class="form">
             <h1 class="">Evaluación</h1>
-            <p class="center-content">¡Bienvenidos sean emprendedores!</p>
-            <p class="center-content"> Favor de contestar las siguientes preguntas lo más sincero posible para una mejora continua, su información es anónima y sólo se utilizará con fines estadísticos para seguir ofreciéndoles una buena experiencia en los talleres.</p>
+            <p class="center-content">¡Bienvenidos, emprendedores!</p>
+            <p class="center-content"> Les invitamos a responder las siguientes preguntas. Su opinión es muy valiosa para ayudarnos a mejorar continuamente. La información proporcionada es anónima y se utilizará únicamente con fines estadísticos, con el objetivo de seguir brindándoles una excelente experiencia en los talleres.</p>
         </div>
         <!-- Panel del formulario -->
         <!-- CAMPUS y Taller-->
         <div id="select" class="form"> 
+            <div class="input-general w-50">
+                <input type="email" id="txtEmail" name="txtEmail" required>
+                <label for="email">Correo Electrónico</label>
+                <div class="error"></div>
+            </div>
             <div class="input-general w-50">
                 <select name="txtCampus" id="txtCampus" required data-error-message="¡Campo requerido!">
                     <option value=""></option>
