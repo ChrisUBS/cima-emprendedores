@@ -179,9 +179,8 @@ function saveFeedback(feedback) {
         success: function (response) {
             console.log(response.data);
             if (response.success) {
-                $("#btnSend, #btnBack, #welcome").fadeOut(140);
+                $("#btnSend, #btnBack, #welcome").hide();
                 $("#submit").show()
-                $("#feedback").hide()
                 setTimeout(function () {
                     location.reload();
                 }, 5000);
@@ -245,6 +244,7 @@ function init() {
     $("#btnSend").hide();
     $("#btnBack").hide();
     $("#submit").hide();
+    $("#welcome").show();
     getTalleres();
     $("#txtCampus").change(getTalleres);
     $("#btnNext").click(function(){

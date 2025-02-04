@@ -496,24 +496,11 @@ function init() {
         button.prop('disabled', true);
         setTimeout(function() {
             button.prop('disabled', false);
-        }, 2000);
-    });
-    $("btnRegister").click(function () {
-        var button = $(this);
-        button.prop('disabled', true);
-        setTimeout(function() {
-            button.prop('disabled', false);
-        }, 2000);
-    });
-    $("button").click(function() {
-        var button = $(this);
-        button.prop('disabled', true);
-        setTimeout(function() {
-            button.prop('disabled', false);
-        }, 2000);
+        }, 150);
     });
     //----------------------------------
-
+    
+    $("#form").show();
     $("#optionId").hide();
     $("#inputGeneral").hide();
     $("#ubicacion").hide();
@@ -524,6 +511,7 @@ function init() {
     $("#btnRegister").hide();
     $("#btnEdit").hide();
     $("#infoButton").hide();
+    $("#finish").hide();
 
     // Hook eventos
     $("#txtOption").change(function () {
