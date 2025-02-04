@@ -368,6 +368,7 @@ function getInfoModal(selectedIdWorkshop) {
         data: {
             idworkshop: selectedIdWorkshop,
         },
+        
         success: function(response) {
             if (response.success) {
                 $('#infoModalBody').empty();
@@ -376,13 +377,15 @@ function getInfoModal(selectedIdWorkshop) {
                         <div class="workshop-info">
                             <h3 class="workshop-title">${infoworkshop.nameworkshop}</h3>
                             <div class="workshop-details">
-                                <p><strong>Facultad:</strong> ${infoworkshop.facultad}</p>
                                 <p><strong>Campus:</strong> ${infoworkshop.campus}</p>
+                                <p><strong>Lugar:</strong> ${infoworkshop.place}</p>
                                 <p><strong>Fecha:</strong> ${infoworkshop.date}</p>
-                                <p><strong>Hora:</strong> ${infoworkshop.time}</p>
-                                <p><strong>Descripción:</strong> ${infoworkshop.dworkshop}</p>
+                                <p><strong>Hora:</strong> ${infoworkshop.time} - ${infoworkshop.timeend}</p>
+                                <p><strong>Descripción:</strong> ${infoworkshop.descriptionworkshop}</p>
                                 <p><strong>Conferencista:</strong> ${infoworkshop.lecturer}</p>
-                                <p><strong>Post:</strong> ${infoworkshop.post}</p>
+                                <p><strong>Habilidades requeridas:</strong> ${infoworkshop.ability || 'N/A'}</p>
+                                <p><strong>Requerimientos:</strong> ${infoworkshop.requirements || 'N/A'}</p>
+                                <p><strong>Cupos:</strong> ${infoworkshop.occupied_slots}/${infoworkshop.slot}</p>
                             </div>
                         </div>
                     `);
@@ -419,13 +422,21 @@ function insertToDatabase(newPerson) {
         dataType: 'json',
         success: function (response) {
             if (response.success) {
-                $(".success").text("¡Registro exitoso!").css("color", "green").stop(true, true).slideDown(300, function() {
-                    $(this).delay(1000).slideUp(100, function() {
-                        setTimeout(function () {
-                            location.reload();
-                        }, 1000);
-                    });
-                });
+                $("#form").hide();
+                $("#optionId").hide();
+                $("#inputGeneral").hide();
+                $("#ubicacion").hide();
+                $("#facultad").hide();
+                $("#lic").hide();
+                $("#taller").hide();
+                $("#btnNext").hide();
+                $("#btnRegister").hide();
+                $("#btnEdit").hide();
+                $("#infoButton").hide();
+                $("#finish").show();
+                setTimeout(function () {
+                    location.reload();
+                }, 3000);
             } else {
                 $("#btnRegister, #btnEdit").fadeIn(300);
                 $("#infoButton").hide();
@@ -496,7 +507,14 @@ function init() {
         button.prop('disabled', true);
         setTimeout(function() {
             button.prop('disabled', false);
-        }, 150);
+        }, 1000);
+    });
+    $("button").click(function() {
+        var button = $(this);
+        button.prop('disabled', true);
+        setTimeout(function() {
+            button.prop('disabled', false);
+        }, 1000);
     });
     //----------------------------------
     

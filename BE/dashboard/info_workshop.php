@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                         talleres.nameworkshop,
                         talleres.descriptionworkshop,
                         talleres.time,
+                        talleres.timeend,
                         talleres.date,
                         talleres.ability,
                         talleres.requirements,
@@ -27,7 +28,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                         facultades.facultad,
                         campus.campus,
                         conferencistas.name AS lecturer_name,
-                        conferencistas.lastname AS lecturer_lastname
+                        conferencistas.lastname AS lecturer_lastname,
+                        (SELECT COUNT(*) FROM registro WHERE registro.idworkshop = talleres.idworkshop) AS occupied_slots
                     FROM
                         talleres
                     INNER JOIN facultades ON talleres.idfacultad = facultades.idfacultad
@@ -48,8 +50,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 $data[] = array(
                     "idworkshop" => $row["idworkshop"],
                     "nameworkshop" => $row["nameworkshop"],
-                    "dworkshop" => $row["descriptionworkshop"],
+                    "descriptionworkshop" => $row["descriptionworkshop"],
                     "time" => $row["time"],
+                    "timeend" => $row["timeend"],
                     "date" => $row["date"],
                     "ability" => $row["ability"],
                     "requirements" => $row["requirements"],
@@ -60,7 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     "idlecturer" => $row["idlecturer"],
                     "facultad" => $row["facultad"],
                     "campus" => $row["campus"],
-                    "lecturer" => $row["lecturer_name"] . " " . $row["lecturer_lastname"]
+                    "lecturer" => $row["lecturer_name"] . " " . $row["lecturer_lastname"],
+                    "occupied_slots" => $row["occupied_slots"]
                 );
             }
             echo json_encode(array("success" => true, "data" => $data));

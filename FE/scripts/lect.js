@@ -131,7 +131,7 @@ function lectTable(modalBodyId) {
         </div>
         <div class="input-general">
             <textarea id="info" name="info" required></textarea>
-            <label for="info">Información</label>
+            <label for="info">Semblanza</label>
         </div>
         `;
 
@@ -225,9 +225,9 @@ function getInfoModal(selectedIdLect) {
                         $('#infoModalBody').append(`
                         <div class="workshop-info">
                             <h3 class="workshop-title">${infoLect.name}</h3>
-                            <div class="workshop-details">
+                            <div>
                                 <p><strong>Apellidos:</strong> ${infoLect.lastname} ${infoLect.middlename}</p>
-                                <p><strong>Informacion:</strong> ${infoLect.info}</p>
+                                <p class="text-area"><strong>Semblanza :</strong> ${infoLect.info}</p>
                             </div>
                         </div>
                     `);

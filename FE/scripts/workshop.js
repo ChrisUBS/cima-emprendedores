@@ -112,53 +112,57 @@ function workshopTable(modalBodyId) {
     modalBody.innerHTML = '';
     const newHTML = `
         <div class="input-general">
-            <input type="text" id="nameworkshop" name="nameworkshop" required>
-            <label for="nameworkshop">Nombre del Taller</label>
+            <input type="text" id="nameworkshop" name="nameworkshop">
+            <label for="nameworkshop">Nombre del Taller *</label>
         </div>
         <div class="input-general">
-            <textarea id="descriptionworkshop" name="descriptionworkshop" required></textarea>
+            <textarea id="descriptionworkshop" name="descriptionworkshop"></textarea>
             <label for="descriptionworkshop">Descripción</label>
         </div>
         <div class="input-general">
             <input type="time" id="time" name="time" >
-            <label for="time">Hora</label>
+            <label for="time">Hora Inicio *</label>
+        </div>
+        <div class="input-general">
+            <input type="time" id="timeend" name="timeend" >
+            <label for="time">Hora Fin *</label>
         </div>
         <div class="input-general">
             <input type="date" id="date" name="date" >
-            <label for="date">Fecha</label>
+            <label for="date">Fecha *</label>
         </div>
         <div class="input-general">
-            <input type="text" id="place" name="place" required>
-            <label for="place">Lugar</label>
+            <input type="text" id="place" name="place">
+            <label for="place">Lugar *</label>
         </div>
         <div class="input-general">
-            <input type="number" id="slot" name="slot" required>
-            <label for="slot">Cupos</label>
+            <input type="number" id="slot" name="slot">
+            <label for="slot">Cupos *</label>
         </div>
         <div class="input-general">
-            <input type="text" id="ability" name="ability" required>
+            <input type="text" id="ability" name="ability">
             <label for="ability">Habilidades requeridas</label>
         </div>
         <div class="input-general">
-            <input type="text" id="requirements" name="requirements" required>
+            <input type="text" id="requirements" name="requirements">
             <label for="requirements">Requerimientos</label>
         </div>
         <div class="input-general">
-            <select name="campus" id="campus" required>
+            <select name="campus" id="campus">
                 <option></option>
                 <option value="3">Ensenada</option>
                 <option value="2">Mexicali</option>
                 <option value="1">Tijuana</option>
             </select>
-            <label for="campus">Campus</label>
+            <label for="campus">Campus *</label>
         </div>
         <div class="input-general">
-            <select disabled name="txtFacultad" id="txtFacultad" required></select>
-            <label for="facultad">Facultad</label>
+            <select disabled name="txtFacultad" id="txtFacultad"></select>
+            <label for="facultad">Facultad *</label>
         </div>
         <div class="input-general">
-            <select name="lect" id="lect" required></select>
-            <label for="lect">Conferencista</label>
+            <select name="lect" id="lect"></select>
+            <label for="lect">Conferencista *</label>
         </div>
     `;
 
@@ -179,6 +183,7 @@ function updateWorkshopList(workshops) {
                     <td>${workshop.campus}</td>
                     <td>${workshop.date}</td>
                     <td>${workshop.time}</td>
+                    <td>${workshop.timeend}</td>
                     <td>${workshop.place}</td>
                     <td>${workshop.occupied_slots}/${workshop.slot}</td>
                     <td>
@@ -328,6 +333,7 @@ function getInfoModal(selectedIdWorkshop) {
                                 <p><strong>Campus:</strong> ${infoworkshop.campus}</p>
                                 <p><strong>Fecha:</strong> ${infoworkshop.date}</p>
                                 <p><strong>Hora:</strong> ${infoworkshop.time}</p>
+                                <p><strong>Hora:</strong> ${infoworkshop.timeend}</p>
                                 <p><strong>Descripción:</strong> ${infoworkshop.dworkshop}</p>
                                 <p><strong>Conferencista:</strong> ${infoworkshop.lecturer}</p>
                                 <p><strong>Requerimientos:</strong> ${infoworkshop.requirements}</p>
@@ -366,6 +372,7 @@ function showWorkshopData(selectedIdWorkshop, modalSelected) {
                 $modalBody.find('#nameworkshop').val(workshopData.nameworkshop);
                 $modalBody.find('#descriptionworkshop').val(workshopData.dworkshop);
                 $modalBody.find('#time').val(workshopData.time);
+                $modalBody.find('#timeend').val(workshopData.timeend);
                 $modalBody.find('#date').val(workshopData.date);
                 $modalBody.find('#place').val(workshopData.place);
                 $modalBody.find('#slot').val(workshopData.slot);
@@ -395,6 +402,7 @@ function editWorkshop(selectedIdWorkshop){
     var nameworkshop = $('#editModalBody #nameworkshop').val();
     var descriptionworkshop = $('#editModalBody #descriptionworkshop').val();
     var time = $('#editModalBody #time').val();
+    var timeend = $('#editModalBody #timeend').val();
     var date = $('#editModalBody #date').val();
     var place = $('#editModalBody #place').val();
     var slot = $('#editModalBody #slot').val();
@@ -411,6 +419,7 @@ function editWorkshop(selectedIdWorkshop){
             nameworkshop: nameworkshop,
             descriptionworkshop: descriptionworkshop,
             time: time,
+            timeend: timeend,
             date: date,
             place: place,
             slot: slot,
@@ -445,6 +454,7 @@ function addWorkshop(modalSelected) {
     var nameworkshop = $modalBody.find('#nameworkshop').val();
     var descriptionworkshop = $modalBody.find('#descriptionworkshop').val();
     var time = $modalBody.find('#time').val();
+    var timeend = $modalBody.find('#timeend').val();
     var date = $modalBody.find('#date').val();
     var place = $modalBody.find('#place').val();
     var slot = $modalBody.find('#slot').val();
@@ -462,6 +472,7 @@ function addWorkshop(modalSelected) {
             nameworkshop: nameworkshop,
             descriptionworkshop: descriptionworkshop,
             time: time,
+            timeend: timeend,
             date: date,
             place: place,
             slot: slot,

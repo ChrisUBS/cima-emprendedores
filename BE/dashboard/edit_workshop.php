@@ -8,13 +8,14 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 include("../conection.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['nameworkshop'], $_POST['descriptionworkshop'], $_POST['time'], $_POST['date'], $_POST['ability'], $_POST['requirements'], $_POST['place'], $_POST['slot'], $_POST['idcampus'], $_POST['idfacultad'], $_POST['idworkshop'], $_POST['idlecturer'])) {
+    if (isset($_POST['nameworkshop'], $_POST['time'], $_POST['timeend'], $_POST['date'], $_POST['place'], $_POST['slot'], $_POST['idcampus'], $_POST['idfacultad'], $_POST['idworkshop'], $_POST['idlecturer'])) {
         $nameworkshop = $_POST['nameworkshop'];
-        $descriptionworkshop = $_POST['descriptionworkshop'];
+        $descriptionworkshop = $_POST['descriptionworkshop'] ?? NULL;
         $time = $_POST['time'];
+        $timeend = $_POST['timeend'];
         $date = $_POST['date'];
-        $ability = $_POST['ability'];
-        $requirements = $_POST['requirements'];
+        $ability = $_POST['ability'] ?? NULL;
+        $requirements = $_POST['requirements'] ?? NULL;
         $place = $_POST['place'];
         $slot = $_POST['slot'];
         $idcampus = $_POST['idcampus'];
@@ -22,11 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $idworkshop = $_POST['idworkshop'];
         $idlecturer = $_POST['idlecturer'];
 
-        $sql = "UPDATE talleres SET nameworkshop = ?, descriptionworkshop = ?, time = ?, date = ?, ability = ?, requirements = ?, place = ?, slot = ?, idcampus = ?, idfacultad = ?, idlecturer = ? WHERE idworkshop = ?";
+        $sql = "UPDATE talleres SET nameworkshop = ?, descriptionworkshop = ?, time = ?, timeend = ?, date = ?, ability = ?, requirements = ?, place = ?, slot = ?, idcampus = ?, idfacultad = ?, idlecturer = ? WHERE idworkshop = ?";
 
         $stmt = $conn->prepare($sql);
         if ($stmt) {
-            $stmt->bind_param("sssssssiiiii", $nameworkshop, $descriptionworkshop, $time, $date, $ability, $requirements, $place, $slot, $idcampus, $idfacultad, $idlecturer, $idworkshop);
+            $stmt->bind_param("ssssssssiiiii", $nameworkshop, $descriptionworkshop, $time, $timeend, $date, $ability, $requirements, $place, $slot, $idcampus, $idfacultad, $idlecturer, $idworkshop);
 
             if ($stmt->execute()) {
                 $response = array(
