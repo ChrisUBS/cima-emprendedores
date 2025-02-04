@@ -229,6 +229,20 @@ body{
     letter-spacing: 0.05em;
 }
 
+.input-general input.has-content ~ label,
+.input-general textarea.has-content ~ label,
+.input-general select.has-content ~ label {
+    color: #00723F;
+    transform: translateX(10px) translateY(-7px);
+    font-size: 0.65em;
+    padding: 0 5px;
+    background: white;
+    border-left: 1px solid #00723F;
+    border-right: 1px solid #00723F;
+    letter-spacing: 0.05em;
+}
+
+
 .select-box label {
     display: block;
     margin-bottom: 5px;
@@ -247,7 +261,8 @@ body{
     height: 13px;
 }
 
-.success {
+.error-container {
     text-align: center;
     margin-bottom: 25px;
+    color: #ff3860;
 }

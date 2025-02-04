@@ -8,9 +8,10 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 include("../conection.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['idworkshop'], $_POST['idcampus'], $_POST['q1'], $_POST['q2'], $_POST['q3'], $_POST['q4'], $_POST['q5'], $_POST['q6'], $_POST['q7'], $_POST['q8'], $_POST['q9'])) {
+    if (isset($_POST['idworkshop'], $_POST['idcampus'], $_POST['email'], $_POST['q1'], $_POST['q2'], $_POST['q3'], $_POST['q4'], $_POST['q5'], $_POST['q6'], $_POST['q7'], $_POST['q8'], $_POST['q9'])) {
         $idworkshop = $_POST['idworkshop'];
         $idcampus = $_POST['idcampus'];
+        $email = $_POST['email'];
         $q1 = $_POST['q1'];
         $q2 = $_POST['q2'];
         $q3 = $_POST['q3'];
@@ -21,13 +22,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $q8 = $_POST['q8'];
         $q9 = $_POST['q9'];
 
-        if ($idworkshop && $idcampus && $q1 && $q2 && $q3 && $q4 && $q5 && $q6 && $q7 && $q8 && $q9) {
-            $sql = "INSERT INTO feedback (idworkshop, idcampus, q1, q2, q3, q4, q5, q6, q7, q8, q9)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        if ($idworkshop && $idcampus && $email && $q1 && $q2 && $q3 && $q4 && $q5 && $q6 && $q7 && $q8 && $q9) {
+            $sql = "INSERT INTO feedback (idworkshop, idcampus, email, q1, q2, q3, q4, q5, q6, q7, q8, q9)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
     
             if ($stmt) {
-                $stmt->bind_param("sssssssssss", $idworkshop, $idcampus, $q1, $q2, $q3, $q4, $q5, $q6, $q7, $q8, $q9);
+                $stmt->bind_param("ssssssssssss", $idworkshop, $idcampus, $email, $q1, $q2, $q3, $q4, $q5, $q6, $q7, $q8, $q9);
                 
                 if ($stmt->execute()) {
                     $response = array(

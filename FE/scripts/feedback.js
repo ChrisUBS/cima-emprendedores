@@ -14,10 +14,11 @@ function firstValid(feedback) {
                 $(this).css("border-color", "red");
                 let errorMessage = "¡Campo requerido!";
                 let errorField = $(this).siblings('.error');
-                errorField.text(errorMessage).slideDown(300);
+                errorField.stop(true, true).slideUp(0);
+                errorField.text(errorMessage).stop(true, true).slideDown(300);
                 setTimeout(function() {
-                    errorField.slideUp(300);
-                }, 1500);
+                    errorField.stop(true, true).slideUp(100);
+                }, 1000);
                 isValid = false;
             } else {
                 $(this).css("border-color", "");
@@ -27,12 +28,13 @@ function firstValid(feedback) {
     
         if (!emailRegex.test(feedback.email)) {
             $("#txtEmail").css("border-color", "red");
-            let errorMessage = "¡Formato de correo no válido!";
+            let errorMessage = "¡Campo requerido o no válido!";
             let errorField = $("#txtEmail").siblings('.error');
-            errorField.text(errorMessage).slideDown(300);
+            errorField.stop(true, true).slideUp(0);
+            errorField.text(errorMessage).stop(true, true).slideDown(300);
             setTimeout(function() {
-                errorField.slideUp(300);
-            }, 1500);
+                errorField.stop(true, true).slideUp(100);
+            }, 1000);
             isValid = false;
         }
     
@@ -109,6 +111,51 @@ function getTalleres() {
     });
 }
 
+function checkUser(feedback) {
+    console.log(feedback);
+    $.ajax({
+        url: `${apiURL}feedback/check_user.php`,
+        method: 'POST',
+        data: {
+            email: feedback.email,
+            idworkshop: feedback.taller
+        },
+        dataType: 'json',
+        success: function (response) {
+            if (response.valid) {
+                $("#select").hide();
+                $("#btnNext").hide();
+                $("#feedback").show();
+                $("#btnSend").show();
+                $("#btnBack").show();
+                $("#btnBack").click(function(){
+                    $("#select").show();
+                    $("#btnNext").show();
+                    $("#feedback").hide();
+                    $("#btnSend").hide();
+                    $("#btnBack").hide();
+                    $("#feedback .input, #feedback .select").empty();
+                });
+                $('#btnSend').off('click').on('click', function() {
+                    $('#btnSend').prop('disabled', true);
+                    endFeedback();
+                    setTimeout(() => {
+                        $('#btnSend').prop('disabled', false);
+                    }, 3000);
+                });
+            } else {
+                // alert(response.message);
+                $("#error-container").text(response.message || "¡Email inválido o encuesta ya contestada!").slideDown(300).delay(1500).slideUp(300);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error al verificar el usuario:", error);
+            alert("Error en la conexión o el servidor. Intente de nuevo más tarde.");
+        }
+    });
+}
+
+
 function saveFeedback(feedback) {
     console.log(feedback);
     $.ajax({
@@ -117,6 +164,7 @@ function saveFeedback(feedback) {
         data: {
             idworkshop: feedback.taller,
             idcampus: feedback.ubicacion,
+            email: feedback.email,
             q1: feedback.question1,
             q2: feedback.question2,
             q3: feedback.question3,
@@ -131,15 +179,12 @@ function saveFeedback(feedback) {
         success: function (response) {
             console.log(response.data);
             if (response.success) {
-                $("#btnSend, #btnBack").fadeOut(140);
-                $(".success").text("¡Formulario Enviado!").slideDown(300, function() {
-                    $(this).delay(2000).slideUp(300, function() {
-                        setTimeout(function () {
-                            location.reload();
-                        }, 4000);
-                    });
-                });
-                console.log("Listo");
+                $("#btnSend, #btnBack, #welcome").fadeOut(140);
+                $("#submit").show()
+                $("#feedback").hide()
+                setTimeout(function () {
+                    location.reload();
+                }, 5000);
             } else {
                 console.log("alert-error", response.message || "¡Error! Por favor, inténtalo de nuevo.");
             }
@@ -147,6 +192,16 @@ function saveFeedback(feedback) {
         error: function (xhr, status, error) {
             console.error(error, xhr, status);
             console.log("alert-error", "¡Error!. Por favor, inténtalo de nuevo.");
+        }
+    });
+}
+
+function holdFocus(){
+    $('.input-general input, .input-general textarea, .input-general select').on('blur', function(){
+        if($(this).val() !== '') {
+            $(this).addClass('has-content');
+        } else {
+            $(this).removeClass('has-content');
         }
     });
 }
@@ -164,6 +219,7 @@ function endFeedback(){
     feedback.question9 = $("#comments").val();
     if (secondValid(feedback)) {
         saveFeedback(feedback);
+        
     } else {
         console.log("¡Los datos del formulario no son válidos!");
     }
@@ -174,38 +230,21 @@ function startFeedback() {
     feedback.taller  = $("#txtTaller").val();
     feedback.email = $("#txtEmail").val();
     if (firstValid(feedback)) {
-        $("#select").hide();
-        $("#btnNext").hide();
-        $("#feedback").show();
-        $("#btnSend").show();
-        $("#btnBack").show();
-        $("#btnBack").click(function(){
-            $("#select").show();
-            $("#btnNext").show();
-            $("#feedback").hide();
-            $("#btnSend").hide();
-            $("#btnBack").hide();
-            $("#feedback .input, #feedback .select").empty();
-        });
-        $('#btnSend').off('click').on('click', function() {
-            $('#btnSend').prop('disabled', true);
-            endFeedback();
-            setTimeout(() => {
-                $('#btnSend').prop('disabled', false);
-            }, 3000);
-        });
+        checkUser(feedback);
     } else {
-        console.log("¡Campo requerido o no válido!");
-        console.log(feedback);
+        // console.log("¡Campo requerido o no válido!");
+        // console.log(feedback);
     }
 }
 
 //main
 function init() {
+    holdFocus();
     $("#select").show();
     $("#feedback").hide();
     $("#btnSend").hide();
     $("#btnBack").hide();
+    $("#submit").hide();
     getTalleres();
     $("#txtCampus").change(getTalleres);
     $("#btnNext").click(function(){

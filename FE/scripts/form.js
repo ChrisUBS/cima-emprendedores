@@ -22,7 +22,7 @@ function hideNotifications() {
 function isValid(person, phase) {
 
     let validation = true;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     function markEmptyFields() {
         $(".input-general input, .input-general select").each(function () {
@@ -66,11 +66,22 @@ function isValid(person, phase) {
         }
     }
 
-    // Validar formato de correo electrónico
-    if (person.email !== "" && !emailRegex.test(person.email)) {
-        validation = false;
-        $(".input-general input#txtEmail").css("border-color", "red");
+    function markEmailError(message) {
+        let emailField = $("#txtEmail");
+        emailField.css("border-color", "red");
+        let errorField = emailField.siblings('.error');
+        errorField.text(message).stop(true, true).slideDown(300);
+        setTimeout(function() {
+            errorField.stop(true, true).slideUp(100);
+        }, 1000);
     }
+
+    // Validar formato de correo electrónico
+    if (person.email && !emailRegex.test(person.email)) {
+        validation = false;
+        markEmailError("Ingrese un correo electrónico válido.");
+    }
+
 
     if (!validation) {
         setTimeout(function () {

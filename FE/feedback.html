@@ -41,10 +41,13 @@
 
     <!-- Panel principal -->
     <main class="log-bg">
-        <div class="form">
+        <div class="form" id="submit">
+            <h1 class="">¡Gracias por contestar la encuesta!</h1>
+        </div>
+        <div class="form" id="welcome">
             <h1 class="">Evaluación</h1>
             <p class="center-content">¡Bienvenidos, emprendedores!</p>
-            <p class="center-content"> Les invitamos a responder las siguientes preguntas. Su opinión es muy valiosa para ayudarnos a mejorar continuamente. La información proporcionada es anónima y se utilizará únicamente con fines estadísticos, con el objetivo de seguir brindándoles una excelente experiencia en los talleres.</p>
+            <p class="center-content"> Les invitamos a responder las siguientes preguntas de manera objetiva. Su opinión es muy valiosa para ayudarnos a mejorar continuamente. La información proporcionada es anónima y se utilizará únicamente con fines estadísticos, con el objetivo de seguir brindándoles una excelente experiencia en los talleres.</p>
         </div>
         <!-- Panel del formulario -->
         <!-- CAMPUS y Taller-->
@@ -72,7 +75,7 @@
             </div>
         </div>
         <!-- FEEDBACK -->
-        <div id="feedback" class="">
+        <div id="feedback" class="feedback">
             <!-- #1 -->
             <div class="question-container">
                 <div class="question1">
@@ -192,9 +195,8 @@
             <button type="button" class="btn btn-success" id="btnBack">Atras</button>
             <button type="button" class="btn btn-success" id="btnNext">Siguiente</button>
             <button type="button" class="btn btn-success" id="btnSend">Enviar</button>
-            <div class="success"></div>
-            <div class="error"></div>
         </div>
+        <div id="error-container" class="error-container" style="display: none;"></div>
     </main>
 
     <!-- Scripts -->
