@@ -30,21 +30,39 @@ function markAttendance(userId) {
 }
 
 function onScanSuccess(decodedText, decodedResult) {
-    // console.log(`Code scanned = ${decodedText}`, decodedResult);
-    const userId = decodedText.startsWith('attendance:') ? decodedText.split(':')[1] : decodedText;
-    // console.log(`User ID extraído: ${userId}`);
+    // Obtener el ID del taller seleccionado del selector
+    const selectedWorkshopId = $("#selectedWorkshop").val();
+    const userId = decodedText;
+    // console.log(selectedWorkshopId, userId);
     if (!isScannerPaused) {
         isScannerPaused = true;
-        markAttendance(userId);
-        setTimeout(() => { isScannerPaused = false; }, 2000);
+
+        searchUserInWorkshop(userId, selectedWorkshopId, function(isValid) {
+            if (isValid) {
+                markAttendance(userId);
+                // alert("Asistencia marcada con éxito para el usuario " + userId);
+            } else {
+                alert("El usuario " + userId + " no pertenece al taller seleccionado o no existe.");
+                console.warn("El usuario no pertenece al taller seleccionado o no existe.");
+            }
+            setTimeout(() => { isScannerPaused = false; }, 4000);
+        });
     }
 }
+
 
 function onScanFailure(error) {
     // console.warn(`Code scan error = ${error}`);
 }
 
 function startQrScanner() {
+    // Verificar si se ha seleccionado un taller
+    const selectedWorkshopId = $("#selectedWorkshop").val();
+    if (!selectedWorkshopId || selectedWorkshopId === "") {
+        alert("Por favor, seleccione un taller antes de iniciar el escáner.");
+        return;
+    }
+
     html5QrCode = new Html5Qrcode("reader");
     html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 },
         onScanSuccess, onScanFailure).then(() => {
@@ -54,6 +72,7 @@ function startQrScanner() {
             console.error("Error al iniciar el escáner: ", err);
         });
 }
+
 
 function stopQrScanner() {
     if (html5QrCode) {
@@ -121,6 +140,30 @@ function statusChange() {
     });
 }
 
+function searchUserInWorkshop(userId, workshopId, callback) {
+    $.ajax({
+        type: "GET",
+        url: `${apiURL}dashboard/qr_get_register.php`,
+        data: {
+            idregistro: userId
+        },
+        dataType: "json",
+        success: function(response) {
+            if (response.success && response.data.length > 0) {
+                const isCorrectWorkshop = response.data.some(reg => reg.idworkshop == workshopId);
+                callback(isCorrectWorkshop);
+            } else {
+                callback(false);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error en la solicitud al servidor:", error);
+            callback(false);
+        }
+    });
+}
+
+
 function searchToDatabase() {
     $.ajax({
         type: "GET",
@@ -177,7 +220,7 @@ function updateRegisterList(register) {
     const listaTalleres = $('#listaAlumnos');
     listaTalleres.empty();
     register.forEach(function(registro) {
-        console.log(registro);
+        // console.log(registro);
         $('#listaAlumnos').append(`
             <tr id="${registro.idregistro}">
                 <td>${registro.idregistro}</td>
@@ -277,6 +320,33 @@ function updateRegisterList(register) {
                 console.log("Error en la solicitud:", xhr, status, error);
             }
         });
+    });
+}
+
+function getWorkshopsForQr(){
+    $.ajax({
+        type: "GET",
+        url: `${apiURL}dashboard/get_workshop.php`,
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+            var selectTaller = $("#selectedWorkshop");
+            selectTaller.empty();
+            if (response && response.success && response.data && response.data.length > 0 && (response.data.filter(workshop => workshop.status == 1).length)) {
+                selectTaller.append("<option value=''></option>");
+                response.data.forEach(taller => {
+                    if (taller.status === 1) {
+                        selectTaller.append(`<option value='${taller.idworkshop}'>${taller.nameworkshop}</option>`);
+                    }
+                });
+            } else {
+                selectTaller.append("<option disabled>No hay talleres disponibles.</option>");
+            }
+        },
+        error: function(xhr, status, error) {
+            selectTaller.empty().append("<option disabled>Error al cargar talleres.</option>");
+            console.error("Error al obtener los talleres:", error);
+        }
     });
 }
 
@@ -492,6 +562,7 @@ function init() {
                 $('#qrModalClose').on('click', function() {
                     $('#qrModal').modal('hide');
                 });
+                getWorkshopsForQr();
                 break;
             case 'deleteButton':
                 $('#deleteModal').modal('show');

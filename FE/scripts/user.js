@@ -24,13 +24,14 @@ function searchToDatabase() {
 function updateUserList(user){
     const listaTalleres = $('#listaAlumnos');
     listaTalleres.empty();
-    console.log(user);
+    // console.log(user);
     user.forEach(function(user) {
         $('#listaAlumnos').append(`
             <tr id="${user.iduabc}">
                 <td>${user.iduabc}</td>
                 <td>${user.name}</td>
                 <td>${user.lastname} ${user.middlename}</td>
+                <td>${user.email}</td>
                 <td>${user.type}</td>
                 <td id="${user.idcampus}">${user.campus}</td> 
                 <td id="${user.idfacultad}">${user.facultad}</td> 
