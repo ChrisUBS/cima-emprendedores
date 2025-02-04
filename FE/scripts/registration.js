@@ -140,16 +140,50 @@ function searchToDatabase() {
     });
 }
 
+function searchUser() {
+    let idUabc = $('#txtId').val();
+
+    $.ajax({
+        type: "POST",
+        url: `${apiURL}register/get_register.php`,
+        data: { id: idUabc },
+        dataType: "json",
+        success: function(response) {
+            if (response.success) {
+                $('#name').val(response.nombre);
+                $('#lastname').val(response.apellidoP);
+                $('#middlename').val(response.apellidoM);
+                $('#txtEmail').val(response.email);
+                $(".success-search").text("Usuario encontrado.").stop(true, true).slideDown(300, function() {
+                    $(this).delay(1000).slideUp(100, function() {
+                    });
+                });
+            } else {
+                $(".error-search").text("Usuario no encontrado.").stop(true, true).slideDown(300, function() {
+                    $(this).delay(1000).slideUp(100, function() {
+                    });
+                });
+                // console.log("alert-error", response.error);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+            console.log("alert-error", "Error en la solicitud al servidor.");
+        }
+    });
+}
+
 function updateRegisterList(register) {
     const listaTalleres = $('#listaAlumnos');
     listaTalleres.empty();
-    console.log(register);
     register.forEach(function(registro) {
+        console.log(registro);
         $('#listaAlumnos').append(`
             <tr id="${registro.idregistro}">
                 <td>${registro.idregistro}</td>
                 <td>${registro.name}</td>
                 <td>${registro.lastname} ${registro.middlename}</td>
+                <td>${registro.email}</td>
                 <td>${registro.type}</td>
                 <td>${registro.nameworkshop}</td>
                 <td>${registro.campus}</td>
@@ -280,23 +314,27 @@ function getWorkshops() {
 function addRegistration(modalSelected) {
     var $modalBody = $(modalSelected);
 
+    var iduabc = $modalBody.find('#txtId').val();
     var name = $modalBody.find('#name').val();
     var lastname = $modalBody.find('#lastname').val();
     var middlename = $modalBody.find('#middlename').val();
+    var email = $modalBody.find('#txtEmail').val();
     var type = $modalBody.find('#type').val();
     var workshopId = $modalBody.find('#workshop').val();
     var campus = $modalBody.find('#campus').val();
     var assist = $modalBody.find('#status').val();
-    console.log(name,lastname,middlename,type,workshopId,campus,assist);
+    // console.log(iduabc,name,lastname,middlename,type,workshopId,campus,assist, email);
 
     $.ajax({
         url: `${apiURL}dashboard/save_register.php`,
         type: 'POST',
         dataType: "json",
         data: {
+            iduabc: iduabc,
             nombre: name,
             apellidoP: lastname,
             apellidoM: middlename,
+            email: email,
             option: type,
             idworkshop: workshopId,
             idcampus: campus,
@@ -327,6 +365,17 @@ function registrationTable(modalBodyId) {
     
     modalBody.innerHTML = '';
     const newHTML = `
+        <div class="input-general input-group center-item">
+            <div class="input-container">
+                <input type="text" name="idUabc" id="txtId" required required data-error-message="¡Campo requerido!">
+                <label for="txtId">ID</label>
+                <button id="btnSearch" type="button" class="btn-search search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <div class="hide error-search error"></div>
+                <div class="hide success-search"></div>
+            </div>
+        </div>
         <div class="input-general">
             <input type="text" id="name" name="name" required>
             <label for="name">Nombre</label>
@@ -338,6 +387,10 @@ function registrationTable(modalBodyId) {
         <div class="input-general">
             <input type="text" id="middlename" name="middlename" required>
             <label for="middlename">Apellido Materno</label>
+        </div>
+        <div class="input-general">
+            <input type="text" name="email" id="txtEmail" required data-error-message="¡Campo requerido!">
+            <label>Correo Electrónico</label>
         </div>
         <div class="input-general">
             <select id="type" name="type" required>
@@ -432,6 +485,7 @@ function init() {
                 $('#addModalClose').off('click').on('click', function() {
                     $('#addModal').modal('hide');
                 });
+                $('.search').click(searchUser);
                 break;
             case 'scanQRCode':
                 $('#qrModal').modal('show');
