@@ -112,42 +112,42 @@ function workshopTable(modalBodyId) {
     modalBody.innerHTML = '';
     const newHTML = `
         <div class="input-general">
-            <input type="text" id="nameworkshop" name="nameworkshop">
+            <input type="text" id="nameworkshop" name="nameworkshop" required>
             <label for="nameworkshop">Nombre del Taller *</label>
         </div>
         <div class="input-general">
-            <textarea id="descriptionworkshop" name="descriptionworkshop"></textarea>
+            <textarea id="descriptionworkshop" name="descriptionworkshop" required></textarea>
             <label for="descriptionworkshop">Descripción</label>
         </div>
         <div class="input-general">
-            <input type="time" id="time" name="time" >
+            <input type="time" id="time" name="time">
             <label for="time">Hora Inicio *</label>
         </div>
         <div class="input-general">
-            <input type="time" id="timeend" name="timeend" >
+            <input type="time" id="timeend" name="timeend">
             <label for="time">Hora Fin *</label>
         </div>
         <div class="input-general">
-            <input type="date" id="date" name="date" >
+            <input type="date" id="date" name="date">
             <label for="date">Fecha *</label>
         </div>
         <div class="input-general">
-            <input type="text" id="place" name="place">
+            <input type="text" id="place" name="place" required>
             <label for="place">Lugar *</label>
         </div>
         <div class="input-general">
-            <input type="number" id="slot" name="slot">
+            <input type="number" id="slot" name="slot" required>
             <label for="slot">Cupos *</label>
         </div>
         <div class="input-general">
-            <input type="text" id="ability" name="ability">
+            <input type="text" id="ability" name="ability" required>
             <label for="ability">Habilidades requeridas</label>
         </div>
         <div class="input-general">
-            <input type="text" id="requirements" name="requirements">
+            <input type="text" id="requirements" name="requirements" required>
             <label for="requirements">Requerimientos</label>
         </div>
-        <div class="input-general">
+        <div class="input-general" required>
             <select name="campus" id="campus">
                 <option></option>
                 <option value="3">Ensenada</option>
@@ -156,11 +156,11 @@ function workshopTable(modalBodyId) {
             </select>
             <label for="campus">Campus *</label>
         </div>
-        <div class="input-general">
+        <div class="input-general" required>
             <select disabled name="txtFacultad" id="txtFacultad"></select>
             <label for="facultad">Facultad *</label>
         </div>
-        <div class="input-general">
+        <div class="input-general" required>
             <select name="lect" id="lect"></select>
             <label for="lect">Conferencista *</label>
         </div>
@@ -196,7 +196,7 @@ function updateWorkshopList(workshops) {
                             <button type="button" title="Editar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="editButton"><i class="fa-solid fa-pen-to-square"></i></button>
                             <button type="button" title="Copiar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="copyButton"><i class="fa-solid fa-copy"></i></button>
                             <button type="button" title="Eliminar" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="deleteButton"><i class="fa-solid fa-trash"></i></button>
-                            <button type="button" title="Enviar formulario" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="sendButton"><i class="fa-solid fa-paper-plane"></i></button>
+                            <button type="button" title="Enviar formulario retroalimentacion" class="btn-class btnDetails" data-id="${workshop.idworkshop}" id="sendButton"><i class="fa-solid fa-paper-plane"></i></button>
                         </form>
                     </td>
                 </tr>
@@ -463,7 +463,7 @@ function addWorkshop(modalSelected) {
     var idcampus = $modalBody.find('#campus').val();
     var idfacultad = $modalBody.find('#txtFacultad').val();
     var idlecturer = $modalBody.find('#lect').val();
-
+    console.log(nameworkshop, descriptionworkshop, time, timeend, date, place, slot, ability, requirements, idcampus, idfacultad, idlecturer)
     $.ajax({
         url: `${apiURL}dashboard/saved_workshop.php`,
         type: 'POST',
@@ -483,6 +483,7 @@ function addWorkshop(modalSelected) {
             idlecturer: idlecturer,
         },
         success: function(response) {
+            console.log(response);
             if (response.success) {
                 getWorkshops();
                 setTimeout(function() {
@@ -493,7 +494,9 @@ function addWorkshop(modalSelected) {
             }
         },
         error: function(xhr, status, error) {
-            console.log("alert-error", `Error en la solicitud: ${error}`);
+            console.log("Error en la solicitud: ", error);
+            console.log("Estado: ", status);
+            console.log("Respuesta completa: ", xhr.responseText);
         }
     });
 }

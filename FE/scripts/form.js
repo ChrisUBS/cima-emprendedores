@@ -544,12 +544,12 @@ function init() {
 
         if (selectedOption === "option1") {
             $('.search').click(searchToDatabase)
-            $('#txtId').siblings('label').text("Matricula");
+            $('#txtId').siblings('label').text("Matricula *");
             $("#optionId").show();
             $("#btnNext").show();
         } else if (selectedOption === "option2") {
             $('.search').click(searchToDatabase)
-            $('#txtId').siblings('label').text("No. Empleado");
+            $('#txtId').siblings('label').text("No. Empleado *");
             $('#optionId').show();
             $("#btnNext").show();
         } else if (selectedOption === "option3" || selectedOption === "option4") {

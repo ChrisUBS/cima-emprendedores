@@ -119,15 +119,15 @@ function lectTable(modalBodyId) {
     const newHTML = `
         <div class="input-general">
             <input type="text" id="namelect" name="namelect" required>
-            <label for="namelect">Nombre(s)</label>
+            <label for="namelect">Nombre(s) *</label>
         </div>
         <div class="input-general">
             <input type="text" id="middlename" name="middlename" required>
-            <label for="middlename">Nombre Paterno</label>
+            <label for="middlename">Nombre Paterno *</label>
         </div>
         <div class="input-general">
             <input type="text" id="lastname" name="lastname" required>
-            <label for="lastname">Nombre Materno</label>
+            <label for="lastname">Nombre Materno *</label>
         </div>
         <div class="input-general">
             <textarea id="info" name="info" required></textarea>
@@ -178,7 +178,7 @@ function addLect(modalSelected) {
     var middlename = $modalBody.find('#middlename').val();
     var lastname = $modalBody.find('#lastname').val();
     var info = $modalBody.find('#info').val();
-    console.log(info, namelect,lastname,info);
+    console.log(info, namelect,lastname,middlename);
 
     $.ajax({
         url: `${apiURL}dashboard/save_lect.php`,

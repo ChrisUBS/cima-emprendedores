@@ -8,11 +8,11 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 include("../conection.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['name'], $_POST['lastname'], $_POST['middlename'], $_POST['info'])) {
+    if (isset($_POST['name'], $_POST['lastname'], $_POST['middlename'])) {
         $name = $_POST['name'];
         $lastname = $_POST['lastname'];
         $middlename = $_POST['middlename'];
-        $info = $_POST['info'];
+        $info = $_POST['info'] ?? NULL;
 
         if ($name && $lastname && $middlename && $info) {
             $sql = "INSERT INTO conferencistas (name, lastname, middlename, info)
