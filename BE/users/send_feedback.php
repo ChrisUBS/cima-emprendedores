@@ -14,7 +14,7 @@ function sendEmail($to, $subject, $body) {
         $mail->Host = 'smtp.gmail.com'; 
         $mail->SMTPAuth = true;
         $mail->Username = 'johan.barragan@uabc.edu.mx';
-        $mail->Password = 'lioplpjswtazgtqn'; 
+        $mail->Password = 'chhp bymu jhsu pntz'; 
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
@@ -114,11 +114,11 @@ if (isset($_GET['idworkshop'])) {
                             <p>Hola $recipientName,</p>
                             <p>Gracias por asistir al siguiente taller:</p>
                             $workshopDetails
-                            <p>Por favor, tómate unos minutos para completar esta <a href='#'>evaluación del taller</a>.</p>
+                            <p>Por favor, tómate unos minutos para completar esta <a href='https://citecuvp.tij.uabc.mx/cimaemprendedores/feedback.html'>evaluación del taller</a>.</p>
                             <p>¡Tu opinión es muy importante para nosotros!</p>
                         </div>
                         <div class='footer'>
-                            <p>&copy; 2024 Cimarrones Emprendedores. Todos los derechos reservados.</p>
+                            <p>&copy; 2025 Cimarrones Emprendedores. Todos los derechos reservados.</p>
                         </div>
                     </div>
                 </body>

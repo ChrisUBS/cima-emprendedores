@@ -110,7 +110,7 @@ if ($stmt = $conn->prepare($query)) {
                         <p>¡Esperamos verte allí!</p>
                     </div>
                     <div class='footer'>
-                        <p>&copy; 2024 Cimarrones Emprendedores. Todos los derechos reservados.</p>
+                        <p>&copy; 2025 Cimarrones Emprendedores. Todos los derechos reservados.</p>
                     </div>
                 </div>
             </body>

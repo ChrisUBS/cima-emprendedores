@@ -176,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <p>¡Nos vemos pronto!</p>
                     </div>
                     <div class='footer'>
-                        <p>&copy; 2024 Cimarrones Emprendedores. Todos los derechos reservados.</p>
+                        <p>&copy; 2025 Cimarrones Emprendedores. Todos los derechos reservados.</p>
                     </div>
                 </div>
             </body>
