@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 28, 2024 at 10:43 AM
+-- Generation Time: Feb 04, 2025 at 07:49 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,7 +41,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`iduser`, `username`, `name`, `lastname`, `password`, `level`) VALUES
-(1, 'root', 'Alejandro', 'Barragan', '$2y$10$ut/eTOZfSZGEMBbCSq86VOZvWD56AymnN3gVcNPvA8TyRsoxOkwba', '1');
+(1, 'root', 'Admin', 'Super', '$2y$10$ut/eTOZfSZGEMBbCSq86VOZvWD56AymnN3gVcNPvA8TyRsoxOkwba', '1');
 
 -- --------------------------------------------------------
 
@@ -76,14 +76,6 @@ CREATE TABLE `conferencistas` (
   `middlename` varchar(25) NOT NULL,
   `info` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `conferencistas`
---
-
-INSERT INTO `conferencistas` (`idlecturer`, `name`, `lastname`, `middlename`, `info`) VALUES
-(1, 'TEST', 'TEST', 'TEST', 'TEST'),
-(3, 'TEST', 'TEST', 'TEST', 'TEST');
 
 -- --------------------------------------------------------
 
@@ -151,7 +143,8 @@ INSERT INTO `facultades` (`idfacultad`, `facultad`, `idcampus`) VALUES
 (47, 'Facultad de Pedagogía e Innovación Educativa', 2),
 (48, 'Facultad de Ingeniería', 2),
 (49, 'Instituto de Ciencias Agrícolas', 2),
-(50, 'Facultad de Arquitectura y Diseño', 2);
+(50, 'Facultad de Arquitectura y Diseño', 2),
+(51, 'Taller de Emprendimiento', 1);
 
 -- --------------------------------------------------------
 
@@ -163,6 +156,7 @@ CREATE TABLE `feedback` (
   `idfeedback` int(5) NOT NULL,
   `idworkshop` int(5) NOT NULL,
   `idcampus` int(5) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `q1` int(1) NOT NULL,
   `q2` int(1) NOT NULL,
   `q3` int(1) NOT NULL,
@@ -173,13 +167,6 @@ CREATE TABLE `feedback` (
   `q8` varchar(255) NOT NULL,
   `q9` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `feedback`
---
-
-INSERT INTO `feedback` (`idfeedback`, `idworkshop`, `idcampus`, `q1`, `q2`, `q3`, `q4`, `q5`, `q6`, `q7`, `q8`, `q9`) VALUES
-(1, 1, 3, 4, 3, 3, 'test', 'test', 2, 2, 'test', 'test');
 
 -- --------------------------------------------------------
 
@@ -484,7 +471,7 @@ CREATE TABLE `registro` (
   `lastname` varchar(20) NOT NULL,
   `middlename` varchar(20) NOT NULL,
   `type` varchar(10) NOT NULL,
-  `email` varchar(60) DEFAULT NULL,
+  `email` varchar(60) NOT NULL,
   `idworkshop` int(5) NOT NULL,
   `date` date NOT NULL DEFAULT current_timestamp(),
   `assist` int(1) NOT NULL DEFAULT 0
@@ -496,14 +483,14 @@ CREATE TABLE `registro` (
 DELIMITER $$
 CREATE TRIGGER `check_slots_before_insert` BEFORE INSERT ON `registro` FOR EACH ROW BEGIN
     DECLARE available_slots INT;
-    
+
     -- Obtener el número de inscripciones actuales para el taller
     SELECT COUNT(*) INTO available_slots
     FROM registro
     WHERE idworkshop = NEW.idworkshop;
-    
+
     -- Obtener el número de slots disponibles para el taller
-    SELECT slot - available_slots INTO available_slots
+    SELECT slot INTO available_slots
     FROM talleres
     WHERE idworkshop = NEW.idworkshop;
 
@@ -511,20 +498,6 @@ CREATE TRIGGER `check_slots_before_insert` BEFORE INSERT ON `registro` FOR EACH 
     IF available_slots <= 0 THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No slots available for this workshop';
     END IF;
-
-    -- Decrementar el número de slots disponibles
-    UPDATE talleres
-    SET slot = slot - 1
-    WHERE idworkshop = NEW.idworkshop;
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `update_slots_after_delete` AFTER DELETE ON `registro` FOR EACH ROW BEGIN
-    -- Incrementar el número de slots disponibles en la tabla talleres
-    UPDATE talleres
-    SET slot = slot + 1
-    WHERE idworkshop = OLD.idworkshop;
 END
 $$
 DELIMITER ;
@@ -541,22 +514,16 @@ CREATE TABLE `talleres` (
   `idlecturer` int(5) NOT NULL,
   `idfacultad` int(5) NOT NULL,
   `idcampus` int(5) NOT NULL,
-  `descriptionworkshop` varchar(255) NOT NULL,
+  `descriptionworkshop` varchar(255) DEFAULT NULL,
   `time` time NOT NULL,
+  `timeend` time NOT NULL,
   `date` date NOT NULL,
   `place` varchar(255) NOT NULL,
-  `ability` varchar(255) NOT NULL,
-  `requirements` varchar(255) NOT NULL,
+  `ability` varchar(255) DEFAULT NULL,
+  `requirements` varchar(255) DEFAULT NULL,
   `slot` int(5) NOT NULL,
   `status` int(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `talleres`
---
-
-INSERT INTO `talleres` (`idworkshop`, `nameworkshop`, `idlecturer`, `idfacultad`, `idcampus`, `descriptionworkshop`, `time`, `date`, `place`, `ability`, `requirements`, `slot`, `status`) VALUES
-(1, 'test', 1, 7, 3, 'Test', '16:30:00', '2024-05-28', 'Aula Magna', 'test', 'test', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -667,19 +634,19 @@ ALTER TABLE `campus`
 -- AUTO_INCREMENT for table `conferencistas`
 --
 ALTER TABLE `conferencistas`
-  MODIFY `idlecturer` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idlecturer` int(5) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `facultades`
 --
 ALTER TABLE `facultades`
-  MODIFY `idfacultad` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `idfacultad` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `idfeedback` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idfeedback` int(5) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `licenciaturas`
@@ -697,7 +664,7 @@ ALTER TABLE `registro`
 -- AUTO_INCREMENT for table `talleres`
 --
 ALTER TABLE `talleres`
-  MODIFY `idworkshop` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idworkshop` int(5) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
