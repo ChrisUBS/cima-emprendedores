@@ -32,7 +32,7 @@ function SuccessLogin() {
                 sessionStorage.setItem('username', response.userName);
                 $(".success").text("Inicio de sesión exitoso!").css("color", "green").stop(true, true).slideDown(300).delay(1000).slideUp(300);
                 setTimeout(function () {
-                    window.location.href = "home.html";
+                    window.location.href = "fe/home.html";
                 }, 2000);
             } else {
                 $(".error").text(response.error).css("color", "red").stop(true, true).slideDown(300).delay(1000).slideUp(300);

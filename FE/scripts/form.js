@@ -41,29 +41,36 @@ function isValid(person, phase) {
             }
         });
     }
-
+    
+    function isEmpty(field) {
+        return !field || field.trim() === "";
+    }
+    
     // Validación de los primeros campos disponibles
     if (phase === "initial") {
-        if (person.nombre === "" || person.nombre === null || person.nombre === undefined ||
-            person.apellidoP === "" || person.apellidoP === null || person.apellidoP === undefined ||
-            person.apellidoM === "" || person.apellidoM === null || person.apellidoM === undefined ||
-            person.email === "" || person.email === null || person.email === undefined ||
-            person.idUabc === "" || person.idUabc === null || person.idUabc === undefined) {
-            validation = false;
-            markEmptyFields();
-            console.log(person)
-        }
+        validation = true;
+        const initialFields = ['nombre', 'apellidoP', 'apellidoM', 'email', 'idUabc'];
+    
+        initialFields.forEach(field => {
+            if (person.hasOwnProperty(field) && isEmpty(person[field])) {
+                validation = false;
+                markEmptyFields();
+            }
+        });
     }
-
+    
+    
     // Validación de la segunda fase, cuando los otros campos están disponibles
     if (phase === "complete") {
-        if (person.ubicacion === "" || person.ubicacion === null || person.ubicacion === undefined ||
-            person.taller === "" || person.taller === null || person.taller === undefined ||
-            person.facultad === "" || person.facultad === null || person.facultad === undefined ||
-            person.lic === "" || person.lic === null || person.lic === undefined) {
-            validation = false;
-            markEmptyFields();
-        }
+        validation = true;
+        const fieldsToCheck = ['ubicacion', 'taller', 'facultad', 'lic'];
+        
+        fieldsToCheck.forEach(field => {
+            if (person.hasOwnProperty(field) && isEmpty(person[field])) {
+                validation = false;
+                markEmptyFields();
+            }
+        });
     }
 
     function markEmailError(message) {
@@ -110,7 +117,7 @@ function validRegister(newPerson, selectedOption) {
         }else {
             $("#btnRegister, #btnEdit").fadeIn(300);
             $(".success").text("¡Registro Fallido o Slots insuficientes!").css("color", "red").stop(true, true).slideDown(300).delay(1000).slideUp(300);
-            // console.log("alert-error", "¡Campo requerido ó no valido!");
+            console.log("alert-error", "¡Campo requerido ó no valido!");
         }
     });
 }
