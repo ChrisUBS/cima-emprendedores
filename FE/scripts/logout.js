@@ -8,7 +8,7 @@ function logout() {
         success: function(response) {
             sessionStorage.removeItem('token');
             sessionStorage.removeItem('username');
-            window.location.href = "login.html";
+            window.location.href = "../login.html";
         },
         error: function(xhr, status, error) {
             console.error(xhr, status, error);
@@ -19,7 +19,7 @@ function logout() {
 function validToken(){
     var token = sessionStorage.getItem('token');
     if (!token) {
-        window.location.href = "login.html";
+        window.location.href = "../login.html";
     }
 }
 
