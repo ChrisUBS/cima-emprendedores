@@ -144,7 +144,9 @@ INSERT INTO `facultades` (`idfacultad`, `facultad`, `idcampus`) VALUES
 (48, 'Facultad de Ingeniería', 2),
 (49, 'Instituto de Ciencias Agrícolas', 2),
 (50, 'Facultad de Arquitectura y Diseño', 2),
-(51, 'Taller de Emprendimiento', 1);
+(51, 'Taller de Emprendimiento', 1),
+(52, 'Departamento de informática y biblioteca (DIP)', 2),
+(53, 'Departamento de informática y biblioteca (DIP)', 3);
 
 -- --------------------------------------------------------
 
