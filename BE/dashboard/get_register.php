@@ -17,10 +17,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         die("Connection failed: " . $conn->connect_error);
     }
     
-    $query = "SELECT r.idregistro, r.iduabc, r.name, r.lastname, r.middlename, r.email, r.type, t.nameworkshop, c.campus, r.date, r.assist 
+    $query = "SELECT r.idregistro, r.iduabc, r.name, r.lastname, r.middlename, r.email, r.type, t.nameworkshop, c.campus, r.date, r.assist, f.facultad 
                 FROM registro r
                 LEFT JOIN campus c ON r.idcampus = c.idcampus
-                LEFT JOIN talleres t ON r.idworkshop = t.idworkshop;";
+                LEFT JOIN talleres t ON r.idworkshop = t.idworkshop
+                LEFT JOIN usuarios u ON r.iduabc = u.iduabc
+                LEFT JOIN facultades f ON u.idfacultad = f.idfacultad;";
 
     $stmt = $conn->prepare($query);
     $stmt->execute();
@@ -40,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 "type" => $row["type"],
                 "nameworkshop" => $row["nameworkshop"],
                 "campus" => $row["campus"],
+                "faculty" => $row["facultad"],
                 "date" => $row["date"],
                 "assist" => $row["assist"],
             );

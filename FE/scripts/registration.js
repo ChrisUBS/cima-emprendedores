@@ -230,6 +230,7 @@ function updateRegisterList(register) {
                 <td>${registro.type}</td>
                 <td>${registro.nameworkshop}</td>
                 <td>${registro.campus}</td>
+                <td>${registro.faculty}</td>
                 <td>${registro.date}</td>
                 <td>
                     <input id="registroAssist" type="checkbox" ${registro.assist === 1 ? 'checked' : ''}>
