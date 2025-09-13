@@ -1,2 +1,31 @@
+# Personalizado
 codes/
 phpmailer/
+conection.php
+
+# Dependencias instaladas por Composer
+/vendor/
+
+# Archivos de Composer que no deben versionarse
+/composer.lock
+
+# Configuración del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Configuración de IDEs/editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Cachés y logs
+*.log
+.cache/
+phpunit.xml
+phpunit.xml.cache
+
+# Archivos temporales
+*.tmp
+*.swp
+*.bak
