@@ -243,6 +243,37 @@ function changeForm(selectedOption) {
             });
             break;
         case "option3":
+            $('#txtOption, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', true);
+            $("#btnNext").hide();
+            $("#btnRegister").show();
+            $("#ubicacion").show();
+            $("#facultad").show();
+            $("#taller").show();
+            $("#btnEdit").show();
+            $("#ubicacion select").change(function () {
+                getFacultad();
+                getTalleres();
+            });
+            $("#btnEdit").off('click').on('click', function () {
+                hideNotifications();
+                $("#ubicacion, #facultad, #taller").hide();
+                OriginalVal();
+                $("#btnRegister, #btnEdit").hide();
+                $('#txtOption, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false);
+                $("#btnNext").show();
+            });
+            $("#txtOption").change(function () {
+                $("#ubicacion, #facultad, #taller").hide();
+                OriginalVal();
+                $("#btnRegister, #btnEdit").hide();
+                $('#txtOption, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail').prop('disabled', false);
+                if ($(this).val() === "") {
+                    $("#btnNext").hide();
+                } else {
+                    $("#btnNext").show();
+                }
+            });
+            break;
         case "option4":
             $('#txtId, #txtNombre, #txtApellidoP, #txtApellidoM, #txtEmail, #btnSearch').prop('disabled', true);
             $("#btnNext").hide();
