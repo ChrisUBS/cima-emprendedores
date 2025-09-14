@@ -32,21 +32,18 @@ Asimismo, cuenta con un rol de administrador que gestiona el sistema completo.
     ```
 4. Habilitar la extensión gd en el archivo **php.ini** (necesaria para generar QR).
 
-5. Configurar la base de datos:
-    - Copiar el archivo **conection.php-example** a **conection.php**.
-    - Editar **conection.php** con las credenciales de tu base de datos MySQL.
+5. Configurar las variables globales:
+    - Copiar el archivo **.env.example** a **.env**.
+    - Editar **.env** con las credenciales del correo electrónico y el acceso a tu base de datos MySQL.
 
-6. Configuración de correos:
-    - En **BE/register/save_register.php** agregar el correo desde el cual se enviarán notificaciones y la contraseña de aplicación correspondiente.
-
-7. Si se requiere hay que dar permisos de escritura a la carpeta donde se generan los QR (opcional):
+6. Si se requiere hay que dar permisos de escritura a la carpeta donde se generan los QR (opcional):
     ```bash
     sudo chmod -R 777 /Applications/XAMPP/xamppfiles/htdocs/cimarrones-emprendedores/plugins/codes
     ```
 
-8. Iniciar MySQL en XAMPP, crear una nueva base de datos e importar la plantilla de **BE/backupBasedata/cimarrones_emprendedores.sql**
+7. Iniciar MySQL en XAMPP, crear una nueva base de datos e importar la plantilla de **BE/backupBasedata/cimarrones_emprendedores.sql**
 
-9. Iniciar Apache en XAMPP y abrir en el navegador:
+8. Iniciar Apache en XAMPP y abrir en el navegador:
     - http://localhost/cimarrones-emprendedores
 ---
 

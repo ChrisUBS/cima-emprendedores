@@ -1,7 +1,7 @@
 # Personalizado
 codes/
 phpmailer/
-conection.php
+.env
 
 # Dependencias instaladas por Composer
 /vendor/

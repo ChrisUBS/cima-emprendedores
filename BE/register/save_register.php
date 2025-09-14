@@ -8,9 +8,14 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 include("../conection.php");
 require '../vendor/autoload.php';
 require '../plugins/phpqrcode/qrlib.php';
+require '../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
+// Cargar las variables del archivo .env
+$dotenv = Dotenv\Dotenv::createImmutable("../");
+$dotenv->load();
 
 function sendEmail($to, $subject, $body, $qrPath, $cid) {
     $mail = new PHPMailer(true);
@@ -20,13 +25,13 @@ function sendEmail($to, $subject, $body, $qrPath, $cid) {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com'; 
         $mail->SMTPAuth = true;
-        $mail->Username = 'johan.barragan@uabc.edu.mx';
-        $mail->Password = 'lioplpjswtazgtqn'; 
+        $mail->Username = $_ENV['EMAIL'];
+        $mail->Password = $_ENV['PASS'];
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
         // Configuración del correo electrónico
-        $mail->setFrom('cimarronesemprendedores@uabc.edu.mx', 'Cimarrones Emprendedores');
+        $mail->setFrom($_ENV['EMAIL_FROM'], $_ENV['NAME_FROM']);
         $mail->addAddress($to);
         $mail->Subject = $subject;
         $mail->isHTML(true);
@@ -37,6 +42,10 @@ function sendEmail($to, $subject, $body, $qrPath, $cid) {
         }
 
         $mail->Body = $body;
+
+        // Debug
+        // $mail->SMTPDebug = 2; // 0 = nada, 1 = errores, 2 = + info, 3 = todo el tráfico
+        // $mail->Debugoutput = 'error_log';
 
         // Enviar el correo
         $mail->send();
